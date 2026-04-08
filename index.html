@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence" />
+  <meta name="keywords" content="Agent-World, MCP, environment synthesis, agent training, reinforcement learning, tool use, self-evolving" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/bulma.min.css" />
+  <link rel="stylesheet" href="./css/bulma-carousel.min.css" />
+  <link rel="stylesheet" href="./css/bulma-slider.min.css" />
+  <link rel="stylesheet" href="./css/fontawesome.all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <link rel="stylesheet" href="./css/enhanced-styles.css" />
+  <link rel="stylesheet" href="./css/final-enhancements.css" />
+  <link rel="stylesheet" href="./css/navbar-fix.css" />
+  <link rel="stylesheet" href="./css/navbar-alignment-fix.css" />
+  <link rel="stylesheet" href="./css/overlap-fix.css" />
+  <link rel="stylesheet" href="./css/spacing-fix.css" />
+  <link rel="stylesheet" href="./css/author-affiliation-styles.css" />
+  <link rel="icon" href="./figs/seed_logo.png" type="image/png" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./js/fontawesome.all.min.js"></script>
+  <script src="./js/bulma-carousel.min.js"></script>
+  <script src="./js/bulma-slider.min.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/enhanced-animations.js"></script>
+
+  <style>
+    .key-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #3a76ed 0%, #5b8ff9 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 1.6rem;
+      width: 52px;
+      height: 52px;
+      line-height: 52px;
+      border-radius: 50%;
+      text-align: center;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
+    .method-card {
+      background: #f8fafc;
+      border-left: 4px solid #3a76ed;
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 1.75rem;
+      margin: 1.25rem 0;
+      transition: all 0.3s ease;
+    }
+    .method-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(58, 118, 237, 0.12);
+    }
+    .method-card h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3a76ed, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+    .results-table-wrapper {
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 900px;
+    }
+    .results-table th {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      color: white;
+      padding: 0.7rem 0.6rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .results-table td {
+      padding: 0.55rem 0.6rem;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .results-table .model-name {
+      text-align: left;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .results-table .section-header {
+      background: #f0f0f0;
+      font-weight: 600;
+      font-style: italic;
+      text-align: center;
+    }
+    .results-table .ours-row {
+      background: #e8f0fe;
+      font-weight: 600;
+    }
+    .results-table .best {
+      font-weight: 700;
+    }
+    .results-table .second-best {
+      text-decoration: underline;
+    }
+    .contribution-list {
+      list-style: none;
+      padding: 0;
+    }
+    .contribution-list li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    .contribution-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .finding-box {
+      background: #fefce8;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .finding-box strong {
+      color: #92400e;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="figs/seed_logo.png" alt="Seed logo" style="height: 1.5rem; max-height: unset;" class="left-logo">
+          | Agent-World
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" href="#abstract">Abstract</a>
+          <a class="navbar-item" href="#introduction">Introduction</a>
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#experiments">Experiments</a>
+          <a class="navbar-item" href="#conclusion">Conclusion</a>
+          <a class="navbar-item" href="#citation">Citation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="has-text-centered">
+          <h1 class="publication-title">
+            <span><em class="dnerf">Agent-World</em>: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence</span>
+          </h1>
+
+          <div class="publication-authors">
+            <span class="author-block">Guanting Dong<sup>1,2,*</sup></span>
+            <span class="author-block">Junting Lu<sup>2</sup></span>
+            <span class="author-block">Junjie Huang<sup>2</sup></span>
+            <span class="author-block">Wanjun Zhong<sup>2</sup></span>
+            <span class="author-block">Longxiang Liu<sup>2</sup></span>
+            <span class="author-block">Shijue Huang<sup>2</sup></span>
+            <span class="author-block">Zhenyu Li<sup>2</sup></span>
+            <span class="author-block">Yang Zhao<sup>2</sup></span>
+            <span class="author-block">Xiaoshuai Song<sup>1</sup></span>
+            <span class="author-block">Xiaoxi Li<sup>1</sup></span>
+            <span class="author-block">Jiajie Jin<sup>1</sup></span>
+            <span class="author-block">Hanbin Wang<sup>2</sup></span>
+            <span class="author-block">Jiazhan Feng<sup>2</sup></span>
+            <span class="author-block">Yujia Qin<sup>2</sup></span>
+            <span class="author-block">Guang Shi<sup>2</sup></span>
+            <span class="author-block">Yutao Zhu<sup>1</sup></span>
+            <span class="author-block">Zhicheng Dou<sup>1,&#8224;</sup></span>
+          </div>
+
+          <div class="publication-affiliations">
+            <span class="affiliation-block"><sup>1</sup>Renmin University of China</span><br>
+            <span class="affiliation-block"><sup>2</sup>ByteDance Seed</span><br>
+            <span class="affiliation-block"><sup>*</sup>Work done at ByteDance Seed&nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author</span>
+          </div>
+
+          <div class="publication-links">
+            <span class="link-block">
+              <span class="button is-dark is-static">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper (Coming Soon)</span>
+              </span>
+            </span>
+            <span class="link-block">
+              <span class="button is-dark is-static">
+                <span class="icon"><i class="fas fa-code"></i></span>
+                <span>Code (Coming Soon)</span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section" id="abstract">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content">
+            <p>
+              Large language models are increasingly expected to serve as general-purpose agents that interact with external, stateful tool environments.
+              The Model Context Protocol (MCP) and broader agent skills offer a unified interface for connecting agents with scalable real-world services,
+              but training robust agents remains limited by the lack of realistic environments and principled mechanisms for lifelong learning.
+            </p>
+            <p>
+              In this paper, we present <strong>Agent-World</strong>, a self-evolving training arena for advancing general agent intelligence through scalable environments.
+              Agent-World has two main components:
+              <strong>(1) Agentic Environment-Task Discovery</strong>, which autonomously explores topic-aligned databases and executable tool ecosystems from thousands of real-world environment themes and synthesizes verifiable tasks with controllable difficulty; and
+              <strong>(2) Continuous Self-Evolving Agent Training</strong>, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments.
+            </p>
+            <p>
+              Across <strong>27 challenging agent benchmarks</strong>, Agent-World consistently outperforms strong proprietary models and baselines. Further analyses reveal scaling trends with environment diversity and self-evolution rounds, offering insights for building general agent intelligence.
+            </p>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">2,000+</div>
+                <div class="stat-label">Environment Themes</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">19K+</div>
+                <div class="stat-label">Distinct Tools</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">27</div>
+                <div class="stat-label">Evaluation Benchmarks</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">20</div>
+                <div class="stat-label">Environment Categories</div>
+              </div>
+            </div>
+
+            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
+              <img src="figs/mcptars_main.png" alt="Overview of Agent-World">
+              <figcaption>
+                <span>Figure 1: Overview of Agent-World (left) and downstream general agent performance (right).</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="section" id="introduction">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Introduction</h2>
+          <div class="content">
+            <p>
+              As the capability frontier of large language models continues to expand, expectations are shifting from chat-oriented text generation toward <strong>general-purpose agent assistants</strong>. Ideally, such agents should seamlessly integrate real-world interaction with verbal reasoning, and continuously learn from experience to improve themselves. Realizing these agentic capabilities requires training LLMs in dynamic environments equipped with executable tools, forming a <em>"Generation–Execution–Feedback"</em> interaction loop.
+            </p>
+            <p>
+              With the rise of agentic reinforcement learning (Agent RL), several agent systems built on static tool environments have demonstrated strong practical value. However, open-world tool environments are inherently <strong>compositional and stateful</strong>. For instance, in a flight-booking workflow, an agent should follow a valid action order (check inventory → execute booking → update the calendar), while each action also modifies the underlying environment state. Prior work centered on stateless or single-tool settings is insufficient for realistic applications.
+            </p>
+            <p>
+              Two key bottlenecks remain unresolved:
+            </p>
+
+            <div class="method-card">
+              <h4><i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i> Scalable Realism and Complex Environment Synthesis</h4>
+              <p>Existing environments are often LLM-generated or derived from limited open-source toolchains, which often mismatch real-world interaction logic. Synthetic environments are limited in complexity, restricting agent training on long-horizon, state-intensive tasks.</p>
+            </div>
+
+            <div class="method-card">
+              <h4><i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i> Continuous Self-Evolving Training Mechanisms</h4>
+              <p>Existing work has primarily emphasized environment construction and scaling, while lacking principled mechanisms that use scalable environments to diagnose agent weaknesses and drive continual self-improvement.</p>
+            </div>
+
+            <p>
+              We propose <strong>Agent-World</strong>, a general-purpose agent training arena that unifies scalable environment synthesis with continuous self-evolving training. Agent-World follows a two-stage design that forms a closed-loop training process.
+            </p>
+
+            <h4>Key Contributions</h4>
+            <ul class="contribution-list">
+              <li>We introduce <strong>Agent-World</strong>, a general-purpose agent training arena that unifies scalable environment synthesis with a continuous self-evolving training mechanism, forming a co-evolution loop between agent policies and environments.</li>
+              <li>We propose <strong>Agentic Environment-Task Discovery</strong>, which mines realistic executable environments from real-world environment themes and synthesizes diverse verifiable tasks with controllable difficulty.</li>
+              <li>We propose <strong>Continuous Self-Evolving Agent Training</strong>, which integrates multi-environment agentic RL with a self-evolving arena to automatically diagnose agent weaknesses and drive targeted learning in a closed training loop.</li>
+              <li>Experiments across <strong>27 challenging agent benchmarks</strong> demonstrate the superior performance of Agent-World. Further analysis reveals scaling relationships among environment diversity, evolution rounds, and agent performance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section" id="method">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Method</h2>
+          <div class="content">
+            <p>
+              Agent-World contains two tightly coupled components that form a closed loop: scalable environments support agent training, while training-time diagnosis feeds back into the next round of environment-task construction.
+            </p>
+
+            <!-- Component 1 -->
+            <h3 style="margin-top: 2.5rem;">
+              <span class="key-number">1</span>
+              Agentic Environment-Task Discovery
+            </h3>
+
+            <div class="method-card">
+              <h4>Environment Theme Collection</h4>
+              <p>
+                We systematically gather environment themes from three real-world sources:
+                <strong>(1) MCP Servers</strong> — real-world server specifications from Smithery with structured JSON documents;
+                <strong>(2) Tool Documentations</strong> — open-source datasets covering real tool-use scenarios;
+                <strong>(3) Industrial PRDs</strong> — product requirement documents containing domain workflows and system interfaces.
+                Together, these form a seed topic set of over <strong>2,000 environment themes</strong> across <strong>20 primary categories</strong>.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h4>Agentic Database Mining</h4>
+              <p>
+                Unlike prior work that uses LLM-synthesized databases, we argue that the web already contains abundant, high-value structured data. We design a deep-research agent that autonomously mines and processes web data into environment databases. For each topic, the agent conducts iterative loops for in-depth information retrieval and data mining, followed by a <strong>database complexification process</strong> to iteratively expand and enrich the database over multiple rounds.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h4>Tool Interface Generation and Verification</h4>
+              <p>
+                A tool-design agent produces candidate tools and unit test cases grounded in the mined databases. We perform cross-validation to retain tools that: (1) compile successfully, (2) achieve accuracy &gt;0.5 across test cases, and (3) belong to environments with at least one tool and one test case. The resulting ecosystem contains <strong>19K+ distinct tools</strong> with rich parameters.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h4>Verifiable Task Synthesis</h4>
+              <p>
+                We synthesize high-quality agentic tasks through two complementary strategies:
+              </p>
+              <p>
+                <strong>Graph-Based Task Synthesis:</strong> We construct weighted tool dependency graphs and perform random walks to generate tool-call sequences. From these sequences, an LLM drafts task descriptions and ground-truth answers, followed by consistency verification (ReAct agent × 5 runs).
+              </p>
+              <p>
+                <strong>Programmatic Task Synthesis:</strong> We directly generate executable Python solutions with complex control flows (loops, branches, aggregations). Each task is paired with an executable verification script for robust evaluation beyond simple string matching.
+              </p>
+              <p>
+                Both methods support <strong>difficulty scaling</strong> — expanding tool chains, increasing non-linear reasoning requirements, and obscuring tool names to force higher-level planning.
+              </p>
+            </div>
+
+            <figure class="image" style="max-width: 500px; margin: 2rem auto;">
+              <img src="figs/mcp_server_taxonomy_sunburst.png" alt="Distribution of environments across 20 primary categories">
+              <figcaption>
+                <span>Distribution of 1,978 environments across 20 primary categories.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
+              <img src="figs/env_stastic.png" alt="Comprehensive statistics of Agent-World environments and tasks">
+              <figcaption>
+                <span>Comprehensive statistics of Agent-World environments and synthesized tasks, including environment diversity, tool coverage, file-type distribution, and task difficulty characteristics.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
+              <img src="figs/mcptars_env.png" alt="Pipeline of Agentic Environment-Task Discovery">
+              <figcaption>
+                <span>Figure 2: Pipeline of Agentic Environment-Task Discovery. Starting from real-world environment themes, mining topic-aligned databases, generating executable tools, and synthesizing verifiable tasks.</span>
+              </figcaption>
+            </figure>
+
+            <!-- Component 2 -->
+            <h3 style="margin-top: 2.5rem;">
+              <span class="key-number">2</span>
+              Continuous Self-Evolving Agent Training
+            </h3>
+
+            <div class="method-card">
+              <h4>Multi-Environment Agent Reinforcement Learning</h4>
+              <p>
+                We implement a closed-loop interaction among three components: an <strong>LLM policy</strong> (generates actions conditioned on history), a <strong>tool interface/runtime</strong> (executes tools in sandboxed environments), and a <strong>database state</strong> (provides verifiable, updatable data backbone). Tasks within each global batch are paired with independent environments, realizing multi-environment rollouts.
+              </p>
+              <p>
+                <strong>Structured Verifiable Reward:</strong> Graph-based tasks are evaluated via rubric-conditioned LLM-as-judge; programmatic tasks are verified through executable validation scripts in sandboxes. We adopt <strong>GRPO</strong> (Group Relative Policy Optimization) for stable training.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h4>Self-Evolving Agent Arena</h4>
+              <p>
+                The environment ecosystem serves as a <strong>dynamic diagnostic arena</strong>:
+              </p>
+              <p>
+                <strong>Phase 1 — Dynamic Evaluation:</strong> Synthesize fresh verifiable tasks in held-out arena environments at each iteration, preventing overfitting to a static benchmark.
+              </p>
+              <p>
+                <strong>Phase 2 — Agentic Diagnosis:</strong> A diagnosis agent analyzes per-task failure traces, error distributions, and environment metadata to identify weak environments and generate task-generation guidelines.
+              </p>
+              <p>
+                <strong>Phase 3 — Agent-Environment Co-Evolution:</strong> Re-run task synthesis conditioned on diagnosed weaknesses, optionally complexify databases, and continue RL to obtain an improved policy. This creates a self-evolving loop:
+              </p>
+              <p style="text-align: center; font-size: 1.1rem; font-weight: 500; color: #1e293b; margin: 1.5rem 0;">
+                π<sub>θ<sup>(r)</sup></sub> → <em>evaluate</em> → W<sup>(r)</sup> → <em>diagnose + target</em> → X<sub>target</sub><sup>(r)</sup> → <em>continue RL</em> → π<sub>θ<sup>(r+1)</sup></sub>
+              </p>
+            </div>
+
+            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
+              <img src="figs/mcptars_training.png" alt="Framework of Continuous Self-Evolving Agent Training">
+              <figcaption>
+                <span>Figure 3: Framework of Continuous Self-Evolving Agent Training. The agent is trained with multi-environment RL, evaluated in a dynamic arena, diagnosed for capability gaps, and improved through targeted expansion.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiments -->
+  <section class="section" id="experiments">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Experiments</h2>
+          <div class="content">
+            <p>
+              We evaluate Agent-World on <strong>27 benchmarks</strong> spanning agentic tool use, software engineering, deep research, and general reasoning, using Qwen3-8B/14B backbones trained with GRPO.
+            </p>
+
+            <h4>Main Results on Agentic Tool-Use Benchmarks</h4>
+            <p>
+              We report accuracy (%) across three benchmark suites: <strong>MCP-Mark</strong>, <strong>BFCL V4</strong>, and <strong>τ²-Bench</strong>.
+            </p>
+
+            <div class="results-table-wrapper">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2" style="text-align:left;">Method</th>
+                    <th colspan="2">MCP-Mark</th>
+                    <th colspan="2">BFCL V4</th>
+                    <th colspan="2">τ²-Bench</th>
+                  </tr>
+                  <tr>
+                    <th>Postgres</th>
+                    <th>Avg.</th>
+                    <th>WebSearch</th>
+                    <th>Avg.</th>
+                    <th>Airline</th>
+                    <th>Avg.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="7" class="section-header">Frontier Proprietary Models</td></tr>
+                  <tr>
+                    <td class="model-name">GPT-5.2 High</td>
+                    <td>66.7</td><td>53.1</td><td>75.5</td><td>62.9</td><td>62.5</td><td>80.2</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Claude Sonnet-4.5</td>
+                    <td>50.0</td><td>33.3</td><td>81.0</td><td>73.2</td><td>70.1</td><td>84.7</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Gemini-3 Pro</td>
+                    <td>70.2</td><td>50.8</td><td>80.0</td><td>72.5</td><td>72.7</td><td>85.4</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Seed 2.0</td>
+                    <td>81.0</td><td>54.7</td><td>92.0</td><td>73.4</td><td>—</td><td>—</td>
+                  </tr>
+                  <tr><td colspan="7" class="section-header">Open-Source Foundation Models (8B–685B)</td></tr>
+                  <tr>
+                    <td class="model-name">DeepSeek-V3.2-685B</td>
+                    <td>66.6</td><td>36.7</td><td>69.5</td><td>54.1</td><td>—</td><td>80.3</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen3-8B</td>
+                    <td>4.8</td><td>2.4</td><td>7.0</td><td>40.4</td><td>26.5</td><td>26.2</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen3-235B-A22B</td>
+                    <td>4.8</td><td>5.8</td><td>54.0</td><td>47.9</td><td>45.6</td><td>58.5</td>
+                  </tr>
+                  <tr><td colspan="7" class="section-header">Open-Source Environment Scaling Methods (7B–14B)</td></tr>
+                  <tr>
+                    <td class="model-name">EnvScaler-8B</td>
+                    <td>9.5</td><td>5.6</td><td>23.0</td><td>47.6</td><td>31.5</td><td>37.9</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">AWM-8B</td>
+                    <td>4.8</td><td>2.4</td><td>9.5</td><td>40.0</td><td>23.5</td><td>34.4</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">ScaleEnv-8B</td>
+                    <td>—</td><td>—</td><td>—</td><td>—</td><td>37.5</td><td>38.5</td>
+                  </tr>
+                  <tr class="ours-row">
+                    <td class="model-name">Agent-World-8B</td>
+                    <td class="second-best">19.1</td><td class="second-best">8.9</td><td class="second-best">47.0</td><td class="second-best">51.4</td><td class="second-best">40.0</td><td class="second-best">61.8</td>
+                  </tr>
+                  <tr class="ours-row">
+                    <td class="model-name">Agent-World-14B</td>
+                    <td class="best">38.1</td><td class="best">13.3</td><td class="best">53.0</td><td class="best">55.8</td><td class="best">52.0</td><td class="best">65.4</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4>Key Findings</h4>
+
+            <div class="finding-box">
+              <strong>(1) Foundation models remain limited in complex agentic tool-use scenarios.</strong>
+              Even GPT-5.2 High achieves only 53.1% on MCP-Mark. Open-source models like Qwen3-235B-A22B score only 5.8%, suggesting current models still struggle with long-horizon tool use requiring multi-step planning and state tracking.
+            </div>
+
+            <div class="finding-box">
+              <strong>(2) Existing environment-scaling methods suffer from uneven capability gains.</strong>
+              Simulator-based methods perform poorly on complex real-world benchmarks. Code-based methods like EnvScaler-8B provide broader gains but show clear weaknesses on specific environments.
+            </div>
+
+            <div class="finding-box">
+              <strong>(3) Agent-World achieves more consistent cross-environment generalization.</strong>
+              Agent-World consistently outperforms prior environment-scaling baselines across all three benchmark suites. Agent-World-14B surpasses even DeepSeek-V3.2-685B on BFCL-V4 (55.8% vs. 54.1%).
+            </div>
+
+            <figure class="image" style="max-width: 950px; margin: 2rem auto;">
+              <img src="figs/radar_21domains_45.png" alt="Generalization across long-horizon agentic reasoning scenarios">
+              <figcaption>
+                <span>Figure 4: Generalization across long-horizon agentic reasoning scenarios. Comparison of Qwen3-8B, EnvScaler-8B, and Agent-World-8B across General Reasoning, Agentic Search &amp; Coding, and Knowledge &amp; MCP.</span>
+              </figcaption>
+            </figure>
+
+            <h4>Generalization on Advanced AI Assistant Benchmarks</h4>
+
+            <figure class="image" style="max-width: 950px; margin: 2rem auto;">
+              <img src="figs/bench_bar_iclr_fullwidth.png" alt="Generalization on advanced agentic assistant benchmarks">
+              <figcaption>
+                <span>Figure 5: Generalization on advanced agentic assistant benchmarks. Comparison of Qwen3, EnvScaler, AWM, and Agent-World series on SkillsBench, ARC-AGI-2, and Claw-Eval.</span>
+              </figcaption>
+            </figure>
+
+            <h4>Scaling Analysis of Training Environments</h4>
+            <p>
+              We progressively increase the number of training environments from 0 to 2000. Performance improves consistently across all domains as the environment scale grows. Averaged over four domains, the score rises from <strong>18.4% to 38.5%</strong> (+20.1 points), more than doubling the initial level. The gains are particularly pronounced on interaction-intensive tasks.
+            </p>
+
+            <figure class="image" style="max-width: 950px; margin: 2rem auto;">
+              <img src="figs/scalev2_scheme_a.png" alt="Scaling relationship between training environments and performance">
+              <figcaption>
+                <span>Figure 5: Scaling relationship between the number of synthesized training environments and downstream agent performance.</span>
+              </figcaption>
+            </figure>
+
+            <h4>Analysis of Continuous Self-Evolution</h4>
+            <p>
+              Starting from Agent-World-14B after initial multi-environment RL, we run two additional rounds of the self-evolving arena loop. Results show <strong>monotonic gains</strong> on all three evaluation suites:
+            </p>
+
+            <div class="results-table-wrapper">
+              <table class="results-table" style="max-width: 600px; margin: 1.5rem auto; min-width: unset;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Round</th>
+                    <th>τ²-Bench</th>
+                    <th>BFCL-V4</th>
+                    <th>MCP-Mark (Post.)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="model-name">Base</td>
+                    <td>45.3</td><td>52.4</td><td>29.5</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">+1 round</td>
+                    <td>48.6 <span style="color: #10b981; font-size:0.8rem;">(+3.3)</span></td>
+                    <td>54.9 <span style="color: #10b981; font-size:0.8rem;">(+2.5)</span></td>
+                    <td>36.3 <span style="color: #10b981; font-size:0.8rem;">(+6.8)</span></td>
+                  </tr>
+                  <tr class="ours-row">
+                    <td class="model-name">+2 rounds</td>
+                    <td class="best">50.5 <span style="color: #10b981; font-size:0.8rem;">(+1.9)</span></td>
+                    <td class="best">55.8 <span style="color: #10b981; font-size:0.8rem;">(+0.9)</span></td>
+                    <td class="best">38.1 <span style="color: #10b981; font-size:0.8rem;">(+1.8)</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              The largest gain appears on MCP-Mark (+8.6 over two rounds), which requires stronger state tracking and more reliable interaction with realistic MCP server environments. This demonstrates that the self-evolving loop yields sustained improvement rather than one-shot gains, supporting scalable environments as a persistent diagnostic arena for continual policy improvement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conclusion -->
+  <section class="section" id="conclusion">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Conclusion</h2>
+          <div class="content">
+            <p>
+              We presented <strong>Agent-World</strong>, a self-evolving training arena for general-purpose agents in realistic tool environments.
+              Agent-World unifies two tightly coupled components:
+            </p>
+            <p>
+              <strong>Agentic Environment-Task Discovery</strong> mines topic-aligned real-world databases and executable toolsets from large-scale themes and synthesizes verifiable tasks with controllable difficulty.
+            </p>
+            <p>
+              <strong>Continuous Self-Evolving Agent Training</strong> combines multi-environment reinforcement learning with an agentic diagnostic arena to identify capability gaps and drive targeted iterative data expansion.
+            </p>
+            <p>
+              Experiments across 27 challenging benchmarks demonstrate that Agent-World consistently improves performance over strong baselines.
+              Further analyses reveal clear scaling trends with respect to environment diversity, evolution rounds, and task difficulty,
+              suggesting that scalable realistic environments are not only useful data sources, but also <strong>critical infrastructure for advancing general agent capabilities</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citation -->
+  <section class="section" id="citation">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Citation</h2>
+          <div class="content">
+<pre><code>@article{dong2026agentworld,
+  title   = {Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence},
+  author  = {Dong, Guanting and Lu, Junting and Huang, Junjie and Zhong, Wanjun and Liu, Longxiang and Huang, Shijue and Li, Zhenyu and Zhao, Yang and Song, Xiaoshuai and Li, Xiaoxi and Jin, Jiajie and Wang, Hanbin and Feng, Jiazhan and Qin, Yujia and Shi, Guang and Zhu, Yutao and Dou, Zhicheng},
+  journal = {arXiv preprint},
+  year    = {2026}
+}
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

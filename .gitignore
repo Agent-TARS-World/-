@@ -1,0 +1,10 @@
+.DS_Store
+_NIPS26___Guanting__MCP_TARS__Scaling_Real_World_Environment_Synthesis_for_Evolving_General_Agent_Intelligence/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
