@@ -29,6 +29,529 @@
   <script src="./js/index.js"></script>
   <script src="./js/enhanced-animations.js"></script>
 
+  <style id="cool-enhancements">
+    /* ── Glassmorphism Navbar ─────────────────────────── */
+    .navbar.is-fixed-top {
+      background: rgba(255,255,255,.72) !important;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(226,232,240,.6);
+      box-shadow: 0 1px 20px rgba(0,0,0,.06);
+      transition: background .3s, box-shadow .3s;
+    }
+    .navbar.is-fixed-top.scrolled {
+      background: rgba(255,255,255,.92) !important;
+      box-shadow: 0 4px 30px rgba(0,0,0,.08);
+    }
+    .navbar-item {
+      font-weight: 500;
+      letter-spacing: .01em;
+      transition: color .2s, transform .2s;
+    }
+    .navbar-item:hover {
+      color: #3a76ed !important;
+      transform: translateY(-1px);
+    }
+
+    /* ── Hero: Animated Mesh Gradient + Floating Orbs ── */
+    .hero {
+      background: linear-gradient(135deg, #e8f0fe 0%, #f0f7ff 25%, #ffffff 50%, #f0fdf4 75%, #f5f3ff 100%) !important;
+      background-size: 400% 400% !important;
+      animation: heroGradient 12s ease infinite !important;
+      position: relative !important;
+      overflow: hidden !important;
+      padding: 5rem 0 3rem !important;
+    }
+    @keyframes heroGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .45;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .hero-orb.orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #3a76ed 0%, transparent 70%);
+      top: -120px; left: -100px;
+      animation: orbFloat1 18s ease-in-out infinite;
+    }
+    .hero-orb.orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+      bottom: -80px; right: -60px;
+      animation: orbFloat2 22s ease-in-out infinite;
+    }
+    .hero-orb.orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+      top: 40%; left: 60%;
+      animation: orbFloat3 15s ease-in-out infinite;
+    }
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(60px, 40px) scale(1.1); }
+      66%  { transform: translate(-30px, 60px) scale(.95); }
+    }
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(-50px, -40px) scale(1.15); }
+    }
+    @keyframes orbFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(40px, -50px) scale(1.1); }
+    }
+
+    /* ── Hero Title: Animated Gradient Text ───────────── */
+    .publication-title {
+      background: linear-gradient(135deg, #1e293b, #3a76ed, #06b6d4, #8b5cf6, #3a76ed) !important;
+      background-size: 300% 300% !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+      animation: titleShimmer 6s ease infinite !important;
+    }
+    @keyframes titleShimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ── Author Chips: Subtle Glow on Hover ──────────── */
+    .author-block {
+      border: 1px solid transparent;
+      backdrop-filter: blur(4px);
+    }
+    .author-block:hover {
+      background: rgba(58,118,237,.08) !important;
+      border-color: rgba(58,118,237,.2);
+      box-shadow: 0 4px 16px rgba(58,118,237,.12);
+    }
+
+    /* ── Buttons: Glow Effect ────────────────────────── */
+    .publication-links .button.is-dark,
+    .publication-links .button.is-dark.is-static {
+      position: relative;
+      overflow: hidden;
+    }
+    .publication-links .button.is-dark::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3a76ed, #06b6d4, #8b5cf6);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity .3s;
+      filter: blur(12px);
+    }
+    .publication-links .button.is-dark:hover::after {
+      opacity: .5;
+    }
+
+    /* ── Stat Cards: Gradient Border Glow ────────────── */
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(226,232,240,.8);
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg, #3a76ed, #06b6d4, #8b5cf6);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card:hover {
+      border-color: transparent;
+      box-shadow: 0 8px 32px rgba(58,118,237,.15);
+    }
+
+    /* ── Section Scroll Reveal ────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    /* ── Section Backgrounds: Alternating Subtle ──────── */
+    #demos { background: linear-gradient(180deg, #fff, #f8fafc); }
+    #introduction { background: #fff; }
+    #method { background: linear-gradient(180deg, #f8fafc, #fff); }
+    #experiments { background: #fff; }
+    #conclusion { background: linear-gradient(180deg, #f8fafc, #fff); }
+
+    /* ── Gradient Dividers Between Sections ───────────── */
+    .section {
+      position: relative;
+    }
+    .section + .section::before,
+    .section + div + .section::before,
+    .section + div + style + script + .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #3a76ed, #06b6d4, #8b5cf6);
+    }
+
+    /* ── Method Cards: Enhanced Hover ─────────────────── */
+    .method-card {
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid transparent !important;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9) !important;
+      border-image: linear-gradient(180deg, #3a76ed, #06b6d4) 1 !important;
+    }
+    .method-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(58,118,237,.04), transparent);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .method-card:hover::after { opacity: 1; }
+    .method-card:hover {
+      box-shadow: 0 8px 24px rgba(58,118,237,.1) !important;
+    }
+
+    /* ── Finding Boxes: Enhanced ──────────────────────── */
+    .finding-box {
+      border-left: 4px solid transparent !important;
+      border-image: linear-gradient(180deg, #f59e0b, #f97316) 1 !important;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .finding-box:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(245,158,11,.12);
+    }
+
+    /* ── Key Numbers: Pulsing Glow ────────────────────── */
+    .key-number {
+      box-shadow: 0 0 0 0 rgba(58,118,237,.4);
+      animation: pulseNum 2.5s ease-in-out infinite;
+    }
+    @keyframes pulseNum {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(58,118,237,.3); }
+      50% { box-shadow: 0 0 0 10px rgba(58,118,237,0); }
+    }
+
+    /* ── Contribution List: Staggered Entrance ───────── */
+    .contribution-list li {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .contribution-list.visible li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .contribution-list.visible li:nth-child(1) { transition-delay: 0s; }
+    .contribution-list.visible li:nth-child(2) { transition-delay: .1s; }
+    .contribution-list.visible li:nth-child(3) { transition-delay: .2s; }
+    .contribution-list.visible li:nth-child(4) { transition-delay: .3s; }
+
+    /* ── Results Table: Row Hover Glow ────────────────── */
+    .results-table tbody tr {
+      transition: background .2s, box-shadow .2s;
+    }
+    .results-table tbody tr:hover {
+      background: rgba(58,118,237,.04) !important;
+    }
+    .results-table .ours-row {
+      background: linear-gradient(90deg, rgba(58,118,237,.08), rgba(6,182,212,.06)) !important;
+    }
+    .results-table .ours-row:hover {
+      background: linear-gradient(90deg, rgba(58,118,237,.14), rgba(6,182,212,.1)) !important;
+    }
+
+    /* ── Figures: Subtle Animated Border ──────────────── */
+    figure.image {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s;
+    }
+    figure.image:hover {
+      transform: translateY(-4px) scale(1.005);
+      box-shadow: 0 16px 48px rgba(58,118,237,.12);
+    }
+
+    /* ── Citation Block: Dark Glass ───────────────────── */
+    pre {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+      border: 1px solid rgba(58,118,237,.2) !important;
+      position: relative;
+      overflow: hidden;
+    }
+    pre::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #3a76ed, #06b6d4, #8b5cf6);
+    }
+
+    /* ── Footer: Gradient Enhancement ────────────────── */
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+    }
+    .footer p { color: rgba(255,255,255,.7); }
+
+    /* ── Demo Card Enhancement ────────────────────────── */
+    .demo-card {
+      border: 1px solid rgba(226,232,240,.6);
+      transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s, border-color .35s !important;
+    }
+    .demo-card:hover {
+      border-color: rgba(58,118,237,.3);
+      box-shadow: 0 12px 40px rgba(58,118,237,.15) !important;
+    }
+
+    /* ── Smooth Custom Scrollbar ──────────────────────── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #cbd5e1, #94a3b8);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* ══════════════ HERO LANDING STYLE ═══════════════ */
+    .aw-hero {
+      min-height: 100vh !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 6rem 0 3rem !important;
+    }
+    .aw-hero .hero-body { width: 100%; z-index: 1; }
+
+    .aw-hero-badge {
+      display: inline-block;
+      padding: .4rem 1.2rem;
+      border-radius: 20px;
+      background: rgba(58,118,237,.08);
+      border: 1px solid rgba(58,118,237,.2);
+      color: #3a76ed;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp .8s ease-out;
+    }
+    .aw-hero-tagline {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      color: #475569;
+      line-height: 1.6;
+      margin: .5rem auto 2.5rem;
+      max-width: 700px;
+      animation: fadeInUp .8s ease-out .3s both;
+    }
+
+    /* Hero inline stats */
+    .aw-hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto 1rem;
+      animation: fadeInUp .8s ease-out .5s both;
+    }
+    .aw-hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    .aw-hero-stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #3a76ed, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .aw-hero-stat-label {
+      font-size: .82rem;
+      color: #64748b;
+      font-weight: 500;
+      margin-top: .2rem;
+    }
+    .aw-hero-stat-divider {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, transparent, #cbd5e1, transparent);
+    }
+
+    /* Hero authors compact */
+    .aw-hero-authors {
+      margin-top: 2rem;
+      animation: fadeInUp .8s ease-out .7s both;
+    }
+    .aw-hero-authors span {
+      display: inline-block;
+      margin: .2rem .4rem;
+      font-size: .85rem;
+      color: #475569;
+    }
+    .aw-hero-affil {
+      font-size: .8rem;
+      color: #94a3b8;
+      margin-top: .6rem;
+      animation: fadeInUp .8s ease-out .8s both;
+    }
+
+    /* Scroll-down chevrons */
+    .aw-scroll-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 3rem;
+      animation: fadeInUp .8s ease-out 1s both;
+    }
+    .aw-scroll-hint span {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-right: 2px solid #94a3b8;
+      border-bottom: 2px solid #94a3b8;
+      transform: rotate(45deg);
+      margin: -5px 0;
+      animation: scrollChevron 2s infinite;
+    }
+    .aw-scroll-hint span:nth-child(2) { animation-delay: .15s; }
+    .aw-scroll-hint span:nth-child(3) { animation-delay: .3s; }
+    @keyframes scrollChevron {
+      0%   { opacity: 0; transform: rotate(45deg) translate(-4px,-4px); }
+      50%  { opacity: 1; }
+      100% { opacity: 0; transform: rotate(45deg) translate(4px,4px); }
+    }
+
+    /* ══════════════ OVERVIEW SHOWCASE ═══════════════ */
+    .aw-showcase {
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+      padding-top: 5rem !important;
+      padding-bottom: 4rem !important;
+    }
+    .aw-main-figure {
+      max-width: 1100px;
+      margin: 0 auto;
+      border-radius: 20px !important;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.06);
+      border: 1px solid rgba(226,232,240,.8);
+      transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s;
+    }
+    .aw-main-figure:hover {
+      transform: translateY(-6px) scale(1.005);
+      box-shadow: 0 30px 80px rgba(58,118,237,.12), 0 1px 3px rgba(0,0,0,.06);
+    }
+    .aw-main-figure img {
+      border-radius: 0 !important;
+      width: 100%;
+      display: block;
+    }
+
+    /* ══════════════ KEY CAPABILITIES ═══════════════ */
+    .aw-capabilities {
+      background: #fff;
+      padding-top: 5rem !important;
+      padding-bottom: 5rem !important;
+    }
+    .aw-cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .aw-cap-card {
+      background: linear-gradient(135deg, #fafbff 0%, #f8fafc 100%);
+      border: 1px solid rgba(226,232,240,.7);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s, border-color .35s;
+      position: relative;
+      overflow: hidden;
+    }
+    .aw-cap-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3a76ed, #06b6d4);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .aw-cap-card:hover::before { opacity: 1; }
+    .aw-cap-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(58,118,237,.1);
+      border-color: rgba(58,118,237,.2);
+    }
+    .aw-cap-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3a76ed, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.3rem;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(58,118,237,.25);
+    }
+    .aw-cap-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: .6rem;
+    }
+    .aw-cap-card p {
+      font-size: .9rem;
+      color: #64748b;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    @media (max-width: 960px) {
+      .aw-cap-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .aw-cap-grid { grid-template-columns: 1fr; }
+      .aw-hero-stats { flex-wrap: wrap; gap: 1rem; }
+      .aw-hero-stat-divider { display: none; }
+      .aw-hero-stat { padding: 0 1rem; }
+    }
+  </style>
+
   <style>
     .key-number {
       display: inline-block;
@@ -99,19 +622,19 @@
     .results-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       min-width: 900px;
     }
     .results-table th {
-      background: linear-gradient(135deg, #1e293b, #334155);
-      color: white;
-      padding: 0.7rem 0.6rem;
+      background: linear-gradient(135deg, #e2e8f0, #f1f5f9);
+      color: #1e293b;
+      padding: 0.5rem 0.4rem;
       text-align: center;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
     }
     .results-table td {
-      padding: 0.55rem 0.6rem;
+      padding: 0.4rem 0.35rem;
       text-align: center;
       border-bottom: 1px solid #e2e8f0;
     }
@@ -183,54 +706,55 @@
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
+          <a class="navbar-item" href="#overview">Overview</a>
+          <a class="navbar-item" href="#capabilities">Capabilities</a>
+          <a class="navbar-item" href="#demos">Demos</a>
           <a class="navbar-item" href="#abstract">Abstract</a>
-          <a class="navbar-item" href="#introduction">Introduction</a>
           <a class="navbar-item" href="#method">Method</a>
           <a class="navbar-item" href="#experiments">Experiments</a>
-          <a class="navbar-item" href="#conclusion">Conclusion</a>
           <a class="navbar-item" href="#citation">Citation</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
+  <!-- ══════════════════════ HERO ══════════════════════ -->
+  <section class="hero aw-hero">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-orb orb-3"></div>
     <div class="hero-body">
       <div class="container">
         <div class="has-text-centered">
+          <div class="aw-hero-badge">Self-Evolving Agent Training Arena</div>
           <h1 class="publication-title">
-            <span><em class="dnerf">Agent-World</em>: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence</span>
+            <span><em class="dnerf">Agent-World</em></span>
           </h1>
+          <p class="aw-hero-tagline">Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence</p>
 
-          <div class="publication-authors">
-            <span class="author-block">Guanting Dong<sup>1,2,*</sup></span>
-            <span class="author-block">Junting Lu<sup>2</sup></span>
-            <span class="author-block">Junjie Huang<sup>2</sup></span>
-            <span class="author-block">Wanjun Zhong<sup>2</sup></span>
-            <span class="author-block">Longxiang Liu<sup>2</sup></span>
-            <span class="author-block">Shijue Huang<sup>2</sup></span>
-            <span class="author-block">Zhenyu Li<sup>2</sup></span>
-            <span class="author-block">Yang Zhao<sup>2</sup></span>
-            <span class="author-block">Xiaoshuai Song<sup>1</sup></span>
-            <span class="author-block">Xiaoxi Li<sup>1</sup></span>
-            <span class="author-block">Jiajie Jin<sup>1</sup></span>
-            <span class="author-block">Hanbin Wang<sup>2</sup></span>
-            <span class="author-block">Zehui Chen<sup>2</sup></span>
-            <span class="author-block">Jiazhan Feng<sup>2</sup></span>
-            <span class="author-block">Yutao Zhu<sup>1</sup></span>
-            <span class="author-block">Zhicheng Dou<sup>1,&#8224;</sup></span>
-            <span class="author-block">Ji-Rong Wen<sup>1</sup></span>
-            <span class="author-block">Guang Shi<sup>2</sup></span>
+          <div class="aw-hero-stats">
+            <div class="aw-hero-stat">
+              <span class="aw-hero-stat-num">2,000+</span>
+              <span class="aw-hero-stat-label">Environments</span>
+            </div>
+            <div class="aw-hero-stat-divider"></div>
+            <div class="aw-hero-stat">
+              <span class="aw-hero-stat-num">19K+</span>
+              <span class="aw-hero-stat-label">Tools</span>
+            </div>
+            <div class="aw-hero-stat-divider"></div>
+            <div class="aw-hero-stat">
+              <span class="aw-hero-stat-num">23</span>
+              <span class="aw-hero-stat-label">Benchmarks</span>
+            </div>
+            <div class="aw-hero-stat-divider"></div>
+            <div class="aw-hero-stat">
+              <span class="aw-hero-stat-num">20</span>
+              <span class="aw-hero-stat-label">Categories</span>
+            </div>
           </div>
 
-          <div class="publication-affiliations">
-            <span class="affiliation-block"><sup>1</sup>Renmin University of China</span><br>
-            <span class="affiliation-block"><sup>2</sup>ByteDance Seed</span><br>
-            <span class="affiliation-block"><sup>*</sup>Work done at ByteDance Seed&nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author</span>
-          </div>
-
-          <div class="publication-links">
+          <div class="publication-links" style="margin-top:2rem;">
             <span class="link-block">
               <span class="button is-dark is-static">
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
@@ -244,12 +768,100 @@
               </span>
             </span>
           </div>
+
+          <div class="aw-hero-authors">
+            <span>Guanting Dong<sup>1,2,*</sup></span>
+            <span>Junting Lu<sup>2</sup></span>
+            <span>Junjie Huang<sup>2,*</sup></span>
+            <span>Wanjun Zhong<sup>2</sup></span>
+            <span>Longxiang Liu<sup>2</sup></span>
+            <span>Shijue Huang<sup>2,*</sup></span>
+            <span>Zhenyu Li<sup>2</sup></span>
+            <span>Yang Zhao<sup>2,*</sup></span>
+            <span>Xiaoshuai Song<sup>1</sup></span>
+            <span>Xiaoxi Li<sup>1</sup></span>
+            <span>Jiajie Jin<sup>1</sup></span>
+            <span>Hanbin Wang<sup>2,*</sup></span>
+            <span>Fangyu Lei<sup>2,*</sup></span>
+            <span>Qinyu Luo<sup>2</sup></span>
+            <span>Mingyang Chen<sup>2</sup></span>
+            <span>Zehui Chen<sup>2</sup></span>
+            <span>Jiazhan Feng<sup>2</sup></span>
+            <span>Yutao Zhu<sup>1</sup></span>
+            <span>Zhicheng Dou<sup>1,&#8224;</sup></span>
+            <span>Ji-Rong Wen<sup>1</sup></span>
+          </div>
+          <div class="aw-hero-affil">
+            <sup>1</sup>Renmin University of China &nbsp;&nbsp; <sup>2</sup>ByteDance Seed &nbsp;&nbsp; <sup>*</sup>Work done at ByteDance Seed &nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author
+          </div>
+
+          <a href="#overview" class="aw-scroll-hint" aria-label="scroll down">
+            <span></span><span></span><span></span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Abstract -->
+  <!-- ══════════════════ OVERVIEW SHOWCASE ══════════════════ -->
+  <section class="section aw-showcase" id="overview">
+    <div class="container">
+      <div class="has-text-centered" style="max-width:800px;margin:0 auto 2.5rem;">
+        <h2 class="title is-3">What is Agent-World?</h2>
+        <p style="font-size:1.15rem;color:#475569;line-height:1.8;">
+          A self-evolving training arena that unifies <strong>scalable environment synthesis</strong> with <strong>continuous agent training</strong>.
+          Agent-World autonomously mines real-world tool ecosystems and drives agents to evolve through dynamic task generation and diagnostic feedback loops.
+        </p>
+      </div>
+      <figure class="image aw-main-figure">
+        <img src="figs/mcptars_main.png" alt="Overview of Agent-World">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════════════ KEY CAPABILITIES ══════════════════ -->
+  <section class="section aw-capabilities" id="capabilities">
+    <div class="container">
+      <div class="has-text-centered" style="margin-bottom:3rem;">
+        <h2 class="title is-3">Key Capabilities</h2>
+        <p style="font-size:1.05rem;color:#64748b;">Six core pillars powering the Agent-World ecosystem</p>
+      </div>
+      <div class="aw-cap-grid">
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-globe"></i></div>
+          <h4>Real-World Environment Mining</h4>
+          <p>Autonomously discovers and mines structured databases from real-world sources — MCP servers, tool docs, and industrial PRDs.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-tools"></i></div>
+          <h4>19K+ Executable Tools</h4>
+          <p>Generates, validates, and assembles diverse tool interfaces with cross-validation, covering 20 primary environment categories.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-project-diagram"></i></div>
+          <h4>Graph &amp; Programmatic Tasks</h4>
+          <p>Synthesizes verifiable tasks via tool dependency graphs and executable Python solutions with controllable difficulty scaling.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-brain"></i></div>
+          <h4>Multi-Environment Agent RL</h4>
+          <p>Closed-loop RL training across diverse environments with structured verifiable rewards and GRPO optimization.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-sync-alt"></i></div>
+          <h4>Self-Evolving Arena</h4>
+          <p>Automatically diagnoses agent weaknesses through dynamic evaluation, then generates targeted tasks to drive iterative improvement.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-chart-line"></i></div>
+          <h4>23 Benchmark SOTA</h4>
+          <p>Consistently outperforms strong proprietary models across agentic tool use, advanced AI assistant, software engineering, deep research, and reasoning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ ABSTRACT ══════════════════ -->
   <section class="section" id="abstract">
     <div class="container">
       <div class="columns is-centered">
@@ -268,39 +880,285 @@
               <strong>(2) Continuous Self-Evolving Agent Training</strong>, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments.
             </p>
             <p>
-              Across <strong>27 challenging agent benchmarks</strong>, Agent-World consistently outperforms strong proprietary models and baselines. Further analyses reveal scaling trends with environment diversity and self-evolution rounds, offering insights for building general agent intelligence.
+              Across <strong>23 challenging agent benchmarks</strong>, Agent-World consistently outperforms strong proprietary models and environment scaling baselines. Further analyses reveal scaling trends with environment diversity and self-evolution rounds, offering insights for building general agent intelligence.
             </p>
-
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-number">2,000+</div>
-                <div class="stat-label">Environment Themes</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">19K+</div>
-                <div class="stat-label">Distinct Tools</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">27</div>
-                <div class="stat-label">Evaluation Benchmarks</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">20</div>
-                <div class="stat-label">Environment Categories</div>
-              </div>
-            </div>
-
-            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
-              <img src="figs/mcptars_main.png" alt="Overview of Agent-World">
-              <figcaption>
-                <span>Figure 1: Overview of Agent-World (left) and downstream general agent performance (right).</span>
-              </figcaption>
-            </figure>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Agent Demos -->
+  <section class="section" id="demos">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Agent Demos</h2>
+          <p style="color:#64748b; margin-bottom:1.5rem;">
+            Real-time interaction demos across diverse Agent-World MCP environments. Scroll horizontally or use the arrow buttons to browse.
+          </p>
+
+          <div class="demo-carousel-wrap">
+            <button class="demo-arrow demo-arrow-left" onclick="document.getElementById('demoTrack').scrollBy({left:-500,behavior:'smooth'})" aria-label="scroll left">&#8249;</button>
+            <div class="demo-track" id="demoTrack">
+
+              <div class="demo-card">
+                <video src="agent-demo/demo_flight.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Flight & Stay Search</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_ecomm.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Ecomm MCP Server</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_notion.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Notion MCP Server</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_slack.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Slack Workspace</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_population.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Population Data</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_telecom.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Telecom API</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_twitter.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Twitter MCP Server</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_github.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">GitHub Service</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/demo_document.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Document Operations</div>
+              </div>
+              <div class="demo-card">
+                <video src="agent-demo/agent_demo.mp4" muted loop playsinline autoplay preload="auto"></video>
+                <button class="demo-expand" aria-label="expand">&#x26F6;</button>
+                <div class="demo-label">Travel Planning</div>
+              </div>
+
+            </div>
+            <button class="demo-arrow demo-arrow-right" onclick="document.getElementById('demoTrack').scrollBy({left:500,behavior:'smooth'})" aria-label="scroll right">&#8250;</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="demo-lightbox" id="demoLightbox">
+    <div class="demo-lightbox-backdrop"></div>
+    <div class="demo-lightbox-content">
+      <video id="lightboxVideo" muted loop playsinline autoplay></video>
+      <button class="demo-lightbox-close" aria-label="close">&times;</button>
+    </div>
+  </div>
+
+  <style>
+    .demo-carousel-wrap {
+      position: relative;
+      margin: 0 -1rem;
+    }
+    .demo-track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 48px 18px;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    .demo-track::-webkit-scrollbar { height: 6px; }
+    .demo-track::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    .demo-track::-webkit-scrollbar-track { background: transparent; }
+    .demo-card {
+      flex: 0 0 580px;
+      scroll-snap-align: start;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      cursor: pointer;
+      position: relative;
+    }
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(58,118,237,.15);
+    }
+    .demo-card video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: contain;
+      display: block;
+      background: #0f172a;
+    }
+    .demo-label {
+      padding: 10px 16px 12px;
+      font-weight: 600;
+      font-size: .95rem;
+      color: #1e293b;
+      text-align: center;
+    }
+    .demo-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 2px 10px rgba(0,0,0,.12);
+      font-size: 1.4rem;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, box-shadow .2s;
+    }
+    .demo-arrow:hover {
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(58,118,237,.2);
+    }
+    .demo-arrow-left  { left: 4px; }
+    .demo-arrow-right { right: 4px; }
+    .demo-expand {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(0,0,0,.55);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .2s, background .2s;
+      z-index: 3;
+    }
+    .demo-card:hover .demo-expand { opacity: 1; }
+    .demo-expand:hover { background: rgba(58,118,237,.85); }
+
+    .demo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-lightbox.active { display: flex; }
+    .demo-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.8);
+      cursor: pointer;
+    }
+    .demo-lightbox-content {
+      position: relative;
+      width: 90vw;
+      max-width: 1200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .demo-lightbox-content video {
+      width: 100%;
+      display: block;
+      background: #0f172a;
+    }
+    .demo-lightbox-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,.6);
+      color: #fff;
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+      line-height: 1;
+    }
+    .demo-lightbox-close:hover { background: rgba(220,38,38,.8); }
+
+    @media (max-width: 768px) {
+      .demo-card { flex: 0 0 420px; }
+      .demo-track { padding: 8px 36px 14px; gap: 14px; }
+      .demo-lightbox-content { width: 96vw; }
+    }
+  </style>
+
+  <script>
+    {
+      const videos = document.querySelectorAll('.demo-card video');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.play().catch(() => {});
+          } else {
+            e.target.pause();
+          }
+        });
+      }, { root: document.getElementById('demoTrack'), threshold: 0.5 });
+      videos.forEach(v => observer.observe(v));
+
+      const lb = document.getElementById('demoLightbox');
+      const lbVideo = document.getElementById('lightboxVideo');
+      function openLightbox(src) {
+        lbVideo.src = src;
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lbVideo.play().catch(() => {});
+      }
+      function closeLightbox() {
+        lb.classList.remove('active');
+        lbVideo.pause();
+        lbVideo.removeAttribute('src');
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('.demo-expand').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const src = btn.parentElement.querySelector('video').src;
+          openLightbox(src);
+        });
+      });
+      lb.querySelector('.demo-lightbox-backdrop').addEventListener('click', closeLightbox);
+      lb.querySelector('.demo-lightbox-close').addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    }
+  </script>
 
   <!-- Introduction -->
   <section class="section" id="introduction">
@@ -338,7 +1196,7 @@
               <li>We introduce <strong>Agent-World</strong>, a general-purpose agent training arena that unifies scalable environment synthesis with a continuous self-evolving training mechanism, forming a co-evolution loop between agent policies and environments.</li>
               <li>We propose <strong>Agentic Environment-Task Discovery</strong>, which mines realistic executable environments from real-world environment themes and synthesizes diverse verifiable tasks with controllable difficulty.</li>
               <li>We propose <strong>Continuous Self-Evolving Agent Training</strong>, which integrates multi-environment agentic RL with a self-evolving arena to automatically diagnose agent weaknesses and drive targeted learning in a closed training loop.</li>
-              <li>Experiments across <strong>27 challenging agent benchmarks</strong> demonstrate the superior performance of Agent-World. Further analysis reveals scaling relationships among environment diversity, evolution rounds, and agent performance.</li>
+              <li>Experiments across <strong>23 challenging agent benchmarks</strong> demonstrate the superior performance of Agent-World. Further analysis reveals scaling relationships among environment diversity, evolution rounds, and agent performance.</li>
             </ul>
           </div>
         </div>
@@ -404,10 +1262,10 @@
               </p>
             </div>
 
-            <figure class="image" style="max-width: 500px; margin: 2rem auto;">
-              <img src="figs/mcp_server_taxonomy_sunburst.png" alt="Distribution of environments across 20 primary categories">
+            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
+              <img src="figs/mcp_server_taxonomy_v2.png" alt="Hierarchical environment taxonomy across 20 first-tier categories">
               <figcaption>
-                <span>Distribution of 1,978 environments across 20 primary categories.</span>
+                <span>Hierarchical environment taxonomy. Left: 20 first-tier categories. Right: top-10 second-tier subcategories per domain.</span>
               </figcaption>
             </figure>
 
@@ -454,9 +1312,9 @@
             </div>
 
             <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
-              <img src="figs/mcptars_training.png" alt="Framework of Continuous Self-Evolving Agent Training">
+              <img src="figs/mcptars_training.png" alt="The Overall Framework of Continuous Self-Evolving Agent Training">
               <figcaption>
-                <span>Figure 3: Framework of Continuous Self-Evolving Agent Training. The agent is trained with multi-environment RL, evaluated in a dynamic arena, diagnosed for capability gaps, and improved through targeted expansion.</span>
+                <span>The Overall Framework of Continuous Self-Evolving Agent Training.</span>
               </figcaption>
             </figure>
           </div>
@@ -473,7 +1331,7 @@
           <h2 class="title is-3">Experiments</h2>
           <div class="content">
             <p>
-              We evaluate Agent-World on <strong>27 benchmarks</strong> spanning agentic tool use, software engineering, deep research, and general reasoning, using Qwen3-8B/14B backbones trained with GRPO.
+              We evaluate Agent-World on <strong>23 benchmarks</strong> spanning agentic tool use, advanced AI assistant, software engineering, deep research, and general reasoning, using Qwen3-8B/14B backbones trained with GRPO.
             </p>
 
             <h4>Main Results on Agentic Tool-Use Benchmarks</h4>
@@ -482,74 +1340,131 @@
             </p>
 
             <div class="results-table-wrapper">
-              <table class="results-table">
+              <table class="results-table" style="min-width:1100px;">
                 <thead>
                   <tr>
                     <th rowspan="2" style="text-align:left;">Method</th>
-                    <th colspan="2">MCP-Mark</th>
-                    <th colspan="2">BFCL V4</th>
-                    <th colspan="2">τ²-Bench</th>
+                    <th colspan="6">MCP-Mark</th>
+                    <th colspan="8">BFCL V4</th>
+                    <th colspan="4">τ²-Bench</th>
                   </tr>
                   <tr>
-                    <th>Postgres</th>
-                    <th>Avg.</th>
-                    <th>WebSearch</th>
-                    <th>Avg.</th>
-                    <th>Airline</th>
-                    <th>Avg.</th>
+                    <th>File.</th><th>Github</th><th>Notion</th><th>Play.</th><th>Post.</th><th>Avg.</th>
+                    <th>WebS.</th><th>Mem.</th><th>Multi-T.</th><th>NoLive</th><th>Live</th><th>Relev.</th><th>Irrelev.</th><th>Avg.</th>
+                    <th>Retail</th><th>Telec.</th><th>Airline</th><th>Avg.</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td colspan="7" class="section-header">Frontier Proprietary Models</td></tr>
+                  <tr><td colspan="19" class="section-header">Frontier Proprietary Models</td></tr>
                   <tr>
                     <td class="model-name">GPT-5.2 High</td>
-                    <td>66.7</td><td>53.1</td><td>75.5</td><td>62.9</td><td>62.5</td><td>80.2</td>
+                    <td>60.0</td><td>47.8</td><td>42.9</td><td>40.0</td><td>66.7</td><td>53.1</td>
+                    <td>75.5</td><td>45.8</td><td>48.5</td><td>81.9</td><td>70.4</td><td>75.0</td><td>88.7</td><td>62.9</td>
+                    <td>81.6</td><td>95.8</td><td>62.5</td><td>80.2</td>
                   </tr>
                   <tr>
                     <td class="model-name">Claude Sonnet-4.5</td>
-                    <td>50.0</td><td>33.3</td><td>81.0</td><td>73.2</td><td>70.1</td><td>84.7</td>
+                    <td>32.5</td><td>29.4</td><td>25.0</td><td>27.0</td><td>50.0</td><td>33.3</td>
+                    <td>81.0</td><td>65.0</td><td>61.4</td><td>88.7</td><td>81.1</td><td>68.8</td><td>86.6</td><td>73.2</td>
+                    <td>86.2</td><td>98.0</td><td>70.1</td><td>84.7</td>
                   </tr>
                   <tr>
                     <td class="model-name">Gemini-3 Pro</td>
-                    <td>70.2</td><td>50.8</td><td>80.0</td><td>72.5</td><td>72.7</td><td>85.4</td>
+                    <td>56.7</td><td>45.7</td><td>43.8</td><td>40.0</td><td>70.2</td><td>50.8</td>
+                    <td>80.0</td><td>61.7</td><td>60.8</td><td>90.7</td><td>83.1</td><td>68.8</td><td>85.6</td><td>72.5</td>
+                    <td>85.3</td><td>98.0</td><td>72.7</td><td>85.4</td>
                   </tr>
                   <tr>
                     <td class="model-name">Seed 2.0</td>
-                    <td>81.0</td><td>54.7</td><td>92.0</td><td>73.4</td><td>—</td><td>—</td>
+                    <td>60.0</td><td>39.1</td><td>53.6</td><td>40.0</td><td>81.0</td><td>54.7</td>
+                    <td>92.0</td><td>57.8</td><td>62.3</td><td>89.0</td><td>82.2</td><td>76.6</td><td>75.0</td><td>73.4</td>
+                    <td>90.4</td><td>94.2</td><td>—</td><td>—</td>
                   </tr>
-                  <tr><td colspan="7" class="section-header">Open-Source Foundation Models (8B–685B)</td></tr>
+                  <tr><td colspan="19" class="section-header">Open-Source Foundation Models (8B–685B)</td></tr>
                   <tr>
                     <td class="model-name">DeepSeek-V3.2-685B</td>
-                    <td>66.6</td><td>36.7</td><td>69.5</td><td>54.1</td><td>—</td><td>80.3</td>
+                    <td>36.7</td><td>20.7</td><td>45.5</td><td>17.0</td><td>66.6</td><td>36.7</td>
+                    <td>69.5</td><td>54.2</td><td>37.4</td><td>34.9</td><td>53.7</td><td>37.5</td><td>93.2</td><td>54.1</td>
+                    <td>—</td><td>—</td><td>—</td><td>80.3</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">GPT-OSS-120B</td>
+                    <td>5.8</td><td>4.4</td><td>3.6</td><td>3.0</td><td>7.1</td><td>4.7</td>
+                    <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    <td>67.8</td><td>49.2</td><td>48.0</td><td>55.0</td>
                   </tr>
                   <tr>
                     <td class="model-name">Qwen3-8B</td>
-                    <td>4.8</td><td>2.4</td><td>7.0</td><td>40.4</td><td>26.5</td><td>26.2</td>
+                    <td>3.3</td><td>0.0</td><td>0.0</td><td>4.0</td><td>4.8</td><td>2.4</td>
+                    <td>7.0</td><td>17.6</td><td>35.4</td><td>90.2</td><td>80.9</td><td>81.3</td><td>77.2</td><td>40.4</td>
+                    <td>34.0</td><td>18.0</td><td>26.5</td><td>26.2</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen3-14B</td>
+                    <td>3.3</td><td>4.4</td><td>0.0</td><td>0.0</td><td>9.5</td><td>3.4</td>
+                    <td>4.0</td><td>19.8</td><td>36.9</td><td>90.0</td><td>82.4</td><td>81.3</td><td>79.4</td><td>41.0</td>
+                    <td>55.3</td><td>14.9</td><td>27.0</td><td>32.4</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen3-32B</td>
+                    <td>10.0</td><td>0.0</td><td>3.6</td><td>0.0</td><td>23.8</td><td>7.5</td>
+                    <td>26.0</td><td>15.7</td><td>43.3</td><td>90.3</td><td>82.0</td><td>81.3</td><td>82.4</td><td>46.7</td>
+                    <td>59.5</td><td>27.2</td><td>48.0</td><td>44.9</td>
                   </tr>
                   <tr>
                     <td class="model-name">Qwen3-235B-A22B</td>
-                    <td>4.8</td><td>5.8</td><td>54.0</td><td>47.9</td><td>45.6</td><td>58.5</td>
+                    <td>13.3</td><td>0.0</td><td>10.7</td><td>0.0</td><td>4.8</td><td>5.8</td>
+                    <td>54.0</td><td>23.9</td><td>45.4</td><td>37.4</td><td>68.9</td><td>87.5</td><td>81.7</td><td>47.9</td>
+                    <td>71.9</td><td>58.0</td><td>45.6</td><td>58.5</td>
                   </tr>
-                  <tr><td colspan="7" class="section-header">Open-Source Environment Scaling Methods (7B–14B)</td></tr>
+                  <tr><td colspan="19" class="section-header">Open-Source Environment Scaling Methods (7B–14B)</td></tr>
+                  <tr>
+                    <td class="model-name">Simulator-8B</td>
+                    <td>3.3</td><td>0.0</td><td>0.0</td><td>4.0</td><td>4.8</td><td>2.4</td>
+                    <td>17.5</td><td>6.0</td><td>4.1</td><td>47.6</td><td>44.6</td><td>31.3</td><td>87.3</td><td>23.9</td>
+                    <td>32.2</td><td>29.2</td><td>34.0</td><td>31.8</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">TOUCAN-7B</td>
+                    <td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>4.8</td><td>1.0</td>
+                    <td>21.0</td><td>18.5</td><td>17.8</td><td>81.0</td><td>73.9</td><td>81.3</td><td>78.6</td><td>36.6</td>
+                    <td>22.8</td><td>10.5</td><td>20.0</td><td>17.7</td>
+                  </tr>
                   <tr>
                     <td class="model-name">EnvScaler-8B</td>
-                    <td>9.5</td><td>5.6</td><td>23.0</td><td>47.6</td><td>31.5</td><td>37.9</td>
+                    <td>10.0</td><td>4.4</td><td>0.0</td><td>4.0</td><td>9.5</td><td>5.6</td>
+                    <td>23.0</td><td>21.9</td><td>47.1</td><td>88.5</td><td>82.2</td><td>93.8</td><td>74.6</td><td>47.6</td>
+                    <td>49.6</td><td>32.7</td><td>31.5</td><td>37.9</td>
                   </tr>
                   <tr>
                     <td class="model-name">AWM-8B</td>
-                    <td>4.8</td><td>2.4</td><td>9.5</td><td>40.0</td><td>23.5</td><td>34.4</td>
+                    <td>3.3</td><td>0.0</td><td>0.0</td><td>4.0</td><td>4.8</td><td>2.4</td>
+                    <td>9.5</td><td>15.7</td><td>34.9</td><td>90.2</td><td>80.5</td><td>93.8</td><td>73.9</td><td>40.0</td>
+                    <td>41.2</td><td>38.5</td><td>23.5</td><td>34.4</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">AWM-14B</td>
+                    <td>3.3</td><td>8.7</td><td>0.0</td><td>4.0</td><td>9.5</td><td>5.1</td>
+                    <td>10.0</td><td>19.8</td><td>37.6</td><td>90.2</td><td>81.5</td><td>75.0</td><td>79.4</td><td>42.4</td>
+                    <td>63.6</td><td>17.8</td><td>31.5</td><td>39.0</td>
                   </tr>
                   <tr>
                     <td class="model-name">ScaleEnv-8B</td>
-                    <td>—</td><td>—</td><td>—</td><td>—</td><td>37.5</td><td>38.5</td>
+                    <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    <td>50.9</td><td>27.2</td><td>37.5</td><td>38.5</td>
                   </tr>
                   <tr class="ours-row">
                     <td class="model-name">Agent-World-8B</td>
-                    <td class="second-best">19.1</td><td class="second-best">8.9</td><td class="second-best">47.0</td><td class="second-best">51.4</td><td class="second-best">40.0</td><td class="second-best">61.8</td>
+                    <td>13.3</td><td>4.4</td><td class="best">3.6</td><td class="best">4.0</td><td class="second-best">19.1</td><td class="second-best">8.9</td>
+                    <td class="second-best">47.0</td><td>21.7</td><td>44.5</td><td>83.3</td><td>79.6</td><td class="best">93.8</td><td>80.2</td><td class="second-best">51.4</td>
+                    <td class="second-best">72.8</td><td class="second-best">50.9</td><td class="second-best">40.0</td><td class="second-best">61.8</td>
                   </tr>
                   <tr class="ours-row">
                     <td class="model-name">Agent-World-14B</td>
-                    <td class="best">38.1</td><td class="best">13.3</td><td class="best">53.0</td><td class="best">55.8</td><td class="best">52.0</td><td class="best">65.4</td>
+                    <td class="best">16.6</td><td>4.4</td><td class="best">3.6</td><td class="best">4.0</td><td class="best">38.1</td><td class="best">13.3</td>
+                    <td class="best">53.0</td><td class="best">23.9</td><td class="best">53.9</td><td>82.3</td><td>79.3</td><td class="best">93.8</td><td>81.0</td><td class="best">55.8</td>
+                    <td class="best">74.5</td><td class="best">56.1</td><td class="best">52.0</td><td class="best">65.4</td>
                   </tr>
                 </tbody>
               </table>
@@ -559,23 +1474,23 @@
 
             <div class="finding-box">
               <strong>(1) Foundation models remain limited in complex agentic tool-use scenarios.</strong>
-              Even GPT-5.2 High achieves only 53.1% on MCP-Mark. Open-source models like Qwen3-235B-A22B score only 5.8%, suggesting current models still struggle with long-horizon tool use requiring multi-step planning and state tracking.
+              Even advanced proprietary models show clear limitations. GPT-5.2 High achieves only 53.1% on MCP-Mark, while open-source models like GPT-OSS-120B and Qwen3-235B-A22B score only 4.7% and 5.8%. These benchmarks cover diverse stateful environments, suggesting current models still struggle with long-horizon tool use requiring multi-step planning and state tracking.
             </div>
 
             <div class="finding-box">
-              <strong>(2) Existing environment-scaling methods suffer from uneven capability gains.</strong>
-              Simulator-based methods perform poorly on complex real-world benchmarks. Code-based methods like EnvScaler-8B provide broader gains but show clear weaknesses on specific environments.
+              <strong>(2) Existing environment-scaling methods still suffer from uneven capability gains.</strong>
+              Simulator-based methods such as Simulator-8B achieve strong results on τ²-Bench yet perform poorly on MCP-Mark and BFCL V4. Code-based methods like EnvScaler-8B and AWM-8B/14B provide broader gains but show clear weaknesses on specific environments including GitHub and Notion.
             </div>
 
             <div class="finding-box">
               <strong>(3) Agent-World achieves more consistent cross-environment generalization.</strong>
-              Agent-World consistently outperforms prior environment-scaling baselines across all three benchmark suites. Agent-World-14B surpasses even DeepSeek-V3.2-685B on BFCL-V4 (55.8% vs. 54.1%).
+              Agent-World consistently outperforms prior environment-scaling baselines across all three benchmark suites. Agent-World-8B achieves 61.8% on τ²-Bench, 51.4% on BFCL V4, and 8.9% on MCP-Mark. Agent-World-14B surpasses even DeepSeek-V3.2-685B on BFCL-V4 (55.8% vs. 54.1%).
             </div>
 
             <figure class="image" style="max-width: 950px; margin: 2rem auto;">
               <img src="figs/radar_21domains_45.png" alt="Generalization across long-horizon agentic reasoning scenarios">
               <figcaption>
-                <span>Figure 4: Generalization across long-horizon agentic reasoning scenarios. Comparison of Qwen3-8B, EnvScaler-8B, and Agent-World-8B across General Reasoning, Agentic Search &amp; Coding, and Knowledge &amp; MCP.</span>
+                <span>Generalization across long-horizon agentic reasoning scenarios. Comparison of Qwen3-8B, EnvScaler-8B, and Agent-World-8B across General Reasoning, Agentic Search &amp; Coding, and Knowledge &amp; MCP.</span>
               </figcaption>
             </figure>
 
@@ -584,7 +1499,7 @@
             <figure class="image" style="max-width: 950px; margin: 2rem auto;">
               <img src="figs/bench_bar_iclr_fullwidth.png" alt="Generalization on advanced agentic assistant benchmarks">
               <figcaption>
-                <span>Figure 5: Generalization on advanced agentic assistant benchmarks. Comparison of Qwen3, EnvScaler, AWM, and Agent-World series on SkillsBench, ARC-AGI-2, and Claw-Eval.</span>
+                <span>Generalization on advanced agentic assistant benchmarks. Comparison of Qwen3, EnvScaler, AWM, and Agent-World series on SkillsBench, ARC-AGI-2, and Claw-Eval.</span>
               </figcaption>
             </figure>
 
@@ -594,22 +1509,22 @@
             </p>
 
             <figure class="image" style="max-width: 950px; margin: 2rem auto;">
-              <img src="figs/scalev2_scheme_a.png" alt="Scaling relationship between training environments and performance">
+              <img src="figs/scalev2_scheme_d.png" alt="Scaling relationship between training environments and performance">
               <figcaption>
-                <span>Figure 5: Scaling relationship between the number of synthesized training environments and downstream agent performance.</span>
+                <span>Scaling relationship of training environments: Downstream agent performance scales positively with the number of synthesized training environments.</span>
               </figcaption>
             </figure>
 
             <h4>Analysis of Continuous Self-Evolution</h4>
             <p>
-              Starting from Agent-World-14B after initial multi-environment RL, we run two additional rounds of the self-evolving arena loop. Results show <strong>monotonic gains</strong> on all three evaluation suites:
+              To validate Continuous Self-Evolving Agent Training, we run the same two-round self-evolving arena loop from two different starting points: Agent-World-14B and EnvScaler-8B. Results show <strong>monotonic gains</strong> on all three evaluation suites for both models:
             </p>
 
             <div class="results-table-wrapper">
-              <table class="results-table" style="max-width: 600px; margin: 1.5rem auto; min-width: unset;">
+              <table class="results-table" style="max-width: 650px; margin: 1.5rem auto; min-width: unset;">
                 <thead>
                   <tr>
-                    <th style="text-align:left;">Round</th>
+                    <th style="text-align:left;">Model / Round</th>
                     <th>τ²-Bench</th>
                     <th>BFCL-V4</th>
                     <th>MCP-Mark (Post.)</th>
@@ -617,28 +1532,53 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="model-name">Base</td>
+                    <td class="model-name">Agent-World-14B (base)</td>
                     <td>45.3</td><td>52.4</td><td>29.5</td>
                   </tr>
                   <tr>
-                    <td class="model-name">+1 round</td>
+                    <td class="model-name" style="padding-left:1.5rem;">+1 round</td>
                     <td>48.6 <span style="color: #10b981; font-size:0.8rem;">(+3.3)</span></td>
                     <td>54.9 <span style="color: #10b981; font-size:0.8rem;">(+2.5)</span></td>
                     <td>36.3 <span style="color: #10b981; font-size:0.8rem;">(+6.8)</span></td>
                   </tr>
                   <tr class="ours-row">
-                    <td class="model-name">+2 rounds</td>
+                    <td class="model-name" style="padding-left:1.5rem;">+2 rounds</td>
                     <td class="best">50.5 <span style="color: #10b981; font-size:0.8rem;">(+1.9)</span></td>
                     <td class="best">55.8 <span style="color: #10b981; font-size:0.8rem;">(+0.9)</span></td>
                     <td class="best">38.1 <span style="color: #10b981; font-size:0.8rem;">(+1.8)</span></td>
+                  </tr>
+                  <tr style="border-top: 2px solid #e2e8f0;">
+                    <td class="model-name">EnvScaler-8B (base)</td>
+                    <td>37.9</td><td>47.6</td><td>9.5</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name" style="padding-left:1.5rem;">+1 round</td>
+                    <td>40.2 <span style="color: #10b981; font-size:0.8rem;">(+2.3)</span></td>
+                    <td>49.1 <span style="color: #10b981; font-size:0.8rem;">(+1.5)</span></td>
+                    <td>13.9 <span style="color: #10b981; font-size:0.8rem;">(+4.4)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="model-name" style="padding-left:1.5rem;">+2 rounds</td>
+                    <td>41.6 <span style="color: #10b981; font-size:0.8rem;">(+1.4)</span></td>
+                    <td>50.0 <span style="color: #10b981; font-size:0.8rem;">(+0.9)</span></td>
+                    <td>15.1 <span style="color: #10b981; font-size:0.8rem;">(+1.2)</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <p>
-              The largest gain appears on MCP-Mark (+8.6 over two rounds), which requires stronger state tracking and more reliable interaction with realistic MCP server environments. This demonstrates that the self-evolving loop yields sustained improvement rather than one-shot gains, supporting scalable environments as a persistent diagnostic arena for continual policy improvement.
+              The largest gains across two rounds appear on MCP-Mark for both models: +8.6 for Agent-World and +5.6 for EnvScaler. This setting requires stronger state tracking and more reliable interaction with realistic MCP server environments. Importantly, EnvScaler-8B also improves, indicating that the loop not only benefits our base model but also yields sustained gains for other environment-scaling baselines without relying on Agent-World initialization.
             </p>
+
+            <h4>Training Dynamics</h4>
+
+            <figure class="image" style="max-width: 800px; margin: 2rem auto;">
+              <img src="figs/8b_14b_train_entropy.png" alt="Training Dynamics of Agent-World">
+              <figcaption>
+                <span>Training Dynamics of Agent-World. (a) Training reward score and (b) actor entropy over training steps for Qwen3-8B and Qwen3-14B backbones using GRPO on synthesized environments.</span>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
@@ -663,7 +1603,7 @@
               <strong>Continuous Self-Evolving Agent Training</strong> combines multi-environment reinforcement learning with an agentic diagnostic arena to identify capability gaps and drive targeted iterative data expansion.
             </p>
             <p>
-              Experiments across 27 challenging benchmarks demonstrate that Agent-World consistently improves performance over strong baselines.
+              Experiments across 23 challenging benchmarks demonstrate that Agent-World consistently improves performance over strong baselines.
               Further analyses reveal clear scaling trends with respect to environment diversity, evolution rounds, and task difficulty,
               suggesting that scalable realistic environments are not only useful data sources, but also <strong>critical infrastructure for advancing general agent capabilities</strong>.
             </p>
@@ -682,11 +1622,25 @@
           <div class="content">
 <pre><code>@article{dong2026agentworld,
   title   = {Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence},
-  author  = {Dong, Guanting and Lu, Junting and Huang, Junjie and Zhong, Wanjun and Liu, Longxiang and Huang, Shijue and Li, Zhenyu and Zhao, Yang and Song, Xiaoshuai and Li, Xiaoxi and Jin, Jiajie and Wang, Hanbin and Chen, Zehui and Feng, Jiazhan and Zhu, Yutao and Dou, Zhicheng and Wen, Ji-Rong and Shi, Guang},
+  author  = {Dong, Guanting and Lu, Junting and Huang, Junjie and Zhong, Wanjun and Liu, Longxiang and Huang, Shijue and Li, Zhenyu and Zhao, Yang and Song, Xiaoshuai and Li, Xiaoxi and Jin, Jiajie and Wang, Hanbin and Lei, Fangyu and Luo, Qinyu and Chen, Mingyang and Chen, Zehui and Feng, Jiazhan and Zhu, Yutao and Dou, Zhicheng and Wen, Ji-Rong},
   journal = {arXiv preprint},
   year    = {2026}
 }
 </code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Acknowledgment -->
+  <section class="section" id="acknowledgment">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Acknowledgment</h2>
+          <div class="content">
+            <p>We greatly thank Wanjun Zhong, Yujia Qin and Guang Shi for supporting this work and providing valuable suggestions. We also thank Yifei Chen for valuable discussions.</p>
           </div>
         </div>
       </div>
@@ -700,5 +1654,88 @@
       </div>
     </div>
   </footer>
+
+  <script>
+  (function() {
+    // Glassmorphism navbar on scroll
+    const nav = document.querySelector('.navbar.is-fixed-top');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+      }, { passive: true });
+    }
+
+    // Scroll reveal for sections and major content blocks
+    const revealTargets = document.querySelectorAll(
+      '.section .title.is-3, .method-card, .stat-card, .finding-box, figure.image, ' +
+      '.results-table-wrapper, .contribution-list, .demo-carousel-wrap, ' +
+      '.aw-main-figure, .aw-cap-card'
+    );
+    revealTargets.forEach(el => el.classList.add('reveal'));
+
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealTargets.forEach(el => revealObs.observe(el));
+
+    // Staggered card reveal
+    document.querySelectorAll('.method-card').forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.08) + 's';
+    });
+    document.querySelectorAll('.aw-cap-card').forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.1) + 's';
+    });
+
+    // Stat number count-up animation
+    const statNums = document.querySelectorAll('.stat-number, .aw-hero-stat-num');
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          const text = el.textContent.trim();
+          const match = text.match(/^([\d,]+)(K?)(\+?)$/);
+          if (match) {
+            const target = parseInt(match[1].replace(/,/g, ''));
+            const kSuffix = match[2];
+            const plusSuffix = match[3];
+            let current = 0;
+            const dur = 1200;
+            const start = performance.now();
+            function step(now) {
+              const t = Math.min((now - start) / dur, 1);
+              const ease = 1 - Math.pow(1 - t, 3);
+              current = Math.round(target * ease);
+              el.textContent = current.toLocaleString() + kSuffix + plusSuffix;
+              if (t < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+          }
+          countObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNums.forEach(el => countObs.observe(el));
+
+    // Parallax orbs on mousemove
+    const hero = document.querySelector('.hero');
+    const orbs = document.querySelectorAll('.hero-orb');
+    if (hero && orbs.length) {
+      hero.addEventListener('mousemove', e => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        orbs.forEach((orb, i) => {
+          const factor = (i + 1) * 15;
+          orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+        });
+      }, { passive: true });
+    }
+  })();
+  </script>
 </body>
 </html>
