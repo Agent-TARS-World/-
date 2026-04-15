@@ -687,6 +687,213 @@
     .finding-box strong {
       color: #92400e;
     }
+    .taxonomy-system {
+      margin: 1rem 0 2.5rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+    }
+    .taxonomy-system-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #e2e8f0;
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    .taxonomy-system-header h4 {
+      margin: 0 0 0.35rem;
+      color: #0f172a;
+    }
+    .taxonomy-system-header p {
+      margin: 0;
+      color: #475569;
+      font-size: 0.92rem;
+    }
+    .taxonomy-counts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.65rem;
+    }
+    .taxonomy-count-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.26rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+    .taxonomy-search {
+      margin-top: 0.75rem;
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.88rem;
+      color: #0f172a;
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .taxonomy-search:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    .taxonomy-empty {
+      font-size: 0.88rem;
+      color: #64748b;
+      padding: 0.7rem 0.2rem;
+    }
+    .taxonomy-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 34%) 1fr;
+      min-height: 480px;
+    }
+    .taxonomy-nav {
+      border-right: 1px solid #e2e8f0;
+      padding: 0.8rem;
+      max-height: 680px;
+      overflow-y: auto;
+      background: #fcfdff;
+    }
+    .taxonomy-l1-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      margin-bottom: 0.55rem;
+      overflow: hidden;
+      background: #fff;
+    }
+    .taxonomy-l1-button {
+      width: 100%;
+      border: none;
+      background: #f8fafc;
+      color: #0f172a;
+      padding: 0.7rem 0.8rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .taxonomy-l1-button:hover {
+      background: #e2e8f0;
+    }
+    .taxonomy-l1-item.active .taxonomy-l1-button {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+    .taxonomy-l2-list {
+      display: none;
+      padding: 0.45rem;
+      border-top: 1px solid #e2e8f0;
+      background: #ffffff;
+    }
+    .taxonomy-l1-item.active .taxonomy-l2-list {
+      display: block;
+    }
+    .taxonomy-l2-button {
+      width: 100%;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      color: #334155;
+      padding: 0.5rem 0.55rem;
+      text-align: left;
+      border-radius: 8px;
+      margin-bottom: 0.35rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      transition: all 0.2s ease;
+    }
+    .taxonomy-l2-button:last-child {
+      margin-bottom: 0;
+    }
+    .taxonomy-l2-button:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    .taxonomy-l2-button.active {
+      background: #dbeafe;
+      border-color: #93c5fd;
+      color: #1e40af;
+      font-weight: 600;
+    }
+    .taxonomy-detail {
+      padding: 1.1rem 1.25rem;
+      background: #ffffff;
+    }
+    .taxonomy-detail .l1-tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.78rem;
+      margin-bottom: 0.65rem;
+    }
+    .taxonomy-detail h5 {
+      margin: 0 0 0.35rem;
+      color: #0f172a;
+      font-size: 1rem;
+    }
+    .taxonomy-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 0.35rem;
+    }
+    .taxonomy-copy-btn {
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 8px;
+      padding: 0.34rem 0.58rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .taxonomy-copy-btn:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+    .taxonomy-copy-btn.copied {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
+    .taxonomy-detail p {
+      margin: 0 0 0.85rem;
+      color: #64748b;
+      font-size: 0.88rem;
+    }
+    .taxonomy-example-list {
+      margin: 0;
+      padding-left: 1.05rem;
+    }
+    .taxonomy-example-list li {
+      margin-bottom: 0.38rem;
+      color: #1e293b;
+      line-height: 1.45;
+      font-size: 0.88rem;
+    }
+    @media (max-width: 900px) {
+      .taxonomy-layout {
+        grid-template-columns: 1fr;
+      }
+      .taxonomy-nav {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        max-height: 420px;
+      }
+    }
   </style>
 </head>
 
@@ -1314,12 +1521,27 @@
               </p>
             </div>
 
-            <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
-              <img src="figs/mcp_server_taxonomy_v2.png" alt="Hierarchical environment taxonomy across 20 first-tier categories">
-              <figcaption>
-                <span>Hierarchical environment taxonomy. Left: 20 first-tier categories. Right: top-10 second-tier subcategories per domain.</span>
-              </figcaption>
-            </figure>
+            <div class="taxonomy-system" id="taxonomy-system">
+              <div class="taxonomy-system-header">
+                <h4>Environment Taxonomy Mapping (L1 -&gt; L2 -&gt; L3 Examples)</h4>
+                <p>Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.</p>
+                <div class="taxonomy-counts">
+                  <span class="taxonomy-count-chip">L1 Categories: 20</span>
+                  <span class="taxonomy-count-chip">L2 Labels: 50</span>
+                  <span class="taxonomy-count-chip">L3 Servers (Total): 1,978</span>
+                </div>
+                <input id="taxonomy-search" class="taxonomy-search" type="text" placeholder="Search by L1 / L2 / server name..." aria-label="Search taxonomy labels and servers">
+              </div>
+              <div class="taxonomy-layout">
+                <div class="taxonomy-nav" id="taxonomy-nav"></div>
+                <div class="taxonomy-detail" id="taxonomy-detail">
+                  <h5>Select one L2 label</h5>
+                  <p>The representative server list will appear here.</p>
+                </div>
+              </div>
+            </div>
+
+          
 
             <figure class="image" style="max-width: 1000px; margin: 2rem auto;">
               <img src="figs/env_stastic.png" alt="Comprehensive statistics of Agent-World environments and tasks">
@@ -1706,6 +1928,227 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    async function loadTaxonomyDataFromIndex() {
+      const response = await fetch("./index.html", { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error("Failed to load index.html");
+      }
+      const html = await response.text();
+      const match = html.match(/const TAXONOMY_DATA = (\[[\s\S]*?\]);\s*let taxonomyState =/);
+      if (!match || !match[1]) {
+        throw new Error("TAXONOMY_DATA not found in index.html");
+      }
+      return Function(`"use strict"; return (${match[1]});`)();
+    }
+
+    function initTaxonomySystemWithData(TAXONOMY_DATA) {
+      let taxonomyState = {
+        query: "",
+        activeL1: "",
+        activeL2: ""
+      };
+
+      function getFilteredTaxonomyData(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) {
+          return TAXONOMY_DATA;
+        }
+
+        return TAXONOMY_DATA.map((l1Item) => {
+          const l1Match = l1Item.l1.toLowerCase().includes(q);
+          const matchedL2 = l1Item.l2.filter((l2Item) => {
+            const l2Match = l2Item.label.toLowerCase().includes(q);
+            const serverMatch = l2Item.servers.some((server) => server.toLowerCase().includes(q));
+            return l1Match || l2Match || serverMatch;
+          });
+          return { ...l1Item, l2: matchedL2 };
+        }).filter((l1Item) => l1Item.l2.length > 0);
+      }
+
+      function buildCopyText(l1Label, l2Label, servers) {
+        return `${l1Label}\n${l2Label}\n${servers.map((server) => `- ${server}`).join("\n")}`;
+      }
+
+      function renderTaxonomyDetail(l1Label, l2Label, servers) {
+        const detail = document.getElementById("taxonomy-detail");
+        detail.innerHTML = `
+          <span class="l1-tag">${l1Label}</span>
+          <div class="taxonomy-detail-header">
+            <h5>${l2Label}</h5>
+            <button type="button" class="taxonomy-copy-btn" id="taxonomy-copy-btn">Copy 10 L3 Examples</button>
+          </div>
+          <p>Representative L3 Servers (10)</p>
+          <ul class="taxonomy-example-list">
+            ${servers.map((server) => `<li>${server}</li>`).join("")}
+          </ul>
+        `;
+
+        const copyBtn = document.getElementById("taxonomy-copy-btn");
+        copyBtn.addEventListener("click", async () => {
+          const text = buildCopyText(l1Label, l2Label, servers);
+          try {
+            await navigator.clipboard.writeText(text);
+            copyBtn.classList.add("copied");
+            copyBtn.textContent = "Copied";
+            setTimeout(() => {
+              copyBtn.classList.remove("copied");
+              copyBtn.textContent = "Copy 10 L3 Examples";
+            }, 1200);
+          } catch (err) {
+            copyBtn.textContent = "Copy failed";
+            setTimeout(() => {
+              copyBtn.textContent = "Copy 10 L3 Examples";
+            }, 1200);
+          }
+        });
+      }
+
+      function renderEmptyTaxonomyDetail(message) {
+        const detail = document.getElementById("taxonomy-detail");
+        detail.innerHTML = `
+          <h5>No matching taxonomy entries</h5>
+          <p>${message || "Try another keyword (supports L1, L2, and server names)."}</p>
+        `;
+      }
+
+      function setActiveL1ByValue(targetL1) {
+        document.querySelectorAll(".taxonomy-l1-item").forEach((el) => {
+          if (el.dataset.l1 === targetL1) {
+            el.classList.add("active");
+          } else {
+            el.classList.remove("active");
+          }
+        });
+      }
+
+      function renderTaxonomyNav() {
+        const nav = document.getElementById("taxonomy-nav");
+        if (!nav) {
+          return;
+        }
+        nav.innerHTML = "";
+
+        const filteredData = getFilteredTaxonomyData(taxonomyState.query);
+        if (filteredData.length === 0) {
+          nav.innerHTML = `<div class="taxonomy-empty">No match found.</div>`;
+          renderEmptyTaxonomyDetail();
+          return;
+        }
+
+        let hasActiveL2 = false;
+        filteredData.forEach((item) => {
+          const l1Wrap = document.createElement("div");
+          l1Wrap.className = "taxonomy-l1-item";
+          l1Wrap.dataset.l1 = item.l1;
+
+          const l1Button = document.createElement("button");
+          l1Button.className = "taxonomy-l1-button";
+          l1Button.type = "button";
+          l1Button.textContent = item.l1;
+          l1Wrap.appendChild(l1Button);
+
+          const l2List = document.createElement("div");
+          l2List.className = "taxonomy-l2-list";
+
+          item.l2.forEach((l2Item) => {
+            const l2Button = document.createElement("button");
+            l2Button.className = "taxonomy-l2-button";
+            l2Button.type = "button";
+            l2Button.textContent = l2Item.label;
+            const isInitialActive = taxonomyState.activeL1 === item.l1 && taxonomyState.activeL2 === l2Item.label;
+            if (isInitialActive) {
+              l2Button.classList.add("active");
+              hasActiveL2 = true;
+            }
+            l2Button.addEventListener("click", () => {
+              document.querySelectorAll(".taxonomy-l2-button.active").forEach((el) => {
+                el.classList.remove("active");
+              });
+              l2Button.classList.add("active");
+              taxonomyState.activeL1 = item.l1;
+              taxonomyState.activeL2 = l2Item.label;
+              setActiveL1ByValue(item.l1);
+              renderTaxonomyDetail(item.l1, l2Item.label, l2Item.servers);
+            });
+            l2List.appendChild(l2Button);
+          });
+
+          l1Wrap.appendChild(l2List);
+          nav.appendChild(l1Wrap);
+
+          l1Button.addEventListener("click", () => {
+            const isActive = l1Wrap.classList.contains("active");
+            document.querySelectorAll(".taxonomy-l1-item.active").forEach((el) => {
+              el.classList.remove("active");
+            });
+            if (!isActive) {
+              l1Wrap.classList.add("active");
+            }
+          });
+        });
+
+        if (!hasActiveL2) {
+          const first = filteredData[0];
+          const firstL2 = first.l2[0];
+          taxonomyState.activeL1 = first.l1;
+          taxonomyState.activeL2 = firstL2.label;
+          setActiveL1ByValue(first.l1);
+          document.querySelectorAll(".taxonomy-l2-button").forEach((el) => {
+            if (el.textContent === firstL2.label) {
+              el.classList.add("active");
+            } else {
+              el.classList.remove("active");
+            }
+          });
+          renderTaxonomyDetail(first.l1, firstL2.label, firstL2.servers);
+        } else {
+          setActiveL1ByValue(taxonomyState.activeL1);
+          const activeL1 = filteredData.find((item) => item.l1 === taxonomyState.activeL1);
+          const activeL2 = activeL1 && activeL1.l2.find((item) => item.label === taxonomyState.activeL2);
+          if (activeL2) {
+            renderTaxonomyDetail(activeL1.l1, activeL2.label, activeL2.servers);
+          }
+        }
+      }
+
+      const nav = document.getElementById("taxonomy-nav");
+      const searchInput = document.getElementById("taxonomy-search");
+      if (!nav || !searchInput || !TAXONOMY_DATA.length) {
+        renderEmptyTaxonomyDetail("Taxonomy data is unavailable.");
+        return;
+      }
+      taxonomyState.activeL1 = TAXONOMY_DATA[0].l1;
+      taxonomyState.activeL2 = TAXONOMY_DATA[0].l2[0].label;
+      renderTaxonomyNav();
+
+      searchInput.addEventListener("input", (event) => {
+        taxonomyState.query = event.target.value;
+        renderTaxonomyNav();
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const taxonomyData = await loadTaxonomyDataFromIndex();
+        initTaxonomySystemWithData(taxonomyData);
+      } catch (error) {
+        const detail = document.getElementById("taxonomy-detail");
+        const nav = document.getElementById("taxonomy-nav");
+        if (nav) {
+          nav.innerHTML = `<div class="taxonomy-empty">Taxonomy data failed to load.</div>`;
+        }
+        if (detail) {
+          detail.innerHTML = `
+            <h5>Taxonomy is temporarily unavailable</h5>
+            <p>Please keep <code>index.html</code> in the same directory, or embed <code>TAXONOMY_DATA</code> directly in this file.</p>
+          `;
+        }
+        console.error("Failed to initialize taxonomy:", error);
+      }
+    });
+  </script>
 
   <script>
   (function() {
