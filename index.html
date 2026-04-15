@@ -460,7 +460,7 @@
       padding-bottom: 4rem !important;
     }
     .aw-main-figure {
-      max-width: 1100px;
+      max-width: 950px;
       margin: 0 auto;
       border-radius: 20px !important;
       overflow: hidden;
@@ -707,8 +707,8 @@
       <div class="navbar-menu">
         <div class="navbar-end">
           <a class="navbar-item" href="#overview">Overview</a>
-          <a class="navbar-item" href="#capabilities">Capabilities</a>
           <a class="navbar-item" href="#demos">Demos</a>
+          <a class="navbar-item" href="#capabilities">Capabilities</a>
           <a class="navbar-item" href="#abstract">Abstract</a>
           <a class="navbar-item" href="#method">Method</a>
           <a class="navbar-item" href="#experiments">Experiments</a>
@@ -800,84 +800,22 @@
   <!-- ══════════════════ OVERVIEW SHOWCASE ══════════════════ -->
   <section class="section aw-showcase" id="overview">
     <div class="container">
-      <div class="has-text-centered" style="max-width:800px;margin:0 auto 2.5rem;">
-        <h2 class="title is-3">What is Agent-World?</h2>
-        <p style="font-size:1.15rem;color:#475569;line-height:1.8;">
-          A self-evolving training arena that unifies <strong>scalable environment synthesis</strong> with <strong>continuous agent training</strong>.
-          Agent-World autonomously mines real-world tool ecosystems and drives agents to evolve through dynamic task generation and diagnostic feedback loops.
+      <div style="max-width:950px;margin:0 auto;">
+        <h2 class="title is-3 has-text-centered">What is Agent-World?</h2>
+        <p style="font-size:1.08rem;color:#475569;line-height:1.85;text-align:justify;margin-bottom:2.5rem;">
+          A self-evolving training arena that unifies <strong>scalable environment synthesis</strong>
+          with <strong>continuous agent training</strong> — autonomously mining real-world tool ecosystems,
+          synthesizing verifiable tasks, and driving agents to evolve through diagnostic feedback loops.
         </p>
-      </div>
-      <figure class="image aw-main-figure">
-        <img src="figs/mcptars_main.png" alt="Overview of Agent-World">
-      </figure>
-    </div>
-  </section>
-
-  <!-- ══════════════════ KEY CAPABILITIES ══════════════════ -->
-  <section class="section aw-capabilities" id="capabilities">
-    <div class="container">
-      <div class="has-text-centered" style="margin-bottom:3rem;">
-        <h2 class="title is-3">Key Capabilities</h2>
-        <p style="font-size:1.05rem;color:#64748b;">Six core pillars powering the Agent-World ecosystem</p>
-      </div>
-      <div class="aw-cap-grid">
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-globe"></i></div>
-          <h4>Real-World Environment Mining</h4>
-          <p>Autonomously discovers and mines structured databases from real-world sources — MCP servers, tool docs, and industrial PRDs.</p>
-        </div>
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-tools"></i></div>
-          <h4>19K+ Executable Tools</h4>
-          <p>Generates, validates, and assembles diverse tool interfaces with cross-validation, covering 20 primary environment categories.</p>
-        </div>
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-project-diagram"></i></div>
-          <h4>Graph &amp; Programmatic Tasks</h4>
-          <p>Synthesizes verifiable tasks via tool dependency graphs and executable Python solutions with controllable difficulty scaling.</p>
-        </div>
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-brain"></i></div>
-          <h4>Multi-Environment Agent RL</h4>
-          <p>Closed-loop RL training across diverse environments with structured verifiable rewards and GRPO optimization.</p>
-        </div>
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-sync-alt"></i></div>
-          <h4>Self-Evolving Arena</h4>
-          <p>Automatically diagnoses agent weaknesses through dynamic evaluation, then generates targeted tasks to drive iterative improvement.</p>
-        </div>
-        <div class="aw-cap-card">
-          <div class="aw-cap-icon"><i class="fas fa-chart-line"></i></div>
-          <h4>23 Benchmark SOTA</h4>
-          <p>Consistently outperforms strong proprietary models across agentic tool use, advanced AI assistant, software engineering, deep research, and reasoning.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════ ABSTRACT ══════════════════ -->
-  <section class="section" id="abstract">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-10">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content">
-            <p>
-              Large language models are increasingly expected to serve as general-purpose agents that interact with external, stateful tool environments.
-              The Model Context Protocol (MCP) and broader agent skills offer a unified interface for connecting agents with scalable real-world services,
-              but training robust agents remains limited by the lack of realistic environments and principled mechanisms for lifelong learning.
-            </p>
-            <p>
-              In this paper, we present <strong>Agent-World</strong>, a self-evolving training arena for advancing general agent intelligence through scalable environments.
-              Agent-World has two main components:
-              <strong>(1) Agentic Environment-Task Discovery</strong>, which autonomously explores topic-aligned databases and executable tool ecosystems from thousands of real-world environment themes and synthesizes verifiable tasks with controllable difficulty; and
-              <strong>(2) Continuous Self-Evolving Agent Training</strong>, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments.
-            </p>
-            <p>
-              Across <strong>23 challenging agent benchmarks</strong>, Agent-World consistently outperforms strong proprietary models and environment scaling baselines. Further analyses reveal scaling trends with environment diversity and self-evolution rounds, offering insights for building general agent intelligence.
-            </p>
-          </div>
-        </div>
+        <figure class="image aw-main-figure" style="max-width:none;margin:0;">
+          <img src="figs/mcptars_main.png" alt="Overview of Agent-World">
+        </figure>
+        <figure class="image" style="margin:2rem 0 0;">
+          <img src="figs/mcp_server_taxonomy_v2.png" alt="Hierarchical environment taxonomy" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.08);">
+          <figcaption style="text-align:center;margin-top:.75rem;font-size:.9rem;color:#64748b;">
+            Hierarchical environment taxonomy across 20 primary categories and their subcategories.
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -1198,6 +1136,75 @@
     }
   </script>
 
+  <!-- ══════════════════ KEY CAPABILITIES ══════════════════ -->
+  <section class="section aw-capabilities" id="capabilities">
+    <div class="container">
+      <div class="has-text-centered" style="margin-bottom:3rem;">
+        <h2 class="title is-3">Key Capabilities</h2>
+        <p style="font-size:1.05rem;color:#64748b;">Six core pillars powering the Agent-World ecosystem</p>
+      </div>
+      <div class="aw-cap-grid">
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-globe"></i></div>
+          <h4>Real-World Environment Mining</h4>
+          <p>Autonomously discovers and mines structured databases from real-world sources — MCP servers, tool docs, and industrial PRDs.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-tools"></i></div>
+          <h4>2K Environments & 19K Tools</h4>
+          <p>Builds over 2,000 realistic environments spanning 20 primary categories, each equipped with executable tool interfaces — totaling 19K+ validated tools with rich parameters.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-project-diagram"></i></div>
+          <h4>Graph &amp; Programmatic Tasks</h4>
+          <p>Synthesizes verifiable tasks via tool dependency graphs and executable Python solutions with controllable difficulty scaling.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-brain"></i></div>
+          <h4>Multi-Environment Agent RL</h4>
+          <p>Closed-loop RL training across diverse environments with structured verifiable rewards and GRPO optimization.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-sync-alt"></i></div>
+          <h4>Self-Evolving Arena</h4>
+          <p>Automatically diagnoses agent weaknesses through dynamic evaluation, then generates targeted tasks to drive iterative improvement.</p>
+        </div>
+        <div class="aw-cap-card">
+          <div class="aw-cap-icon"><i class="fas fa-chart-line"></i></div>
+          <h4>Strong Results on 23 Benchmarks</h4>
+          <p>Demonstrates strong performance across agentic tool use, advanced AI assistant, software engineering, deep research, and reasoning benchmarks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ ABSTRACT ══════════════════ -->
+  <section class="section" id="abstract">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content">
+            <p>
+              Large language models are increasingly expected to serve as general-purpose agents that interact with external, stateful tool environments.
+              The Model Context Protocol (MCP) and broader agent skills offer a unified interface for connecting agents with scalable real-world services,
+              but training robust agents remains limited by the lack of realistic environments and principled mechanisms for lifelong learning.
+            </p>
+            <p>
+              In this paper, we present <strong>Agent-World</strong>, a self-evolving training arena for advancing general agent intelligence through scalable environments.
+              Agent-World has two main components:
+              <strong>(1) Agentic Environment-Task Discovery</strong>, which autonomously explores topic-aligned databases and executable tool ecosystems from thousands of real-world environment themes and synthesizes verifiable tasks with controllable difficulty; and
+              <strong>(2) Continuous Self-Evolving Agent Training</strong>, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments.
+            </p>
+            <p>
+              Across <strong>23 challenging agent benchmarks</strong>, Agent-World consistently outperforms strong proprietary models and environment scaling baselines. Further analyses reveal scaling trends with environment diversity and self-evolution rounds, offering insights for building general agent intelligence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Introduction -->
   <section class="section" id="introduction">
     <div class="container">
@@ -1267,6 +1274,13 @@
                 <strong>(2) Tool Documentations</strong> — open-source datasets covering real tool-use scenarios;
                 <strong>(3) Industrial PRDs</strong> — product requirement documents containing domain workflows and system interfaces.
                 Together, these form a seed topic set of over <strong>2,000 environment themes</strong> across <strong>20 primary categories</strong>.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h4>Hierarchical Environment Taxonomy</h4>
+              <p>
+                We design a <strong>three-level hierarchical classification system</strong> to organize all environment themes: 20 first-tier categories (e.g., Document & Design, Social Media & Community, System & Cloud Infrastructure), each subdivided into fine-grained second-tier subcategories (e.g., Office & Text Processing, Social Network Integration, Cloud Platform Services), and finally mapped to specific MCP server instances at the third tier. This taxonomy ensures broad domain coverage, enables systematic gap analysis during self-evolving training, and supports controlled difficulty scaling across diverse real-world domains.
               </p>
             </div>
 
