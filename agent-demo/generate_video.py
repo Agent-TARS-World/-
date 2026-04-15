@@ -78,6 +78,8 @@ FAV   = get_font(24*S, True)
 FCODE = get_font(18*S)
 FHDR  = get_font(20*S, True)
 FSTAT = get_font(13*S)
+FTAX  = get_font(14*S)
+FTAXB = get_font(14*S, True)
 
 # ── Logo ────────────────────────────────────────────────────────────
 logo_img = None
@@ -107,7 +109,10 @@ STEPS = [
     ("answer", '{\n  "page_title": "Tuscan kale",\n  "db_same_name_count": 0,\n  "risk_score": 100,\n  "risk_level": "High Risk"\n}'),
 ]
 
-VIDEO_TITLE = "Travel Planning"
+VIDEO_TITLE = "Note Consistency & Risk Assessment"
+VIDEO_L1 = "Document & Design"
+VIDEO_L2 = "Office & Text Processing"
+VIDEO_L3 = "Notion MCP Server"
 
 AV_SZ = 72 * S
 
@@ -231,7 +236,8 @@ def paste_logo_header(img, x, y, h):
     return resized.width
 
 def draw_header(img, draw, step, total):
-    HH = 66 * S
+    has_tax = bool(VIDEO_L1 or VIDEO_L2 or VIDEO_L3)
+    HH = (66 + (22 if has_tax else 0)) * S
     draw.rectangle([0,0,RW,HH], fill=WHITE)
     draw.line([0,HH-1,RW,HH-1], fill=BORDER, width=S)
     lw = paste_logo_header(img, 20, 5, 56)
@@ -244,6 +250,21 @@ def draw_header(img, draw, step, total):
     tx2 = RW - tw - 30*S
     draw.rounded_rectangle([tx2, 19*S, tx2+tw, 45*S], radius=13*S, fill=CARD_BG, outline=PRI, width=S)
     draw.text((tx2+10*S, 24*S), tag, fill=PRI, font=FTAG)
+    if has_tax:
+        sep = "  ›  "
+        ty = 64*S
+        cx = 30*S
+        for i, lbl in enumerate([VIDEO_L1, VIDEO_L2, VIDEO_L3]):
+            if not lbl:
+                continue
+            if i > 0 and cx > 30*S:
+                draw.text((cx, ty), sep, fill=TEXT3, font=FTAX)
+                cx += draw.textbbox((0,0), sep, font=FTAX)[2]
+            is_last = (i == 2) or (i == 1 and not VIDEO_L3) or (i == 0 and not VIDEO_L2 and not VIDEO_L3)
+            fnt = FTAXB if is_last else FTAX
+            clr = PRI if is_last else TEXT3
+            draw.text((cx, ty), lbl, fill=clr, font=fnt)
+            cx += draw.textbbox((0,0), lbl, font=fnt)[2]
 
 def draw_input_bar(draw, text="", cursor=False, frame_idx=0):
     y = RH - 90*S
@@ -285,7 +306,8 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
     CW = 1200; BW = CW - 10; TW = BW - 30
     LX = (W - CW) // 2
     RX = LX + CW
-    cy = 82
+    has_tax = bool(VIDEO_L1 or VIDEO_L2 or VIDEO_L3)
+    cy = 82 + (22 if has_tax else 0)
 
     for si, (role, full_text) in enumerate(visible):
         if cy > H - 170: break
@@ -466,6 +488,28 @@ def main():
         c = tuple(int(PRI[j]+((6,182,212)[j]-PRI[j])*fr) for j in range(3))
         sw = (tw1+tw2)//4
         td.rectangle([sx+i*sw, ly, sx+(i+1)*sw, ly+3*S], fill=c)
+    if VIDEO_L1 or VIDEO_L2 or VIDEO_L3:
+        FTITLE_TAX = get_font(20*S)
+        FTITLE_TAXB = get_font(20*S, True)
+        parts = [l for l in [VIDEO_L1, VIDEO_L2, VIDEO_L3] if l]
+        sep_str = "  ›  "
+        total_w = 0
+        for pi, p in enumerate(parts):
+            fnt = FTITLE_TAXB if pi == len(parts)-1 else FTITLE_TAX
+            total_w += td.textbbox((0,0), p, font=fnt)[2]
+            if pi < len(parts)-1:
+                total_w += td.textbbox((0,0), sep_str, font=FTITLE_TAX)[2]
+        tax_y = ly + 18*S
+        tax_x = (RW - total_w) // 2
+        for pi, p in enumerate(parts):
+            is_last = (pi == len(parts)-1)
+            fnt = FTITLE_TAXB if is_last else FTITLE_TAX
+            clr = PRI if is_last else TEXT3
+            td.text((tax_x, tax_y), p, fill=clr, font=fnt)
+            tax_x += td.textbbox((0,0), p, font=fnt)[2]
+            if pi < len(parts)-1:
+                td.text((tax_x, tax_y), sep_str, fill=TEXT3, font=FTITLE_TAX)
+                tax_x += td.textbbox((0,0), sep_str, font=FTITLE_TAX)[2]
     ti_final = ti.convert('RGB').resize((W,H), Image.LANCZOS)
 
     print(f"Writing MP4 to {OUT} ...")
@@ -534,11 +578,14 @@ def main():
     size_mb = os.path.getsize(OUT) / 1024 / 1024
     print(f"Done! {tf} frames, {total_sec:.1f}s, {size_mb:.1f} MB")
 
-def generate_video_for(title, steps, output_path):
-    global VIDEO_TITLE, STEPS, OUT
+def generate_video_for(title, steps, output_path, l1="", l2="", l3=""):
+    global VIDEO_TITLE, STEPS, OUT, VIDEO_L1, VIDEO_L2, VIDEO_L3
     VIDEO_TITLE = title
     STEPS = steps
     OUT = output_path
+    VIDEO_L1 = l1
+    VIDEO_L2 = l2
+    VIDEO_L3 = l3
     main()
 
 if __name__ == '__main__':

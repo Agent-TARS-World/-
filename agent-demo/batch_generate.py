@@ -9,6 +9,9 @@ DEMOS = [
     {
         "title": "Flight Refund Evaluation",
         "file": "demo_flight.mp4",
+        "l1": "Travel & Transportation",
+        "l2": "Booking & Hospitality",
+        "l3": "Flight and Stay Search Server",
         "steps": [
             ("user", "I booked flight 1451 with airline W9\non 2025-07-16, account john_smith_123,\nticket price $320.\nPlease check auto-refund eligibility\nand return JSON."),
             ("think", "Need to get flight status, airline info,\nand user payment method.\n1. get_flight_status - check cancellation\n2. get_airline_by_iata - check if active\n3. get_user_by_id - get payment method"),
@@ -26,6 +29,9 @@ DEMOS = [
     {
         "title": "Ecomm Return Processing",
         "file": "demo_ecomm.mp4",
+        "l1": "Search & Information Retrieval",
+        "l2": "API Gateway & Aggregation",
+        "l3": "Ecomm MCP Server",
         "steps": [
             ("user", "Hey! I need to return a few things.\nMy name is Anya Sanchez,\nzip code is 43171."),
             ("think", "First authenticate the user via name + zip.\nThen find delivered orders eligible for return.\nCheck payment method for refund."),
@@ -43,6 +49,9 @@ DEMOS = [
     {
         "title": "Note Consistency Check",
         "file": "demo_notion.mp4",
+        "l1": "Document & Design",
+        "l2": "Office & Text Processing",
+        "l3": "Notion MCP Server",
         "steps": [
             ("user", "Search for a same-name page using the\nfirst title in the page list.\nCheck nested to-do vs plain paragraph\nfor consistency.\nRules: missing=50, incomplete=30, mismatch=20\nTotal>=50 -> High Risk"),
             ("fn", "get_example_page()"),
@@ -62,6 +71,9 @@ DEMOS = [
     {
         "title": "Compliance Inspection",
         "file": "demo_slack.mp4",
+        "l1": "Social Media & Community",
+        "l2": "Social Network Integration",
+        "l3": "Slack Workspace Automation Server",
         "steps": [
             ("user", "Analyze reported message at timestamp\n1512104434.000490 correlated with user\nU123ABC456. Check login status and\ncontacts. Output triage level and\nticket comments."),
             ("fn", 'get_message_by_ts(\n  ts="1512104434.000490"\n)'),
@@ -80,6 +92,9 @@ DEMOS = [
     {
         "title": "City Influence Index",
         "file": "demo_population.mp4",
+        "l1": "Search & Information Retrieval",
+        "l2": "API Gateway & Aggregation",
+        "l3": "Population Data Server",
         "steps": [
             ("user", "Get top 10 cities by population + Karachi.\nCompute influence index S=ln(pop/40).\nMultiply Karachi by 1+growthRate.\nSelect the highest and convert to\nlog magnitude."),
             ("fn", "list_top_cities_by_population(\n  limit=10\n)"),
@@ -98,6 +113,9 @@ DEMOS = [
     {
         "title": "Mobile Network Diagnosis",
         "file": "demo_telecom.mp4",
+        "l1": "Communication & General Utilities",
+        "l2": "Messaging & Notification",
+        "l3": "Telecom API MCP Server",
         "steps": [
             ("user", "My mobile data isn't working properly.\nSometimes it stops, and other times\nit's really slow.\nMy phone number is 555-123-2002."),
             ("fn", 'get_customer_by_phone(\n  phone="555-123-2002"\n)'),
@@ -114,6 +132,9 @@ DEMOS = [
     {
         "title": "Engagement Value Audit",
         "file": "demo_twitter.mp4",
+        "l1": "Social Media & Community",
+        "l2": "Social Network Integration",
+        "l3": "Twitter MCP Server",
         "steps": [
             ("user", "Log in as TwitterDev and perform an\nengagement value audit:\n1. Verify profile consistency\n2. Find highest-influence in following\n3. Check tweet_id=2 comment ratio\n   from followed users."),
             ("fn", 'get_user_by_username(\n  username="TwitterDev"\n)'),
@@ -130,6 +151,9 @@ DEMOS = [
     {
         "title": "Repository Management",
         "file": "demo_github.mp4",
+        "l1": "System & Cloud Infrastructure",
+        "l2": "Cloud Platform Services",
+        "l3": "GitHub",
         "steps": [
             ("user", "I've been promoted! Please:\n1. Update username -> adryzzVP\n2. Email -> adryzzVP@...github.com\n3. Role -> owner\n4. Make all repos private\n5. Create repo VPTeamFormation"),
             ("fn", 'getUserByUsername(\n  username="adryzz"\n)'),
@@ -149,6 +173,9 @@ DEMOS = [
     {
         "title": "Database Governance",
         "file": "demo_document.mp4",
+        "l1": "Document & Design",
+        "l2": "Office & Text Processing",
+        "l3": "Document Operations Server",
         "steps": [
             ("user", "Travel database governance check:\nVerify user e79a0b74's name.\nCheck database c3f0603a status property\nagainst tag category standards."),
             ("fn", 'get_user_by_id(\n  "e79a0b74-3aba-..."\n)'),
@@ -173,5 +200,10 @@ if __name__ == "__main__":
         print(f"\n{'='*60}")
         print(f"[{i}/{total}] {demo['title']}  →  {demo['file']}")
         print(f"{'='*60}")
-        generate_video_for(demo["title"], demo["steps"], out)
+        generate_video_for(
+            demo["title"], demo["steps"], out,
+            l1=demo.get("l1", ""),
+            l2=demo.get("l2", ""),
+            l3=demo.get("l3", ""),
+        )
     print(f"\n✅ All {total} videos generated!")

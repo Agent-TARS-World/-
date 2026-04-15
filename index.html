@@ -761,12 +761,6 @@
                 <span>Paper (Coming Soon)</span>
               </span>
             </span>
-            <span class="link-block">
-              <span class="button is-dark is-static">
-                <span class="icon"><i class="fas fa-code"></i></span>
-                <span>Code (Coming Soon)</span>
-              </span>
-            </span>
           </div>
 
           <div class="aw-hero-authors">
@@ -905,52 +899,82 @@
               <div class="demo-card">
                 <video src="agent-demo/demo_flight.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Flight & Stay Search</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Flight and Stay Search Server</div>
+                  <div class="demo-breadcrumb">Travel & Transportation<span class="demo-sep">›</span>Booking & Hospitality</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_ecomm.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Ecomm MCP Server</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Ecomm MCP Server</div>
+                  <div class="demo-breadcrumb">Search & Information Retrieval<span class="demo-sep">›</span>API Gateway & Aggregation</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_notion.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Notion MCP Server</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Notion MCP Server</div>
+                  <div class="demo-breadcrumb">Document & Design<span class="demo-sep">›</span>Office & Text Processing</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_slack.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Slack Workspace</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Slack Workspace Automation Server</div>
+                  <div class="demo-breadcrumb">Social Media & Community<span class="demo-sep">›</span>Social Network Integration</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_population.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Population Data</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Population Data Server</div>
+                  <div class="demo-breadcrumb">Search & Information Retrieval<span class="demo-sep">›</span>API Gateway & Aggregation</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_telecom.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Telecom API</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Telecom API MCP Server</div>
+                  <div class="demo-breadcrumb">Communication & General Utilities<span class="demo-sep">›</span>Messaging & Notification</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_twitter.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Twitter MCP Server</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Twitter MCP Server</div>
+                  <div class="demo-breadcrumb">Social Media & Community<span class="demo-sep">›</span>Social Network Integration</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_github.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">GitHub Service</div>
+                <div class="demo-label">
+                  <div class="demo-l3">GitHub</div>
+                  <div class="demo-breadcrumb">System & Cloud Infrastructure<span class="demo-sep">›</span>Cloud Platform Services</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/demo_document.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Document Operations</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Document Operations Server</div>
+                  <div class="demo-breadcrumb">Document & Design<span class="demo-sep">›</span>Office & Text Processing</div>
+                </div>
               </div>
               <div class="demo-card">
                 <video src="agent-demo/agent_demo.mp4" muted loop playsinline autoplay preload="auto"></video>
                 <button class="demo-expand" aria-label="expand">&#x26F6;</button>
-                <div class="demo-label">Travel Planning</div>
+                <div class="demo-label">
+                  <div class="demo-l3">Notion MCP Server</div>
+                  <div class="demo-breadcrumb">Document & Design<span class="demo-sep">›</span>Office & Text Processing</div>
+                </div>
               </div>
 
             </div>
@@ -1011,11 +1035,25 @@
       background: #0f172a;
     }
     .demo-label {
-      padding: 10px 16px 12px;
-      font-weight: 600;
-      font-size: .95rem;
-      color: #1e293b;
+      padding: 8px 16px 10px;
       text-align: center;
+    }
+    .demo-label .demo-l3 {
+      font-weight: 600;
+      font-size: .92rem;
+      color: #1e293b;
+      margin: 0;
+    }
+    .demo-label .demo-breadcrumb {
+      font-size: .72rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      letter-spacing: .01em;
+      line-height: 1.3;
+    }
+    .demo-label .demo-breadcrumb .demo-sep {
+      margin: 0 3px;
+      color: #cbd5e1;
     }
     .demo-arrow {
       position: absolute;
