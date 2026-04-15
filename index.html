@@ -1930,18 +1930,849 @@
   </footer>
 
   <script>
-    async function loadTaxonomyDataFromIndex() {
-      const response = await fetch("./index.html", { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error("Failed to load index.html");
+    const TAXONOMY_DATA = [
+      {
+            l1: "L1-01 Search & Information Retrieval",
+            l2: [
+                  {
+                        label: "L2-01 General Web Search",
+                        servers: [
+                              "ATproto Docs Search Server",
+                              "Active Job Search Server",
+                              "Atlas Docs",
+                              "Aurora Documentation",
+                              "Book MCP Server",
+                              "Brave Search",
+                              "Brave Search Server",
+                              "Brave-Gemini Research",
+                              "Brian Knows",
+                              "Bright Data"
+                        ]
+                  },
+                  {
+                        label: "L2-02 Web Content Extraction",
+                        servers: [
+                              "ATproto Docs Search Server",
+                              "Airbnb Listings Scraper",
+                              "Atlas Docs",
+                              "Aurora Documentation",
+                              "BookStack MCP Server",
+                              "Bright Data",
+                              "Browser Automation Agent",
+                              "Cloudflare Browser Rendering",
+                              "Confluence Communication Server",
+                              "Confluence MCP Server"
+                        ]
+                  },
+                  {
+                        label: "L2-03 API Gateway & Aggregation",
+                        servers: [
+                              "ACI MCP Server",
+                              "AI Agent with MCP",
+                              "APISIX Model Context Protocol Server",
+                              "Active Job Search Server",
+                              "Add Test",
+                              "Adjust Reporting Server",
+                              "Advisor",
+                              "Amazon Selling Partner API Integration Server",
+                              "Apifox MCP Pro",
+                              "Atlassian Integration Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-02 Academic & Scientific Research",
+            l2: [
+                  {
+                        label: "L2-04 Literature Search & Discovery",
+                        servers: [
+                              "AI Research Assistant - Semantic Scholar",
+                              "Academic Author Network",
+                              "BioMCP",
+                              "CiteAssist MCP",
+                              "Crossref MCP Server",
+                              "DOI Temel Server",
+                              "Google Scholar MCP Server",
+                              "Google Scholar Search Server",
+                              "Open Book",
+                              "Paper Search"
+                        ]
+                  },
+                  {
+                        label: "L2-05 Citation & Scholarly Analytics",
+                        servers: [
+                              "AI Research Assistant - Semantic Scholar",
+                              "Academic Author Network",
+                              "Call For Papers",
+                              "Call For Papers MCP",
+                              "CiteAssist MCP",
+                              "ConferenceSearcher",
+                              "Crossref MCP Server",
+                              "Google Scholar MCP Server",
+                              "Google Scholar Search Server",
+                              "PaperMCP Academic Paper Search Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-03 Social Media & Community",
+            l2: [
+                  {
+                        label: "L2-06 Social Network Integration",
+                        servers: [
+                              "Atris",
+                              "Beyond MCP Server",
+                              "Bilibili API Server",
+                              "Bluesky MCP Server",
+                              "Discord",
+                              "Discord Integration Server",
+                              "Douyin Video Text Extractor",
+                              "Farcaster MCP Server",
+                              "HDW MCP Server",
+                              "Hypefury MCP Server"
+                        ]
+                  },
+                  {
+                        label: "L2-07 Video & Content Platforms",
+                        servers: [
+                              "Advanced YouTube",
+                              "Atris",
+                              "Bilibili API Server",
+                              "DeepSRT Server",
+                              "Douyin Video Text Extractor",
+                              "Giphy API Integration",
+                              "Instagram Video Downloader",
+                              "Kick MCP Server",
+                              "LinkedIn Post Generator",
+                              "Meta Post Scheduler"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-04 Finance & Markets",
+            l2: [
+                  {
+                        label: "L2-08 Stock & Equity Data",
+                        servers: [
+                              "A-Share Market Data Server",
+                              "Alpaca Market Data Server",
+                              "Alpaca Trading Integration",
+                              "Alpaca Trading MCP Server",
+                              "Alpha Vantage MCP Server",
+                              "Alpha Vantage Stock Server",
+                              "AlphaVantage MCP Server",
+                              "Ashare Stock Market Data Service - A股数据查询",
+                              "DART Financial Data Server",
+                              "DART Financial Disclosure Access Server"
+                        ]
+                  },
+                  {
+                        label: "L2-09 Currency & Foreign Exchange",
+                        servers: [
+                              "Alpha Vantage MCP Server",
+                              "AlphaVantage MCP Server",
+                              "Currency Converter MCP",
+                              "FinanceMCP Server",
+                              "FrankfurterMCP",
+                              "Juhe Exchange Rates"
+                        ]
+                  },
+                  {
+                        label: "L2-10 Financial Analysis & Portfolio",
+                        servers: [
+                              "A-Share Market Data Server",
+                              "Alpaca Trading Integration",
+                              "Alpaca Trading MCP Server",
+                              "Alpha Vantage Stock Server",
+                              "AlphaVantage MCP Server",
+                              "Ashare Stock Market Data Service - A股数据查询",
+                              "Autumn MCP Server",
+                              "Cashfree Payment Integration Server",
+                              "Comax Payment Link",
+                              "Comexstat Data Server (Brazilian foreign trade statistics)"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-05 Cryptocurrency & Web3",
+            l2: [
+                  {
+                        label: "L2-11 Crypto Market Data",
+                        servers: [
+                              "100ms Raydium Sniper",
+                              "Artemis MCP Server",
+                              "Asset Price MCP",
+                              "Binance Bitcoin Price Tool",
+                              "Binance Cryptocurrency Market Data Service",
+                              "Bitcoin SV Tools Server",
+                              "Bitly Exchange MCP Server",
+                              "Bitpanda API Integration Server",
+                              "CCXT Cryptocurrency Exchange Server",
+                              "CCXT MCP Server"
+                        ]
+                  },
+                  {
+                        label: "L2-12 DeFi & DEX Protocols",
+                        servers: [
+                              "100ms Raydium Sniper",
+                              "Armor Crypto",
+                              "Bitcoin SV Tools Server",
+                              "Bitly Exchange MCP Server",
+                              "Bridge Rates Server",
+                              "CCXT Cryptocurrency Exchange Server",
+                              "CCXT MCP Server",
+                              "Crossmint HR Airdrop",
+                              "DefiLlama API Server",
+                              "Jupiter Swap API Server"
+                        ]
+                  },
+                  {
+                        label: "L2-13 Blockchain Infrastructure & Wallets",
+                        servers: [
+                              "Aptos Blockchain Server",
+                              "Armor Crypto",
+                              "Aurora Cloud Console API",
+                              "BICScan",
+                              "Base Network MCP Server",
+                              "Bitcoin SV Tools Server",
+                              "Bitpanda API Integration Server",
+                              "Blockscout MCP Server",
+                              "Bridge Rates Server",
+                              "COTI Blockchain MCP Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-06 Weather & Geospatial",
+            l2: [
+                  {
+                        label: "L2-14 Weather Forecasting",
+                        servers: [
+                              "360 Weather MCP",
+                              "AAAAAA MCP Server",
+                              "AEMET Weather Data Server",
+                              "AMap Location Service Server",
+                              "Deep Dive MCP Server",
+                              "Deneme MCP Server",
+                              "Endless",
+                              "Gaode Weather",
+                              "IPMA Weather Data Server",
+                              "Juhe Weather"
+                        ]
+                  },
+                  {
+                        label: "L2-15 Maps & Location Services",
+                        servers: [
+                              "360 Weather MCP",
+                              "AMap Location Service Server",
+                              "ArcGIS Location Services",
+                              "BatchData Real Estate Server",
+                              "Earthdata Server",
+                              "EdgeOne Geo Location Server",
+                              "GeoServer MCP Server",
+                              "Google Maps",
+                              "Google Maps API Server",
+                              "IBGE Municipality Listing Server"
+                        ]
+                  },
+                  {
+                        label: "L2-16 Earth Science & Environmental Monitoring",
+                        servers: [
+                              "AEMET Weather Data Server",
+                              "ArcGIS Location Services",
+                              "CO2 Sensor Server",
+                              "Current Forest Fire Status in Korea",
+                              "Earthdata MCP Server",
+                              "Earthdata Server",
+                              "Endless",
+                              "Google Maps",
+                              "IPMA Weather Data Server",
+                              "Juhe Weather"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-07 Software Development",
+            l2: [
+                  {
+                        label: "L2-17 Code Execution & Analysis",
+                        servers: [
+                              "ABAP-ADT-API MCP-Server",
+                              "AILint",
+                              "Aider MCP Server",
+                              "Claude Code Execution Server",
+                              "Clojure Linter",
+                              "Code MCP",
+                              "Code Review Server",
+                              "Code Runner",
+                              "Code Runner MCP Server",
+                              "Code Sandbox Server"
+                        ]
+                  },
+                  {
+                        label: "L2-18 Package & Dependency Management",
+                        servers: [
+                              "Chromium Latest Commit",
+                              "Code Sandbox Server",
+                              "Context7",
+                              "DeepSource Server",
+                              "Git Repo Browser",
+                              "Laravel MCP Companion",
+                              "MCP Server Template for Cursor IDE",
+                              "Montano Server",
+                              "NPM Sentinel MCP",
+                              "Node Omnibus Server"
+                        ]
+                  },
+                  {
+                        label: "L2-19 Framework & Component Libraries",
+                        servers: [
+                              "BluestoneApps Development Standards (Remote)",
+                              "Cairo Coder",
+                              "Context7",
+                              "Databutton",
+                              "Dify Server",
+                              "Ejemplo MCP Server",
+                              "Expo Development Server Manager",
+                              "First MCP Server",
+                              "Flutter Inspector",
+                              "Flyon MCP Python Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-08 System & Cloud Infrastructure",
+            l2: [
+                  {
+                        label: "L2-20 Shell & Terminal Operations",
+                        servers: [
+                              "302AI Sandbox Server",
+                              "ADB Android Device Server",
+                              "AppleScript MCP Server",
+                              "Azure CLI MCP Server",
+                              "Azure CLI Server",
+                              "Desktop Commander",
+                              "Desktop TXT File Manager",
+                              "Devcontainers Integration Server",
+                              "FTP Access Server",
+                              "File Manager"
+                        ]
+                  },
+                  {
+                        label: "L2-21 Cloud Platform Services",
+                        servers: [
+                              "1Panel Website Deployment Server",
+                              "AWS EC2 Pricing",
+                              "Alibaba Cloud Observability Server",
+                              "Alibaba Cloud Operations Server",
+                              "App Store Connect Server",
+                              "Atlassian Integration Server",
+                              "Azure CLI MCP Server",
+                              "Azure CLI Server",
+                              "Azure DevOps Integration",
+                              "Azure DevOps Integration Server"
+                        ]
+                  },
+                  {
+                        label: "L2-22 DevOps & Workflow Automation",
+                        servers: [
+                              "1Panel Website Deployment Server",
+                              "302AI Sandbox Server",
+                              "ADB Android Device Server",
+                              "APIMatic Validator",
+                              "AdGuard Home Server",
+                              "Agentic Control Framework",
+                              "Alibaba Cloud Observability Server",
+                              "Alibaba Cloud Operations Server",
+                              "Andy's Test API MCP Server",
+                              "App Store Connect Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-09 Browser Automation & Testing",
+            l2: [
+                  {
+                        label: "L2-23 Browser Control & Interaction",
+                        servers: [
+                              "302AI Browser Automation Server",
+                              "AutoSpectra",
+                              "Automated UI Debuger and Tester",
+                              "Browser Automation Agent",
+                              "Browser Control",
+                              "Browser Extension and MCP Server",
+                              "Browser Use (used by Deploya.dev)",
+                              "Browser Use Automation Server",
+                              "Browser Use MCP Server",
+                              "BrowserCat Remote Browser Automation"
+                        ]
+                  },
+                  {
+                        label: "L2-24 UI Testing & Quality Assurance",
+                        servers: [
+                              "Allure Report Transformer",
+                              "AutoSpectra",
+                              "Automated UI Debuger and Tester",
+                              "BrowserCat Remote Browser Automation",
+                              "BrowserStack Test Platform Server",
+                              "BrowserTools",
+                              "Cloudflare Playwright",
+                              "End to End Testing Server",
+                              "MCP Servers",
+                              "Mobile Automation Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-10 Data Storage & Databases",
+            l2: [
+                  {
+                        label: "L2-25 Relational Databases",
+                        servers: [
+                              "Adb MySQL MCP Server",
+                              "Airtable Integration Tool",
+                              "Airtable MCP",
+                              "Airtable Server",
+                              "AlibabaCloud DMS Unified Data Gateway",
+                              "AnalyticDB for MySQL Server",
+                              "Apache Doris MCP Server",
+                              "BigQuery",
+                              "BigQuery Access Server",
+                              "BigQuery Analysis Server"
+                        ]
+                  },
+                  {
+                        label: "L2-26 NoSQL & Document Stores",
+                        servers: [
+                              "Advanced PocketBase Server",
+                              "AlibabaCloud DMS Unified Data Gateway",
+                              "Appwrite MCP Server",
+                              "ArangoDB MCP Server",
+                              "Azure Data Explorer Server",
+                              "CentralMind Gateway",
+                              "Chroma MCP Server",
+                              "Claude Server",
+                              "Cursor10x Memory System",
+                              "Database Explorer"
+                        ]
+                  },
+                  {
+                        label: "L2-27 Memory & Knowledge Management",
+                        servers: [
+                              "AI咖提示词管理MCP",
+                              "Advanced Hasura GraphQL Server",
+                              "Aindreyway Codex Keeper",
+                              "ArcKnowledge",
+                              "Atlassian Confluence Integration",
+                              "Attio CRM Integration Server",
+                              "Blinko Note Service Connector",
+                              "Chroma MCP Server",
+                              "Claude Custom Prompts",
+                              "Claude Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-11 AI & Machine Learning",
+            l2: [
+                  {
+                        label: "L2-28 Model Hubs & LLM APIs",
+                        servers: [
+                              "AI Image Generation Service",
+                              "API.Market MCP Server (40 tools)",
+                              "AST Model Context Protocol Server",
+                              "Any OpenAI Compatible API Integrations",
+                              "Atla Evaluation Server",
+                              "Blabber",
+                              "Brightsy MCP Server",
+                              "Chain-of-Recursive-Thoughts Server",
+                              "ChatGPT Server",
+                              "Claude API Integration"
+                        ]
+                  },
+                  {
+                        label: "L2-29 Image & Multimedia Generation",
+                        servers: [
+                              "4o-image Image Generation Server",
+                              "AI Image Generation Service",
+                              "API.Market MCP Server (40 tools)",
+                              "Asset Image Generator",
+                              "Blabber",
+                              "DALL-E Image Generator",
+                              "Docent Server",
+                              "Everart",
+                              "Flux Cloudflare MCP",
+                              "Flux ImageGen Server"
+                        ]
+                  },
+                  {
+                        label: "L2-30 Agent Orchestration & Multi-Agent",
+                        servers: [
+                              "A2A Bridge Server",
+                              "AI Lab MCP Server",
+                              "AST Model Context Protocol Server",
+                              "Agent Orchestration System",
+                              "Any OpenAI Compatible API Integrations",
+                              "AutoGen Server",
+                              "Brightsy MCP Server",
+                              "Chain-of-Recursive-Thoughts Server",
+                              "ChatGPT Server",
+                              "Demo MCP Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-12 Reasoning & Decision Support",
+            l2: [
+                  {
+                        label: "L2-31 Structured Thinking & Planning",
+                        servers: [
+                              "Analogical Reasoning Server",
+                              "Chain of Draft Server",
+                              "Chain of Thought",
+                              "Clear Thought",
+                              "Clear Thought Server",
+                              "CoConuT Continuous Chain of Thought Server",
+                              "Coding Prompt Engineer",
+                              "Collaborative Reasoning Server",
+                              "Decision Framework Server",
+                              "Deepseek Thinker"
+                        ]
+                  },
+                  {
+                        label: "L2-32 Argumentation & Decision Frameworks",
+                        servers: [
+                              "Analogical Reasoning Server",
+                              "Chain of Draft Server",
+                              "Chain of Thought",
+                              "Clear Thought",
+                              "Clear Thought Server",
+                              "CoConuT Continuous Chain of Thought Server",
+                              "Collaborative Reasoning Server",
+                              "Decision Framework Server",
+                              "Deepseek Thinker",
+                              "Gemini Thinking"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-13 Mathematics & Computation",
+            l2: [
+                  {
+                        label: "L2-33 Arithmetic & General Calculation",
+                        servers: [
+                              "Add Numbers Server",
+                              "Advanced Calculator Server",
+                              "Base64 Encoder and Decoder Server",
+                              "Cal Server",
+                              "Calculate Server",
+                              "Calculator",
+                              "Calculator Server",
+                              "Calculator Service",
+                              "Cooking Units Converter",
+                              "Expression Evaluation Server"
+                        ]
+                  },
+                  {
+                        label: "L2-34 Scientific & Symbolic Computing",
+                        servers: [
+                              "Advanced Calculator Server",
+                              "Bazi Calculator",
+                              "Calculate Server",
+                              "Calculator Server",
+                              "Rabi MCP Server",
+                              "Scientific Computation MCP Server",
+                              "Wolfram Alpha",
+                              "Wolfram Alpha LLM API"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-14 Media & Entertainment",
+            l2: [
+                  {
+                        label: "L2-35 Video & Audio Processing",
+                        servers: [
+                              "After Effects MCP Server",
+                              "Audio Interface Server",
+                              "Cartesia Voice API Server",
+                              "Daisys Audio Interaction Server",
+                              "ElevenLabs MCP Server",
+                              "Face Detection and Tracking",
+                              "File Convert",
+                              "Flyworks Lipsync Server",
+                              "Ghibli Video Server",
+                              "Music Analysis"
+                        ]
+                  },
+                  {
+                        label: "L2-36 Gaming & Interactive",
+                        servers: [
+                              "CSFloat",
+                              "Chess Server",
+                              "Dice Roller",
+                              "EVE Online Market Data Server",
+                              "Exia Scenario Generator",
+                              "Formula 1 Schedule",
+                              "GameBoy Emulator Server",
+                              "Lemonade Stand Game Server",
+                              "MLB Stats Server",
+                              "MTG Deck Manager and Scryfall Integration"
+                        ]
+                  },
+                  {
+                        label: "L2-37 Arts, Culture & Museums",
+                        servers: [
+                              "Cultural Heritage Server",
+                              "Disney App MCP Server",
+                              "Film Information Server",
+                              "Films MCP Server",
+                              "Movie & TV Data Server",
+                              "Movie Information Server",
+                              "Movie Recommender",
+                              "TMDB Server",
+                              "TV Show Recommender"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-15 Healthcare & Life Sciences",
+            l2: [
+                  {
+                        label: "L2-38 Clinical Medicine & Health",
+                        servers: [
+                              "BMI Calculator",
+                              "BioMCP",
+                              "ClinicalTrials MCP Server",
+                              "Fruityvice Nutrition Info Server",
+                              "Healthcare Data and Medical Information Server",
+                              "Hevy Fitness API MCP Server",
+                              "Intervals.icu MCP Server",
+                              "Medical Calculation Server",
+                              "Medicine MCP Server",
+                              "NIH RePORTER"
+                        ]
+                  },
+                  {
+                        label: "L2-39 Chemistry, Biology & Bioinformatics",
+                        servers: [
+                              "BioMCP",
+                              "Biomart MCP",
+                              "ChEMBL Server",
+                              "Fruityvice Nutrition Info Server",
+                              "Medicine MCP Server",
+                              "PubChem MCP Server",
+                              "Scientific Research Extension",
+                              "Skincare"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-16 Travel & Transportation",
+            l2: [
+                  {
+                        label: "L2-40 Booking & Hospitality",
+                        servers: [
+                              "Airbnb Search and Listing Details Server",
+                              "Airbnb Search and Listing Server",
+                              "Amadeus MCP Server",
+                              "Flight & Stay Search Server (Duffel API)",
+                              "Flight Search Server",
+                              "Flight Search Service",
+                              "Flight and Stay Search Server",
+                              "Hotel Booking Server",
+                              "Korea Tour",
+                              "Korea Tourism API"
+                        ]
+                  },
+                  {
+                        label: "L2-41 Transit, Navigation & Vehicles",
+                        servers: [
+                              "12306 MCP Server",
+                              "Amadeus MCP Server",
+                              "Aviation Data Integration Server",
+                              "Flight & Stay Search Server (Duffel API)",
+                              "Flight and Stay Search Server",
+                              "FlightRadar",
+                              "Flightradar24 Server",
+                              "Fujitsu Social Digital Twin Server",
+                              "GeoPal Travel and Logistics Server",
+                              "Kakao Navigation"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-17 Document & Design",
+            l2: [
+                  {
+                        label: "L2-42 Office & Text Processing",
+                        servers: [
+                              "Cursor Talk to Figma",
+                              "DevHub CMS Integration",
+                              "Document Operations Server",
+                              "Document Reader",
+                              "Draw.io Diagramming Server",
+                              "Elementor MCP Server",
+                              "Elevator Pitch",
+                              "Excel MCP Server",
+                              "Feishu Document Integration Server",
+                              "Feishu(飞书) Integration Server"
+                        ]
+                  },
+                  {
+                        label: "L2-43 Design, UI & Visualization",
+                        servers: [
+                              "Cursor Talk to Figma",
+                              "Draw.io Diagramming Server",
+                              "Drawing Tool for AI Assistants",
+                              "Elementor MCP Server",
+                              "Emoji Hub Server",
+                              "Eraser Diagram Generator",
+                              "Excel MCP Server",
+                              "F2C Design to Code Server",
+                              "Figjam MCP Server",
+                              "Figma API Integration"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-18 News & Trends",
+            l2: [
+                  {
+                        label: "L2-44 News Aggregation & Feeds",
+                        servers: [
+                              "AIDaily",
+                              "Bangla News Server",
+                              "BlockBeats News",
+                              "Cointelegraph News",
+                              "CryptoPanic News Server",
+                              "Cryptocurrency News Server",
+                              "Currents API News Search Server",
+                              "Game Trends",
+                              "GeekNews Server",
+                              "Geo News MCP Server"
+                        ]
+                  },
+                  {
+                        label: "L2-45 Trend Analytics & Monitoring",
+                        servers: [
+                              "App Market Intelligence",
+                              "Bangla News Server",
+                              "Cryptocurrency News Server",
+                              "Game Trends",
+                              "Geo News MCP Server",
+                              "GitHub Trending",
+                              "Google Workshop MCP Server",
+                              "Hacker News",
+                              "Hacker News Integration",
+                              "Juhe News Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-19 Cybersecurity & Network Analysis",
+            l2: [
+                  {
+                        label: "L2-46 Offensive Security & Penetration Testing",
+                        servers: [
+                              "Burpsuite Server",
+                              "Crypto_MCP",
+                              "Damn Vulnerable MCP Server Demo",
+                              "GhidraMCP",
+                              "Intruder",
+                              "Mallory - Cyber Threat Intelligence",
+                              "Nmap Network Scanner Server",
+                              "Nmap Scanner Server",
+                              "OSINT Server",
+                              "OnSecurity"
+                        ]
+                  },
+                  {
+                        label: "L2-47 Network Monitoring & Threat Intelligence",
+                        servers: [
+                              "AIM Guard",
+                              "Better Auth Server",
+                              "Binalyze AIR MCP Server",
+                              "Burpsuite Server",
+                              "CISA M365",
+                              "Chaitin IP Intelligence",
+                              "Demo IP Query",
+                              "EPSS Vulnerability Scoring Server",
+                              "Enrichment MCP Server",
+                              "Have I Been Pwned Integration Server"
+                        ]
+                  }
+            ]
+      },
+      {
+            l1: "L1-20 Communication & General Utilities",
+            l2: [
+                  {
+                        label: "L2-48 Messaging & Notification",
+                        servers: [
+                              "AgentMail MCP Server",
+                              "Aligo SMS API Integration Server",
+                              "Brevo MCP",
+                              "ChannelTalk Integration",
+                              "Chat Logger",
+                              "ChatterBox Meeting Integration Server",
+                              "Clinica nas Nuvens",
+                              "Devin AI Slack Integration Server",
+                              "DingTalk AI Server",
+                              "Discord Webhook MCP Server"
+                        ]
+                  },
+                  {
+                        label: "L2-49 Time, Calendar & Scheduling",
+                        servers: [
+                              "Aligo SMS API Integration Server",
+                              "Amazing Marvin MCP",
+                              "Cal.com Calendar Integration",
+                              "Canvas Integration Server",
+                              "ChatterBox Meeting Integration Server",
+                              "ClickUp Task Integration Server",
+                              "Clinica nas Nuvens",
+                              "Clockify Time Entry Manager",
+                              "Clockify Time Tracking Integration",
+                              "Clockify Time Tracking Integration Server"
+                        ]
+                  },
+                  {
+                        label: "L2-50 Education, Reference & Lifestyle",
+                        servers: [
+                              "AI-Powered Interview Roleplay",
+                              "Anki Integration Server",
+                              "Anki MCP Server",
+                              "Astrology Natal Chart Interpretation Agent",
+                              "Bible Verse Access Server",
+                              "Books Server",
+                              "CSS Tutor",
+                              "Canvas Integration Server",
+                              "Canvas LMS Server",
+                              "Canvas Learning Management System Server"
+                        ]
+                  }
+            ]
       }
-      const html = await response.text();
-      const match = html.match(/const TAXONOMY_DATA = (\[[\s\S]*?\]);\s*let taxonomyState =/);
-      if (!match || !match[1]) {
-        throw new Error("TAXONOMY_DATA not found in index.html");
-      }
-      return Function(`"use strict"; return (${match[1]});`)();
-    }
+];
 
     function initTaxonomySystemWithData(TAXONOMY_DATA) {
       let taxonomyState = {
@@ -2129,24 +2960,8 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const taxonomyData = await loadTaxonomyDataFromIndex();
-        initTaxonomySystemWithData(taxonomyData);
-      } catch (error) {
-        const detail = document.getElementById("taxonomy-detail");
-        const nav = document.getElementById("taxonomy-nav");
-        if (nav) {
-          nav.innerHTML = `<div class="taxonomy-empty">Taxonomy data failed to load.</div>`;
-        }
-        if (detail) {
-          detail.innerHTML = `
-            <h5>Taxonomy is temporarily unavailable</h5>
-            <p>Please keep <code>index.html</code> in the same directory, or embed <code>TAXONOMY_DATA</code> directly in this file.</p>
-          `;
-        }
-        console.error("Failed to initialize taxonomy:", error);
-      }
+    document.addEventListener("DOMContentLoaded", () => {
+      initTaxonomySystemWithData(TAXONOMY_DATA);
     });
   </script>
 
