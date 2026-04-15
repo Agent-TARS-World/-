@@ -27,8 +27,6 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - name: Upload artifact
