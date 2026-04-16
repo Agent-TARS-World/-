@@ -310,7 +310,6 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
     cy = 82 + (22 if has_tax else 0)
 
     for si, (role, full_text) in enumerate(visible):
-        if cy > H - 170: break
         is_typing = (si == len(visible)-1 and typing_chars >= 0)
         text = full_text[:typing_chars] if is_typing else full_text
         fnt = get_role_font(role)
@@ -318,6 +317,8 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
         lines = wrap(text, fnt, TW, d) if is_typing else full_lines
         lh = get_role_lh(role)
         th_full = len(full_lines) * lh
+
+        if cy + th_full + 100 > H - 95: break
 
         # Avatar (in 2x coords)
         if role == 'user':
@@ -524,36 +525,11 @@ def main():
     fc = 0
     tf = int(2.0*FPS)
 
-    # Transition: empty chat interface for ~1s before typing starts
-    empty_frame = render([], 0, frame_idx=0)
-    enp = np.array(empty_frame)
-    for _ in range(int(1.0*FPS)):
-        writer.append_data(enp)
-        fc += 1; tf += 1
-
     for si in range(len(STEPS)):
         role, full_text = STEPS[si]
         tlen = len(full_text)
         start = max(0, si - MAX_VIS + 1)
         visible = list(STEPS[start:si+1])
-
-        if role == 'user':
-            flat_text = full_text.replace('\n', ' ')
-            flat_len = len(flat_text)
-            inp_cpf = 6
-            inp_frames = math.ceil(flat_len / inp_cpf)
-            prev_visible = list(STEPS[start:si]) if si > 0 else []
-            for tf_i in range(inp_frames):
-                chars = min((tf_i+1)*inp_cpf, flat_len)
-                inp_text = flat_text[:chars]
-                disp = inp_text if len(inp_text) < 60 else "…" + inp_text[-58:]
-                frame = render(prev_visible, si, input_text=disp, frame_idx=fc)
-                writer.append_data(np.array(frame))
-                fc += 1; tf += 1
-            for _ in range(3):
-                frame = render(prev_visible, si, frame_idx=fc)
-                writer.append_data(np.array(frame))
-                fc += 1; tf += 1
 
         n_type = math.ceil(tlen / CPF)
         for tf_i in range(n_type):
