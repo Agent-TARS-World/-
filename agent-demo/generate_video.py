@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Generate premium MP4 video for Agent-World demo — 2x supersampled."""
-import os, math
+import os, math, unicodedata
 import numpy as np
 import imageio
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # Output resolution
 W, H = 1920, 1080
-S = 2  # supersampling factor
+S = 1  # no supersampling for fast generation
 RW, RH = W * S, H * S
 FPS = 15
 CPF = 12
@@ -51,6 +51,13 @@ SHADOW_C = (0, 0, 0, 18)  # very subtle black shadow
 # ── Fonts (all at 2x for supersampled rendering) ────────────────────
 TNR      = "/System/Library/Fonts/Supplemental/Times New Roman.ttf"
 TNR_BOLD = "/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf"
+CJK_CANDIDATES = [
+    "/System/Library/Fonts/PingFang.ttc",
+    "/System/Library/Fonts/Hiragino Sans GB.ttc",
+    "/System/Library/Fonts/STHeiti Light.ttc",
+    "/System/Library/Fonts/Supplemental/Songti.ttc",
+    "/Library/Fonts/Arial Unicode.ttf",
+]
 
 def get_font(sz, bold=False):
     if bold and os.path.exists(TNR_BOLD):
@@ -64,6 +71,15 @@ def get_font(sz, bold=False):
             try: return ImageFont.truetype(p, sz)
             except: continue
     return ImageFont.load_default()
+
+def get_cjk_font(sz, bold=False):
+    for p in CJK_CANDIDATES:
+        if os.path.exists(p):
+            try:
+                return ImageFont.truetype(p, sz)
+            except:
+                continue
+    return get_font(sz, bold)
 
 F     = get_font(26*S)
 FS    = get_font(22*S)
@@ -80,6 +96,21 @@ FHDR  = get_font(20*S, True)
 FSTAT = get_font(13*S)
 FTAX  = get_font(14*S)
 FTAXB = get_font(14*S, True)
+F_CJK     = get_cjk_font(26*S)
+FS_CJK    = get_cjk_font(22*S)
+FB_CJK    = get_cjk_font(26*S, True)
+FT_CJK    = get_cjk_font(28*S, True)
+FM_CJK    = get_cjk_font(20*S)
+FG_CJK    = get_cjk_font(15*S, True)
+FTAG_CJK  = get_cjk_font(17*S, True)
+FTAG2_CJK = get_cjk_font(16*S, True)
+FH_CJK    = get_cjk_font(56*S, True)
+FAV_CJK   = get_cjk_font(24*S, True)
+FCODE_CJK = get_cjk_font(18*S)
+FHDR_CJK  = get_cjk_font(20*S, True)
+FSTAT_CJK = get_cjk_font(13*S)
+FTAX_CJK  = get_cjk_font(14*S)
+FTAXB_CJK = get_cjk_font(14*S, True)
 
 # ── Logo ────────────────────────────────────────────────────────────
 logo_img = None
@@ -89,6 +120,10 @@ if os.path.exists(LOGO_PATH):
     logo_img = Image.open(LOGO_PATH).convert("RGBA")
     iw = int(logo_img.width * 0.48)
     logo_icon = logo_img.crop((0, 0, iw, logo_img.height))
+
+_wrap_cache = {}
+_base_frame_cache = {}
+_measure_cache = {}
 
 # ── Steps data ──────────────────────────────────────────────────────
 STEPS = [
@@ -120,15 +155,15 @@ AV_SZ = 72 * S
 _shadow_cache = {}
 
 def make_shadow(w, h, radius, blur_r=8):
-    """Create a soft drop shadow image (RGBA)."""
+    """Create a soft drop shadow image (RGBA) with caching."""
     key = (w, h, radius, blur_r)
     if key in _shadow_cache:
         return _shadow_cache[key]
-    pad = blur_r * 3
+    pad = blur_r * 2
     sw, sh = w + pad*2, h + pad*2
     shadow = Image.new('RGBA', (sw, sh), (0,0,0,0))
     sd = ImageDraw.Draw(shadow)
-    sd.rounded_rectangle([pad, pad, pad+w, pad+h], radius=radius, fill=(0,0,0,22))
+    sd.rounded_rectangle([pad, pad, pad+w, pad+h], radius=radius, fill=(0,0,0,18))
     shadow = shadow.filter(ImageFilter.GaussianBlur(radius=blur_r))
     _shadow_cache[key] = shadow
     return shadow
@@ -209,19 +244,82 @@ def draw_avatar(img, draw, x, y, role):
         draw.rounded_rectangle([x,y,x+sz,y+sz], radius=16*S, fill=ENV_AV, outline=TOOL_BD, width=2*S)
         draw_env_icon(draw, x, y, sz, TOOL_TX)
 
-def wrap(text, font, mw, draw):
+def is_cjk_char(ch):
+    if not ch:
+        return False
+    return unicodedata.east_asian_width(ch) in ("W", "F")
+
+def text_width(draw, text, font):
+    key = (text, id(font))
+    if key not in _measure_cache:
+        bb = draw.textbbox((0, 0), text, font=font)
+        _measure_cache[key] = bb[2] - bb[0]
+    return _measure_cache[key]
+
+def pick_font(ch, latin_font, cjk_font):
+    return cjk_font if cjk_font and is_cjk_char(ch) else latin_font
+
+def mixed_text_width(draw, text, latin_font, cjk_font=None):
+    if not text:
+        return 0
+    width = 0
+    for ch in text:
+        width += text_width(draw, ch, pick_font(ch, latin_font, cjk_font))
+    return width
+
+def draw_mixed_text(draw, x, y, text, fill, latin_font, cjk_font=None):
+    if not text:
+        return
+    cx = x
+    seg = ""
+    seg_font = None
+    for ch in text:
+        ch_font = pick_font(ch, latin_font, cjk_font)
+        if seg_font is None or ch_font == seg_font:
+            seg += ch
+            seg_font = ch_font
+            continue
+        draw.text((cx, y), seg, fill=fill, font=seg_font)
+        cx += text_width(draw, seg, seg_font)
+        seg = ch
+        seg_font = ch_font
+    if seg:
+        draw.text((cx, y), seg, fill=fill, font=seg_font)
+
+def wrap(text, font, mw, draw, cjk_font=None):
+    key = (text, id(font), id(cjk_font) if cjk_font else 0, mw * S)
+    if key in _wrap_cache:
+        return _wrap_cache[key]
     mw2 = mw * S
     lines = []
     for p in text.split('\n'):
         if not p: lines.append(''); continue
         cur = ''
+        cur_w = 0
         for ch in p:
-            t = cur + ch
-            if draw.textbbox((0,0), t, font=font)[2] > mw2 and cur:
-                lines.append(cur); cur = ch
-            else: cur = t
+            ch_w = text_width(draw, ch, pick_font(ch, font, cjk_font))
+            if cur and cur_w + ch_w > mw2:
+                lines.append(cur)
+                cur = ch
+                cur_w = ch_w
+            else:
+                cur += ch
+                cur_w += ch_w
         if cur: lines.append(cur)
+    _wrap_cache[key] = lines
     return lines
+
+def get_base_frame(step_num):
+    key = (
+        step_num, len(STEPS), VIDEO_TITLE, VIDEO_L1, VIDEO_L2, VIDEO_L3,
+    )
+    if key not in _base_frame_cache:
+        img = Image.new('RGBA', (RW, RH), BG + (255,))
+        d = ImageDraw.Draw(img)
+        draw_header(img, d, step_num, len(STEPS))
+        draw_input_bar(d, text="", cursor=False, frame_idx=0)
+        _base_frame_cache[key] = img
+    return _base_frame_cache[key].copy()
 
 def paste_logo_header(img, x, y, h):
     if logo_img is None: return 0
@@ -292,33 +390,108 @@ def get_role_font(role):
     if role == 'think': return FS
     return F
 
+def get_role_cjk_font(role):
+    if role == 'fn': return FCODE_CJK
+    if role in ('tool','answer'): return FM_CJK
+    if role == 'think': return FS_CJK
+    return F_CJK
+
 def get_role_lh(role):
     if role in ('fn','tool','think'): return 28
     return 32
 
+def get_entry_overhead(role):
+    if role == 'user':
+        return 38 + 24 + 10
+    if role == 'think':
+        return 38 + 26 + 20 + 10
+    if role == 'fn':
+        return 38 + 26 + 22 + 8
+    if role == 'tool':
+        return 38 + 26 + 20 + 10
+    if role == 'answer':
+        return 38 + 26 + 26 + 10
+    return 38 + 16
+
+def get_entry_total_height(role, full_line_count):
+    return get_entry_overhead(role) + full_line_count * get_role_lh(role)
+
 # ── Main render ─────────────────────────────────────────────────────
 def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", frame_idx=0):
-    img = Image.new('RGBA', (RW,RH), BG + (255,))
+    img = get_base_frame(step_num)
     d = ImageDraw.Draw(img)
-    draw_header(img, d, step_num, len(STEPS))
-    draw_input_bar(d, text=input_text, cursor=bool(input_text), frame_idx=frame_idx)
+    if input_text:
+        draw_input_bar(d, text=input_text, cursor=bool(input_text), frame_idx=frame_idx)
 
     CW = 1200; BW = CW - 10; TW = BW - 30
     LX = (W - CW) // 2
     RX = LX + CW
     has_tax = bool(VIDEO_L1 or VIDEO_L2 or VIDEO_L3)
-    cy = 82 + (22 if has_tax else 0)
+    cy0 = 82 + (22 if has_tax else 0)
+    bottom_limit = H - 95 - 10
+    available_h = bottom_limit - cy0
 
+    prepared = []
     for si, (role, full_text) in enumerate(visible):
         is_typing = (si == len(visible)-1 and typing_chars >= 0)
         text = full_text[:typing_chars] if is_typing else full_text
         fnt = get_role_font(role)
-        full_lines = wrap(full_text, fnt, TW, d)
-        lines = wrap(text, fnt, TW, d) if is_typing else full_lines
+        cjk_fnt = get_role_cjk_font(role)
+        full_lines = wrap(full_text, fnt, TW, d, cjk_fnt)
+        lines = wrap(text, fnt, TW, d, cjk_fnt) if is_typing else full_lines
+        layout_lc = max(1, len(lines)) if is_typing else len(full_lines)
         lh = get_role_lh(role)
-        th_full = len(full_lines) * lh
+        overhead = get_entry_overhead(role)
+        prepared.append({
+            "role": role,
+            "lines": lines,
+            "full_lines": full_lines,
+            "lh": lh,
+            "is_typing": is_typing,
+            "fnt": fnt,
+            "cjk_fnt": cjk_fnt,
+            "overhead": overhead,
+            "lc": layout_lc,
+            "total_h": overhead + layout_lc * lh,
+            "skip_top": 0,
+        })
 
-        if cy + th_full + 100 > H - 95: break
+    kept = []
+    remaining = available_h
+    for entry in reversed(prepared):
+        if entry["total_h"] <= remaining:
+            kept.append(entry)
+            remaining -= entry["total_h"]
+            continue
+        if not kept:
+            kept.append(entry)
+        break
+    kept.reverse()
+
+    total_kept_h = sum(e["total_h"] for e in kept)
+    if total_kept_h > available_h:
+        target = kept[-1]
+        others_h = total_kept_h - target["total_h"]
+        max_lines = max(1, (available_h - others_h - target["overhead"]) // target["lh"])
+        new_lc = min(target["lc"], max_lines)
+        if new_lc < target["lc"]:
+            target["skip_top"] = target["lc"] - new_lc
+            target["lc"] = new_lc
+            target["total_h"] = target["overhead"] + new_lc * target["lh"]
+        total_kept_h = sum(e["total_h"] for e in kept)
+
+    cy = cy0
+    for entry in kept:
+        role = entry["role"]
+        all_lines = entry["lines"]
+        skip = entry["skip_top"]
+        lines = all_lines[skip:skip + entry["lc"]] if skip or entry["lc"] < len(all_lines) else all_lines
+        full_lines = entry["full_lines"]
+        lh = entry["lh"]
+        is_typing = entry["is_typing"]
+        fnt = entry["fnt"]
+        cjk_fnt = entry["cjk_fnt"]
+        th_full = entry["lc"] * lh
 
         # Avatar (in 2x coords)
         if role == 'user':
@@ -347,20 +520,17 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
             bh = th_full + 24
             bw = min(BW, TW + 40)
             ubx = RX - bw
-            # Shadow
             shadow = make_shadow(bw*S, bh*S, 14*S, 10*S)
-            pad = 10*3*S*S
-            simg = Image.new('RGBA', img.size, (0,0,0,0))
-            simg.paste(shadow, (ubx*S - pad, cy*S - pad + 4*S))
-            img = Image.alpha_composite(img, simg)
+            pad = 10*2*S
+            img.paste(shadow, (ubx*S - pad, cy*S - pad + 4*S), shadow)
             d = ImageDraw.Draw(img)
             # Card
             d.rounded_rectangle([ubx*S, cy*S, (ubx+bw)*S, (cy+bh)*S], radius=14*S, fill=USR_BG)
             for i,l in enumerate(lines):
-                d.text((ubx*S+14*S, cy*S+12*S+i*lh*S), l, fill=WHITE, font=F)
+                draw_mixed_text(d, ubx*S+14*S, cy*S+12*S+i*lh*S, l, WHITE, F, F_CJK)
             if is_typing and lines:
                 last = lines[-1]
-                cw_t = d.textbbox((0,0), last, font=F)[2]
+                cw_t = mixed_text_width(d, last, F, F_CJK)
                 if (frame_idx//4)%2==0:
                     ly = cy*S+13*S+(len(lines)-1)*lh*S
                     d.rectangle([ubx*S+14*S+cw_t+2*S, ly, ubx*S+14*S+cw_t+4*S, ly+lh*S-8*S], fill=CURSOR_C)
@@ -370,21 +540,18 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
             bh = th_full + 20
             d.text((bx*S+14*S, cy*S), "THINKING", fill=THK_TX, font=FTAG)
             cy += 26
-            # Shadow
             shadow = make_shadow(BW*S, bh*S, 8*S, 6*S)
-            pad = 6*3*S*S
-            simg = Image.new('RGBA', img.size, (0,0,0,0))
-            simg.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S))
-            img = Image.alpha_composite(img, simg)
+            pad = 6*2*S
+            img.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S), shadow)
             d = ImageDraw.Draw(img)
             # Left accent bar
             d.rounded_rectangle([bx*S, cy*S, bx*S+4*S, (cy+bh)*S], radius=2*S, fill=THK_BAR)
             d.rounded_rectangle([(bx+10)*S, cy*S, (bx+BW)*S, (cy+bh)*S], radius=8*S, fill=THK_BG, outline=THK_BD, width=S)
             for i,l in enumerate(lines):
-                d.text((bx*S+22*S, cy*S+10*S+i*lh*S), l, fill=THK_TX, font=FS)
+                draw_mixed_text(d, bx*S+22*S, cy*S+10*S+i*lh*S, l, THK_TX, FS, FS_CJK)
             if is_typing and lines:
                 last = lines[-1]
-                cw_t = d.textbbox((0,0), last, font=FS)[2]
+                cw_t = mixed_text_width(d, last, FS, FS_CJK)
                 if (frame_idx//4)%2==0:
                     ly = cy*S+11*S+(len(lines)-1)*lh*S
                     d.rectangle([bx*S+22*S+cw_t+2*S, ly, bx*S+22*S+cw_t+4*S, ly+lh*S-8*S], fill=THK_BAR)
@@ -395,18 +562,16 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
             d.text((bx*S+14*S, cy*S), "FUNCTION CALL", fill=PRI_L, font=FTAG)
             cy += 26
             shadow = make_shadow(BW*S, bh*S, 8*S, 6*S)
-            pad = 6*3*S*S
-            simg = Image.new('RGBA', img.size, (0,0,0,0))
-            simg.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S))
-            img = Image.alpha_composite(img, simg)
+            pad = 6*2*S
+            img.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S), shadow)
             d = ImageDraw.Draw(img)
             d.rounded_rectangle([bx*S, cy*S, bx*S+4*S, (cy+bh)*S], radius=2*S, fill=PRI)
             d.rounded_rectangle([(bx+10)*S, cy*S, (bx+BW)*S, (cy+bh)*S], radius=8*S, fill=FN_BG, outline=FN_BD, width=S)
             for i,l in enumerate(lines):
-                d.text((bx*S+22*S, cy*S+10*S+i*lh*S), l, fill=TEXT, font=FCODE)
+                draw_mixed_text(d, bx*S+22*S, cy*S+10*S+i*lh*S, l, TEXT, FCODE, FCODE_CJK)
             if is_typing and lines:
                 last = lines[-1]
-                cw_t = d.textbbox((0,0), last, font=FCODE)[2]
+                cw_t = mixed_text_width(d, last, FCODE, FCODE_CJK)
                 if (frame_idx//4)%2==0:
                     ly = cy*S+11*S+(len(lines)-1)*lh*S
                     d.rectangle([bx*S+22*S+cw_t+2*S, ly, bx*S+22*S+cw_t+4*S, ly+lh*S-8*S], fill=PRI)
@@ -417,18 +582,16 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
             d.text((bx*S+14*S, cy*S), "TOOL RESULT", fill=AMBER, font=FTAG)
             cy += 26
             shadow = make_shadow(BW*S, bh*S, 8*S, 6*S)
-            pad = 6*3*S*S
-            simg = Image.new('RGBA', img.size, (0,0,0,0))
-            simg.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S))
-            img = Image.alpha_composite(img, simg)
+            pad = 6*2*S
+            img.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 3*S), shadow)
             d = ImageDraw.Draw(img)
             d.rounded_rectangle([bx*S, cy*S, bx*S+4*S, (cy+bh)*S], radius=2*S, fill=AMBER)
             d.rounded_rectangle([(bx+10)*S, cy*S, (bx+BW)*S, (cy+bh)*S], radius=8*S, fill=TOOL_BG, outline=TOOL_BD, width=S)
             for i,l in enumerate(lines):
-                d.text((bx*S+22*S, cy*S+10*S+i*lh*S), l, fill=TOOL_TX, font=FM)
+                draw_mixed_text(d, bx*S+22*S, cy*S+10*S+i*lh*S, l, TOOL_TX, FM, FM_CJK)
             if is_typing and lines:
                 last = lines[-1]
-                cw_t = d.textbbox((0,0), last, font=FM)[2]
+                cw_t = mixed_text_width(d, last, FM, FM_CJK)
                 if (frame_idx//4)%2==0:
                     ly = cy*S+11*S+(len(lines)-1)*lh*S
                     d.rectangle([bx*S+22*S+cw_t+2*S, ly, bx*S+22*S+cw_t+4*S, ly+lh*S-8*S], fill=AMBER)
@@ -439,30 +602,28 @@ def render(visible, step_num, typing_role=None, typing_chars=-1, input_text="", 
             d.text((bx*S+14*S, cy*S), "FINAL ANSWER", fill=GREEN, font=FTAG)
             cy += 26
             shadow = make_shadow(BW*S, bh*S, 10*S, 8*S)
-            pad = 8*3*S*S
-            simg = Image.new('RGBA', img.size, (0,0,0,0))
-            simg.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 4*S))
-            img = Image.alpha_composite(img, simg)
+            pad = 8*2*S
+            img.paste(shadow, ((bx+10)*S - pad, cy*S - pad + 4*S), shadow)
             d = ImageDraw.Draw(img)
             d.rounded_rectangle([bx*S, cy*S, bx*S+4*S, (cy+bh)*S], radius=2*S, fill=GREEN)
             d.rounded_rectangle([(bx+10)*S, cy*S, (bx+BW)*S, (cy+bh)*S], radius=10*S, fill=ANS_BG, outline=ANS_BD, width=2*S)
             for i,l in enumerate(lines):
-                d.text((bx*S+24*S, cy*S+12*S+i*lh*S), l, fill=ANS_TX, font=FM)
+                draw_mixed_text(d, bx*S+24*S, cy*S+12*S+i*lh*S, l, ANS_TX, FM, FM_CJK)
             if is_typing and lines:
                 last = lines[-1]
-                cw_t = d.textbbox((0,0), last, font=FM)[2]
+                cw_t = mixed_text_width(d, last, FM, FM_CJK)
                 if (frame_idx//4)%2==0:
                     ly = cy*S+13*S+(len(lines)-1)*lh*S
                     d.rectangle([bx*S+24*S+cw_t+2*S, ly, bx*S+24*S+cw_t+4*S, ly+lh*S-8*S], fill=GREEN)
             cy += bh + 10
 
-    # Downscale 2x → 1x with high-quality LANCZOS
-    return img.convert('RGB').resize((W, H), Image.LANCZOS)
+    if S > 1:
+        return img.convert('RGB').resize((W, H), Image.LANCZOS)
+    return img.convert('RGB')
 
 # ── Main ────────────────────────────────────────────────────────────
 def main():
-    print("Generating premium streaming video (2x supersampled)...")
-    MAX_VIS = 4
+    print("Generating cached streaming video...")
 
     # Title frame
     ti = Image.new('RGBA', (RW,RH), BG + (255,))
@@ -511,12 +672,12 @@ def main():
             if pi < len(parts)-1:
                 td.text((tax_x, tax_y), sep_str, fill=TEXT3, font=FTITLE_TAX)
                 tax_x += td.textbbox((0,0), sep_str, font=FTITLE_TAX)[2]
-    ti_final = ti.convert('RGB').resize((W,H), Image.LANCZOS)
+    ti_final = ti.convert('RGB').resize((W,H), Image.LANCZOS) if S > 1 else ti.convert('RGB')
 
     print(f"Writing MP4 to {OUT} ...")
     writer = imageio.get_writer(OUT, fps=FPS, codec='libx264',
                                 pixelformat='yuv420p', macro_block_size=2,
-                                quality=8, output_params=['-crf', '18'])
+                                quality=8, output_params=['-preset', 'veryfast', '-crf', '20'])
 
     tnp = np.array(ti_final)
     for _ in range(int(2.0*FPS)):
@@ -528,12 +689,13 @@ def main():
     for si in range(len(STEPS)):
         role, full_text = STEPS[si]
         tlen = len(full_text)
-        start = max(0, si - MAX_VIS + 1)
-        visible = list(STEPS[start:si+1])
+        visible = list(STEPS[:si+1])
 
-        n_type = math.ceil(tlen / CPF)
+        max_typing_frames = 30
+        cpf = max(CPF, math.ceil(tlen / max_typing_frames)) if tlen > 0 else CPF
+        n_type = math.ceil(tlen / cpf)
         for tf_i in range(n_type):
-            chars = min((tf_i+1)*CPF, tlen)
+            chars = min((tf_i+1)*cpf, tlen)
             frame = render(visible, si+1, typing_role=role, typing_chars=chars, frame_idx=fc)
             writer.append_data(np.array(frame))
             fc += 1; tf += 1
@@ -562,6 +724,7 @@ def generate_video_for(title, steps, output_path, l1="", l2="", l3=""):
     VIDEO_L1 = l1
     VIDEO_L2 = l2
     VIDEO_L3 = l3
+    _base_frame_cache.clear()
     main()
 
 if __name__ == '__main__':
