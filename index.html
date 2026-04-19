@@ -55,8 +55,111 @@
     .ruc-logo {
       height: 1.65rem;
       max-height: unset;
-      margin-right: 0.42rem;
+      margin-right: 0;
       width: auto;
+    }
+    .aw-brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: nowrap;
+    }
+    .aw-brand-logos {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-shrink: 0;
+    }
+    .aw-brand-seed-logo {
+      height: 1.45rem;
+      width: auto;
+      max-height: unset;
+      display: block;
+      flex-shrink: 0;
+    }
+    .aw-brand-divider {
+      color: #cbd5e1;
+      font-weight: 400;
+      padding: 0 0.1rem;
+      flex-shrink: 0;
+    }
+    .aw-brand-title {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      padding-left: 0.15rem;
+    }
+    .navbar-end .navbar-item.has-dropdown {
+      border-bottom: none !important;
+    }
+    .navbar-end .navbar-item.has-dropdown > .navbar-link {
+      color: #64748b !important;
+      font-weight: 500 !important;
+      border-bottom: 3px solid transparent !important;
+      transition: color 0.2s ease, border-color 0.2s ease !important;
+    }
+    .navbar-end .navbar-item.has-dropdown:hover > .navbar-link,
+    .navbar-end .navbar-item.has-dropdown.is-active > .navbar-link {
+      color: #3a76ed !important;
+      border-bottom-color: #3a76ed !important;
+    }
+    .navbar-end .navbar-dropdown {
+      border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      padding: 0.4rem 0;
+      min-width: 13rem;
+    }
+    .navbar-end .navbar-dropdown .navbar-item {
+      font-size: 0.92rem;
+    }
+
+    /* Language switch (We-Math–style segmented control, top-right) */
+    .aw-lang-switch-wrap.navbar-item {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+      border-bottom: none !important;
+    }
+    .aw-lang-switch-wrap.navbar-item:hover {
+      transform: none !important;
+      color: #64748b !important;
+      background: transparent !important;
+    }
+    .aw-lang-switch {
+      display: inline-flex;
+      align-items: stretch;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f1f5f9;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .aw-lang-pill {
+      border: none;
+      margin: 0;
+      background: transparent;
+      padding: 0.32rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      color: #64748b;
+      line-height: 1.25;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .aw-lang-pill:hover {
+      color: #334155;
+      background: rgba(255, 255, 255, 0.65);
+    }
+    .aw-lang-pill.is-active {
+      background: #fff;
+      color: #3a76ed;
+      box-shadow: 0 1px 4px rgba(58, 118, 237, 0.12);
+    }
+    .taxonomy-lang-hint {
+      margin: 0.5rem 0 0;
+      font-size: 0.8rem;
+      color: #94a3b8;
     }
 
     /* ── Hero: Animated Mesh Gradient + Floating Orbs ── */
@@ -907,10 +1010,15 @@
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="#">
-          <img src="figs/ruc%20logo.png" alt="Renmin University of China logo" class="left-logo ruc-logo">
-          <img src="figs/seed_logo.png" alt="Seed logo" style="height: 1.5rem; max-height: unset;" class="left-logo">
-          | Agent-World
+        <a class="navbar-item" href="#" aria-label="Agent-World home">
+          <span class="aw-brand-lockup">
+            <span class="aw-brand-logos">
+              <img src="figs/ruc%20logo.png" alt="Renmin University of China logo" class="left-logo ruc-logo">
+              <img src="figs/seed_logo.png" alt="ByteDance Seed" class="left-logo aw-brand-seed-logo">
+            </span>
+            <span class="aw-brand-divider" aria-hidden="true">|</span>
+            <span class="aw-brand-title">Agent-World</span>
+          </span>
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
@@ -920,13 +1028,28 @@
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
-          <a class="navbar-item" href="#overview">Overview</a>
-          <a class="navbar-item" href="#demos">Demos</a>
-          <a class="navbar-item" href="#capabilities">Capabilities</a>
-          <a class="navbar-item" href="#abstract">Abstract</a>
-          <a class="navbar-item" href="#method">Method</a>
-          <a class="navbar-item" href="#experiments">Experiments</a>
-          <a class="navbar-item" href="#citation">Citation</a>
+          <a class="navbar-item" href="#overview" data-i18n="nav.overview">Overview</a>
+          <a class="navbar-item" href="#demos" data-i18n="nav.demos">Demos</a>
+          <a class="navbar-item" href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
+          <a class="navbar-item" href="#abstract" data-i18n="nav.abstract">Abstract</a>
+          <a class="navbar-item" href="#method" data-i18n="nav.method">Method</a>
+          <a class="navbar-item" href="#experiments" data-i18n="nav.experiments">Experiments</a>
+          <a class="navbar-item" href="#citation" data-i18n="nav.citation">Citation</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#" data-i18n="nav.more_research">More Research</a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="https://seed-tars.com/1/" target="_blank" rel="noopener noreferrer">UI-TARS 1.0</a>
+              <a class="navbar-item" href="https://seed-tars.com/1.5/" target="_blank" rel="noopener noreferrer">UI-TARS 1.5</a>
+              <a class="navbar-item" href="https://seed-tars.com/showcase/ui-tars-2" target="_blank" rel="noopener noreferrer">UI-TARS 2</a>
+              <a class="navbar-item" href="https://seed-tars.com/game-tars/" target="_blank" rel="noopener noreferrer">Game-TARS</a>
+            </div>
+          </div>
+          <div class="navbar-item aw-lang-switch-wrap" role="group" aria-label="Language">
+            <div class="aw-lang-switch">
+              <button type="button" class="aw-lang-pill is-active" data-aw-lang="en">English</button>
+              <button type="button" class="aw-lang-pill" data-aw-lang="zh">中文</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -940,31 +1063,31 @@
     <div class="hero-body">
       <div class="container">
         <div class="has-text-centered">
-          <div class="aw-hero-badge">Self-Evolving Agent Training Arena</div>
+          <div class="aw-hero-badge" data-i18n="hero.badge">Self-Evolving Agent Training Arena</div>
           <h1 class="publication-title">
             <span><em class="dnerf">Agent-World</em></span>
           </h1>
-          <p class="aw-hero-tagline">Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence</p>
+          <p class="aw-hero-tagline" data-i18n-html="hero.tagline">Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence</p>
 
           <div class="aw-hero-stats">
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">2,000+</span>
-              <span class="aw-hero-stat-label">Environments</span>
+              <span class="aw-hero-stat-label" data-i18n="hero.stat_env">Environments</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">19K+</span>
-              <span class="aw-hero-stat-label">Tools</span>
+              <span class="aw-hero-stat-label" data-i18n="hero.stat_tools">Tools</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">23</span>
-              <span class="aw-hero-stat-label">Benchmarks</span>
+              <span class="aw-hero-stat-label" data-i18n="hero.stat_bench">Benchmarks</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">20</span>
-              <span class="aw-hero-stat-label">Categories</span>
+              <span class="aw-hero-stat-label" data-i18n="hero.stat_cat">Categories</span>
             </div>
           </div>
 
@@ -972,16 +1095,16 @@
             <span class="link-block">
               <span class="button is-dark is-static">
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span>Paper (Coming Soon)</span>
+                <span data-i18n="hero.paper_soon">Paper (Coming Soon)</span>
               </span>
             </span>
           </div>
 
           <div class="aw-hero-authors">
-            <span>Guanting Dong<sup>1,2,*</sup></span>
+            <span>Guanting Dong<sup>1,*</sup></span>
             <span>Junting Lu<sup>2</sup></span>
             <span>Junjie Huang<sup>2,*</sup></span>
-            <span>Wanjun Zhong<sup>2</sup></span>
+            <span>Wanjun Zhong<sup>2,&#8224;</sup></span>
             <span>Longxiang Liu<sup>2</sup></span>
             <span>Shijue Huang<sup>2,*</sup></span>
             <span>Zhenyu Li<sup>2</sup></span>
@@ -989,18 +1112,18 @@
             <span>Xiaoshuai Song<sup>1</sup></span>
             <span>Xiaoxi Li<sup>1</sup></span>
             <span>Jiajie Jin<sup>1</sup></span>
+            <span>Yutao Zhu<sup>1</sup></span>
             <span>Hanbin Wang<sup>2,*</sup></span>
             <span>Fangyu Lei<sup>2,*</sup></span>
             <span>Qinyu Luo<sup>2</sup></span>
             <span>Mingyang Chen<sup>2</sup></span>
             <span>Zehui Chen<sup>2</sup></span>
             <span>Jiazhan Feng<sup>2</sup></span>
-            <span>Yutao Zhu<sup>1</sup></span>
-            <span>Zhicheng Dou<sup>1,&#8224;</sup></span>
             <span>Ji-Rong Wen<sup>1</sup></span>
+            <span>Zhicheng Dou<sup>1,&#8224;</sup></span>
           </div>
           <div class="aw-hero-affil">
-            <sup>1</sup>Renmin University of China &nbsp;&nbsp; <sup>2</sup>ByteDance Seed &nbsp;&nbsp; <sup>*</sup>Work done at ByteDance Seed &nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author
+            <sup>1</sup>Gaoling School of Artificial Intelligence, Renmin University of China &nbsp;&nbsp; <sup>2</sup>ByteDance Seed &nbsp;&nbsp; <sup>*</sup>Work was done during their internship at ByteDance Seed &nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author
           </div>
 
           <a href="#overview" class="aw-scroll-hint" aria-label="scroll down">
@@ -1015,8 +1138,8 @@
   <section class="section aw-showcase" id="overview">
     <div class="container">
       <div style="max-width:950px;margin:0 auto;">
-        <h2 class="title is-3 has-text-centered">What is Agent-World?</h2>
-        <p style="font-size:1.08rem;color:#475569;line-height:1.85;text-align:justify;margin-bottom:2.5rem;">
+        <h2 class="title is-3 has-text-centered" data-i18n="overview.title">What is Agent-World?</h2>
+        <p class="aw-overview-lead" style="font-size:1.08rem;color:#475569;line-height:1.85;text-align:justify;margin-bottom:2.5rem;" data-i18n-html="overview.lead">
           A self-evolving training arena that unifies <strong>scalable environment synthesis</strong>
           with <strong>continuous agent training</strong> — autonomously mining real-world tool ecosystems,
           synthesizing verifiable tasks, and driving agents to evolve through diagnostic feedback loops.
@@ -1530,20 +1653,21 @@
 
             <div class="taxonomy-system" id="taxonomy-system">
               <div class="taxonomy-system-header">
-                <h4>Environment Taxonomy Mapping (L1 -&gt; L2 -&gt; L3 Examples)</h4>
-                <p>Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.</p>
+                <h4 data-i18n="taxonomy.title">Environment Taxonomy Mapping (L1 -&gt; L2 -&gt; L3 Examples)</h4>
+                <p data-i18n="taxonomy.intro">Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.</p>
+                <p class="taxonomy-lang-hint" data-i18n="taxonomy.lang_hint">Tip: Use English / 中文 in the top-right to switch interface language (taxonomy data stays English).</p>
                 <div class="taxonomy-counts">
-                  <span class="taxonomy-count-chip">L1 Categories: 20</span>
-                  <span class="taxonomy-count-chip">L2 Labels: 50</span>
-                  <span class="taxonomy-count-chip">L3 Servers (Total): 1,978</span>
+                  <span class="taxonomy-count-chip" data-i18n="taxonomy.chip_l1">L1 Categories: 20</span>
+                  <span class="taxonomy-count-chip" data-i18n="taxonomy.chip_l2">L2 Labels: 50</span>
+                  <span class="taxonomy-count-chip" data-i18n="taxonomy.chip_l3">L3 Servers (Total): 1,978</span>
                 </div>
-                <input id="taxonomy-search" class="taxonomy-search" type="text" placeholder="Search by L1 / L2 / server name..." aria-label="Search taxonomy labels and servers">
+                <input id="taxonomy-search" class="taxonomy-search" type="text" placeholder="Search by L1 / L2 / server name..." aria-label="Search taxonomy labels and servers" data-i18n-placeholder="taxonomy.search_ph" data-i18n-aria="taxonomy.search_aria">
               </div>
               <div class="taxonomy-layout">
                 <div class="taxonomy-nav" id="taxonomy-nav"></div>
                 <div class="taxonomy-detail" id="taxonomy-detail">
-                  <h5>Select one L2 label</h5>
-                  <p>The representative server list will appear here.</p>
+                  <h5 data-i18n="taxonomy.placeholder_title">Select one L2 label</h5>
+                  <p data-i18n="taxonomy.placeholder_desc">The representative server list will appear here.</p>
                 </div>
               </div>
             </div>
@@ -1903,7 +2027,7 @@
           <div class="content">
 <pre><code>@article{dong2026agentworld,
   title   = {Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence},
-  author  = {Dong, Guanting and Lu, Junting and Huang, Junjie and Zhong, Wanjun and Liu, Longxiang and Huang, Shijue and Li, Zhenyu and Zhao, Yang and Song, Xiaoshuai and Li, Xiaoxi and Jin, Jiajie and Wang, Hanbin and Lei, Fangyu and Luo, Qinyu and Chen, Mingyang and Chen, Zehui and Feng, Jiazhan and Zhu, Yutao and Dou, Zhicheng and Wen, Ji-Rong},
+  author  = {Dong, Guanting and Lu, Junting and Huang, Junjie and Zhong, Wanjun and Liu, Longxiang and Huang, Shijue and Li, Zhenyu and Zhao, Yang and Song, Xiaoshuai and Li, Xiaoxi and Jin, Jiajie and Zhu, Yutao and Wang, Hanbin and Lei, Fangyu and Luo, Qinyu and Chen, Mingyang and Chen, Zehui and Feng, Jiazhan and Wen, Ji-Rong and Dou, Zhicheng},
   journal = {arXiv preprint},
   year    = {2026}
 }
@@ -1919,9 +2043,9 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-10">
-          <h2 class="title is-3">Acknowledgment</h2>
+          <h2 class="title is-3" data-i18n="ack.title">Acknowledgment</h2>
           <div class="content">
-            <p>We greatly thank Wanjun Zhong, Yujia Qin and Guang Shi for supporting this work and providing valuable suggestions. We also thank Yifei Chen for valuable discussions.</p>
+            <p data-i18n-html="ack.body">We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.</p>
           </div>
         </div>
       </div>
@@ -1931,12 +2055,154 @@
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
-        <p>Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed.</p>
+        <p data-i18n-html="footer.line">Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed.</p>
       </div>
     </div>
   </footer>
 
   <script>
+    (function () {
+      const STORAGE_KEY = "aw-lang";
+      const messages = {
+        en: {
+          "nav.overview": "Overview",
+          "nav.demos": "Demos",
+          "nav.capabilities": "Capabilities",
+          "nav.abstract": "Abstract",
+          "nav.method": "Method",
+          "nav.experiments": "Experiments",
+          "nav.citation": "Citation",
+          "nav.more_research": "More Research",
+          "hero.badge": "Self-Evolving Agent Training Arena",
+          "hero.tagline": "Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence",
+          "hero.stat_env": "Environments",
+          "hero.stat_tools": "Tools",
+          "hero.stat_bench": "Benchmarks",
+          "hero.stat_cat": "Categories",
+          "hero.paper_soon": "Paper (Coming Soon)",
+          "overview.title": "What is Agent-World?",
+          "overview.lead": "A self-evolving training arena that unifies <strong>scalable environment synthesis</strong> with <strong>continuous agent training</strong> — autonomously mining real-world tool ecosystems, synthesizing verifiable tasks, and driving agents to evolve through diagnostic feedback loops.",
+          "taxonomy.title": "Environment Taxonomy Mapping (L1 → L2 → L3 Examples)",
+          "taxonomy.intro": "Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.",
+          "taxonomy.lang_hint": "Tip: Use English / 中文 in the top-right to switch interface language (taxonomy data stays English).",
+          "taxonomy.chip_l1": "L1 Categories: 20",
+          "taxonomy.chip_l2": "L2 Labels: 50",
+          "taxonomy.chip_l3": "L3 Servers (Total): 1,978",
+          "taxonomy.search_ph": "Search by L1 / L2 / server name...",
+          "taxonomy.search_aria": "Search taxonomy labels and servers",
+          "taxonomy.placeholder_title": "Select one L2 label",
+          "taxonomy.placeholder_desc": "The representative server list will appear here.",
+          "taxonomy.copy_btn": "Copy 10 L3 Examples",
+          "taxonomy.l3_list_title": "Representative L3 Servers (10)",
+          "taxonomy.no_results_title": "No matching taxonomy entries",
+          "taxonomy.try_keyword": "Try another keyword (supports L1, L2, and server names).",
+          "taxonomy.no_match": "No match found.",
+          "taxonomy.copy_done": "Copied",
+          "taxonomy.copy_fail": "Copy failed",
+          "taxonomy.data_unavailable": "Taxonomy data is unavailable.",
+          "taxonomy.unavailable_title": "Taxonomy unavailable",
+          "ack.title": "Acknowledgment",
+          "ack.body": "We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.",
+          "footer.line": "Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed."
+        },
+        zh: {
+          "nav.overview": "概述",
+          "nav.demos": "演示",
+          "nav.capabilities": "核心能力",
+          "nav.abstract": "摘要",
+          "nav.method": "方法",
+          "nav.experiments": "实验",
+          "nav.citation": "引用",
+          "nav.more_research": "更多研究",
+          "hero.badge": "自进化智能体训练场",
+          "hero.tagline": "规模化真实世界环境合成<br>驱动通用智能体持续演化",
+          "hero.stat_env": "环境",
+          "hero.stat_tools": "工具",
+          "hero.stat_bench": "基准",
+          "hero.stat_cat": "类目",
+          "hero.paper_soon": "论文（即将发布）",
+          "overview.title": "什么是 Agent-World？",
+          "overview.lead": "一个自进化的训练场，将<strong>可扩展的环境合成</strong>与<strong>连续智能体训练</strong>统一起来——自主挖掘真实世界工具生态、合成可验证任务，并通过诊断反馈闭环驱动智能体持续演进。",
+          "taxonomy.title": "环境分类映射（L1 → L2 → L3 示例）",
+          "taxonomy.intro": "点击左侧一级（L1）类目展开二级（L2）标签；任选一个 L2 标签，在右侧查看 10 个代表性三级（L3）服务器示例。",
+          "taxonomy.lang_hint": "提示：右上角 English / 中文 可切换界面语言（下方服务器与类目名称仍为英文数据）。",
+          "taxonomy.chip_l1": "一级类目：20",
+          "taxonomy.chip_l2": "二级标签：50",
+          "taxonomy.chip_l3": "三级服务器（合计）：1,978",
+          "taxonomy.search_ph": "按一级 / 二级 / 服务器名称搜索…",
+          "taxonomy.search_aria": "搜索分类标签与服务器",
+          "taxonomy.placeholder_title": "请选择一个 L2 标签",
+          "taxonomy.placeholder_desc": "代表性服务器列表将显示在此处。",
+          "taxonomy.copy_btn": "复制 10 个 L3 示例",
+          "taxonomy.l3_list_title": "代表性 L3 服务器（10）",
+          "taxonomy.no_results_title": "没有匹配的类目条目",
+          "taxonomy.try_keyword": "请尝试其他关键词（支持一级、二级与服务器名称）。",
+          "taxonomy.no_match": "未找到匹配项。",
+          "taxonomy.copy_done": "已复制",
+          "taxonomy.copy_fail": "复制失败",
+          "taxonomy.data_unavailable": "分类数据暂不可用。",
+          "taxonomy.unavailable_title": "分类模块不可用",
+          "ack.title": "致谢",
+          "ack.body": "我们诚挚感谢 Yujia Qin<sup>2</sup> 与 Guang Shi<sup>2</sup> 对本工作的支持与宝贵建议，并感谢 Yifei Chen<sup>1</sup> 的有益讨论。",
+          "footer.line": "Agent-World &copy; 2026。中国人民大学高瓴人工智能学院与 ByteDance Seed。"
+        }
+      };
+
+      function getLang() {
+        try {
+          return localStorage.getItem(STORAGE_KEY) === "zh" ? "zh" : "en";
+        } catch (e) {
+          return "en";
+        }
+      }
+
+      function setLang(lang) {
+        try {
+          localStorage.setItem(STORAGE_KEY, lang === "zh" ? "zh" : "en");
+        } catch (e) {}
+      }
+
+      function t(key) {
+        const lang = getLang();
+        const table = messages[lang] || messages.en;
+        return table[key] || messages.en[key] || key;
+      }
+
+      function applyStatic() {
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+          el.innerHTML = t(el.getAttribute("data-i18n-html"));
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+          const key = el.getAttribute("data-i18n-placeholder");
+          if (key) el.placeholder = t(key);
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+          const key = el.getAttribute("data-i18n-aria");
+          if (key) el.setAttribute("aria-label", t(key));
+        });
+        document.documentElement.lang = getLang() === "zh" ? "zh-CN" : "en";
+        document.querySelectorAll("[data-aw-lang]").forEach(function (btn) {
+          btn.classList.toggle("is-active", btn.getAttribute("data-aw-lang") === getLang());
+        });
+      }
+
+      function dispatchUpdate() {
+        document.dispatchEvent(new CustomEvent("aw:i18n-updated"));
+      }
+
+      window.AW_LANG = {
+        get: getLang,
+        set: setLang,
+        t: t,
+        applyStatic: applyStatic,
+        dispatchUpdate: dispatchUpdate,
+        messages: messages
+      };
+    })();
+
     const TAXONOMY_DATA = [
       {
             l1: "L1-01 Search & Information Retrieval",
@@ -2811,13 +3077,15 @@
 
       function renderTaxonomyDetail(l1Label, l2Label, servers) {
         const detail = document.getElementById("taxonomy-detail");
+        const copyLabel = window.AW_LANG ? window.AW_LANG.t("taxonomy.copy_btn") : "Copy 10 L3 Examples";
+        const l3Title = window.AW_LANG ? window.AW_LANG.t("taxonomy.l3_list_title") : "Representative L3 Servers (10)";
         detail.innerHTML = `
           <span class="l1-tag">${l1Label}</span>
           <div class="taxonomy-detail-header">
             <h5>${l2Label}</h5>
-            <button type="button" class="taxonomy-copy-btn" id="taxonomy-copy-btn">Copy 10 L3 Examples</button>
+            <button type="button" class="taxonomy-copy-btn" id="taxonomy-copy-btn">${copyLabel}</button>
           </div>
-          <p>Representative L3 Servers (10)</p>
+          <p>${l3Title}</p>
           <ul class="taxonomy-example-list">
             ${servers.map((server) => `<li>${server}</li>`).join("")}
           </ul>
@@ -2826,28 +3094,39 @@
         const copyBtn = document.getElementById("taxonomy-copy-btn");
         copyBtn.addEventListener("click", async () => {
           const text = buildCopyText(l1Label, l2Label, servers);
+          const tBtn = window.AW_LANG.t.bind(window.AW_LANG);
           try {
             await navigator.clipboard.writeText(text);
             copyBtn.classList.add("copied");
-            copyBtn.textContent = "Copied";
+            copyBtn.textContent = tBtn("taxonomy.copy_done");
             setTimeout(() => {
               copyBtn.classList.remove("copied");
-              copyBtn.textContent = "Copy 10 L3 Examples";
+              copyBtn.textContent = tBtn("taxonomy.copy_btn");
             }, 1200);
           } catch (err) {
-            copyBtn.textContent = "Copy failed";
+            copyBtn.textContent = tBtn("taxonomy.copy_fail");
             setTimeout(() => {
-              copyBtn.textContent = "Copy 10 L3 Examples";
+              copyBtn.textContent = tBtn("taxonomy.copy_btn");
             }, 1200);
           }
         });
       }
 
-      function renderEmptyTaxonomyDetail(message) {
+      function renderEmptyTaxonomyDetail(message, titleKey) {
         const detail = document.getElementById("taxonomy-detail");
+        const t = window.AW_LANG ? window.AW_LANG.t.bind(window.AW_LANG) : function (k) {
+          const fall = {
+            "taxonomy.no_results_title": "No matching taxonomy entries",
+            "taxonomy.try_keyword": "Try another keyword (supports L1, L2, and server names).",
+            "taxonomy.unavailable_title": "Taxonomy unavailable"
+          };
+          return fall[k] || k;
+        };
+        const title = titleKey ? t(titleKey) : t("taxonomy.no_results_title");
+        const body = message || t("taxonomy.try_keyword");
         detail.innerHTML = `
-          <h5>No matching taxonomy entries</h5>
-          <p>${message || "Try another keyword (supports L1, L2, and server names)."}</p>
+          <h5>${title}</h5>
+          <p>${body}</p>
         `;
       }
 
@@ -2870,7 +3149,8 @@
 
         const filteredData = getFilteredTaxonomyData(taxonomyState.query);
         if (filteredData.length === 0) {
-          nav.innerHTML = `<div class="taxonomy-empty">No match found.</div>`;
+          const noMatch = window.AW_LANG ? window.AW_LANG.t("taxonomy.no_match") : "No match found.";
+          nav.innerHTML = `<div class="taxonomy-empty">${noMatch}</div>`;
           renderEmptyTaxonomyDetail();
           return;
         }
@@ -2954,9 +3234,18 @@
       const nav = document.getElementById("taxonomy-nav");
       const searchInput = document.getElementById("taxonomy-search");
       if (!nav || !searchInput || !TAXONOMY_DATA.length) {
-        renderEmptyTaxonomyDetail("Taxonomy data is unavailable.");
+        const unavail = window.AW_LANG ? window.AW_LANG.t("taxonomy.data_unavailable") : "Taxonomy data is unavailable.";
+        renderEmptyTaxonomyDetail(unavail, "taxonomy.unavailable_title");
         return;
       }
+
+      document.addEventListener("aw:i18n-updated", function () {
+        const n = document.getElementById("taxonomy-nav");
+        if (n && TAXONOMY_DATA.length) {
+          renderTaxonomyNav();
+        }
+      });
+
       taxonomyState.activeL1 = TAXONOMY_DATA[0].l1;
       taxonomyState.activeL2 = TAXONOMY_DATA[0].l2[0].label;
       renderTaxonomyNav();
@@ -2968,6 +3257,17 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      if (window.AW_LANG) {
+        window.AW_LANG.applyStatic();
+        document.querySelectorAll("[data-aw-lang]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const lang = btn.getAttribute("data-aw-lang");
+            window.AW_LANG.set(lang);
+            window.AW_LANG.applyStatic();
+            window.AW_LANG.dispatchUpdate();
+          });
+        });
+      }
       initTaxonomySystemWithData(TAXONOMY_DATA);
     });
   </script>
@@ -2981,6 +3281,10 @@
         nav.classList.toggle('scrolled', window.scrollY > 50);
       }, { passive: true });
     }
+
+    document.querySelectorAll('.navbar-item.has-dropdown > a.navbar-link[href="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => e.preventDefault());
+    });
 
     // Scroll reveal for sections and major content blocks
     const revealTargets = document.querySelectorAll(
