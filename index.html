@@ -50,6 +50,8 @@
     }
     .navbar-item:hover {
       color: #3a76ed !important;
+    }
+    .navbar-end .navbar-item:hover {
       transform: translateY(-1px);
     }
     .ruc-logo {
@@ -80,10 +82,23 @@
       gap: 0.55rem;
       flex-shrink: 0;
     }
+    /* Wide Seed wordmark: avoid Bulma .navbar-item img { max-height: 1.75rem } clipping + body overflow-x */
+    body {
+      overflow-x: visible !important;
+    }
+    .navbar .container {
+      overflow-x: visible !important;
+    }
+    .navbar-brand,
+    .navbar-brand > a.navbar-item {
+      overflow: visible !important;
+    }
     .aw-brand-seed-logo {
-      height: 1.45rem;
+      height: auto;
       width: auto;
-      max-height: unset;
+      max-height: 1.85rem !important;
+      object-fit: contain;
+      object-position: left center;
       display: block;
       flex-shrink: 0;
     }
@@ -1135,14 +1150,14 @@
           </div>
 
           <div class="aw-hero-authors">
-            <span><a class="aw-author-link" href="https://dongguanting.github.io/" target="_blank" rel="noopener noreferrer">Guanting Dong</a><sup>1,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=amozZDkAAAAJ" target="_blank" rel="noopener noreferrer">Guanting Dong</a><sup>1,*</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=ZyvZWYYAAAAJ" target="_blank" rel="noopener noreferrer">Junting Lu</a><sup>2</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=kZnvrCEAAAAJ" target="_blank" rel="noopener noreferrer">Junjie Huang</a><sup>2,*</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=FGIZfyQAAAAJ" target="_blank" rel="noopener noreferrer">Wanjun Zhong</a><sup>2,&#8224;</sup></span>
-            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=nCuDUs8AAAAJ" target="_blank" rel="noopener noreferrer">Longxiang Liu</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=tK2YD60AAAAJ" target="_blank" rel="noopener noreferrer">Longxiang Liu</a><sup>2</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=C0Xc3dYAAAAJ" target="_blank" rel="noopener noreferrer">Shijue Huang</a><sup>2,*</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=v0IDKw4AAAAJ" target="_blank" rel="noopener noreferrer">Zhenyu Li</a><sup>2</sup></span>
-            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=UrVEK7IAAAAJ" target="_blank" rel="noopener noreferrer">Yang Zhao</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=T5MuQE4AAAAJ" target="_blank" rel="noopener noreferrer">Yang Zhao</a><sup>2,*</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=0QqMGUQAAAAJ" target="_blank" rel="noopener noreferrer">Xiaoshuai Song</a><sup>1</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=XDljV4YAAAAJ" target="_blank" rel="noopener noreferrer">Xiaoxi Li</a><sup>1</sup></span>
             <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=iHCuEo8AAAAJ" target="_blank" rel="noopener noreferrer">Jiajie Jin</a><sup>1</sup></span>
@@ -2087,7 +2102,7 @@
         <div class="column is-10">
           <h2 class="title is-3">Acknowledgment</h2>
           <div class="content">
-            <p>We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.</p>
+            <p>We greatly thank <a class="aw-author-link" href="https://scholar.google.com/citations?user=njm-G8wAAAAJ" target="_blank" rel="noopener noreferrer">Yujia Qin</a><sup>2</sup> and <a class="aw-author-link" href="https://scholar.google.com/citations?user=MjXxWbUAAAAJ" target="_blank" rel="noopener noreferrer">Guang Shi</a><sup>2</sup> for supporting this work and providing valuable suggestions. We also thank <a class="aw-author-link" href="https://scholar.google.com/citations?user=nq_-2vUAAAAJ" target="_blank" rel="noopener noreferrer">Yifei Chen</a><sup>1</sup> for valuable discussions.</p>
           </div>
         </div>
       </div>
@@ -2102,6 +2117,7 @@
     </div>
   </footer>
 
+  <script src="./js/taxonomy-zh-map.js"></script>
   <script>
     (function () {
       const STORAGE_KEY = "aw-lang";
@@ -2109,7 +2125,7 @@
         en: {
           "taxonomy.title": "Environment Taxonomy Mapping (L1 → L2 → L3 Examples)",
           "taxonomy.intro": "Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.",
-          "taxonomy.lang_hint": "Tip: Use English / 中文 above to switch labels for this taxonomy panel (server names stay English).",
+          "taxonomy.lang_hint": "Tip: In 中文 mode, L1 / L2 / L3 names display in Chinese (machine-translated for readability).",
           "taxonomy.chip_l1": "L1 Categories: 20",
           "taxonomy.chip_l2": "L2 Labels: 50",
           "taxonomy.chip_l3": "L3 Servers (Total): 1,978",
@@ -2130,7 +2146,7 @@
         zh: {
           "taxonomy.title": "环境分类映射（L1 → L2 → L3 示例）",
           "taxonomy.intro": "点击左侧一级（L1）类目展开二级（L2）标签；任选一个 L2 标签，在右侧查看 10 个代表性三级（L3）服务器示例。",
-          "taxonomy.lang_hint": "提示：上方 English / 中文 仅切换本分类模块的界面文案（服务器与类目名称仍为英文）。",
+          "taxonomy.lang_hint": "中文模式下，一级 / 二级 / 三级（服务器）名称均显示中文（机器翻译，仅供参考）。",
           "taxonomy.chip_l1": "一级类目：20",
           "taxonomy.chip_l2": "二级标签：50",
           "taxonomy.chip_l3": "三级服务器（合计）：1,978",
@@ -3056,17 +3072,49 @@
         activeL2: ""
       };
 
+      function zhTax(en) {
+        if (!en) {
+          return en;
+        }
+        if (!window.AW_LANG || window.AW_LANG.get() !== "zh") {
+          return en;
+        }
+        const map = window.TAXONOMY_ZH_MAP;
+        return (map && map[en]) || en;
+      }
+
+      function fieldMatches(queryNorm, queryRaw, enStr) {
+        const enLo = enStr.toLowerCase();
+        if (enLo.includes(queryNorm)) {
+          return true;
+        }
+        const map = window.TAXONOMY_ZH_MAP;
+        const zh = map && map[enStr];
+        if (!zh) {
+          return false;
+        }
+        const zhLo = zh.toLowerCase();
+        if (zhLo.includes(queryNorm)) {
+          return true;
+        }
+        if (queryRaw && zh.includes(queryRaw)) {
+          return true;
+        }
+        return false;
+      }
+
       function getFilteredTaxonomyData(query) {
-        const q = query.trim().toLowerCase();
+        const raw = query.trim();
+        const q = raw.toLowerCase();
         if (!q) {
           return TAXONOMY_DATA;
         }
 
         return TAXONOMY_DATA.map((l1Item) => {
-          const l1Match = l1Item.l1.toLowerCase().includes(q);
+          const l1Match = fieldMatches(q, raw, l1Item.l1);
           const matchedL2 = l1Item.l2.filter((l2Item) => {
-            const l2Match = l2Item.label.toLowerCase().includes(q);
-            const serverMatch = l2Item.servers.some((server) => server.toLowerCase().includes(q));
+            const l2Match = fieldMatches(q, raw, l2Item.label);
+            const serverMatch = l2Item.servers.some((server) => fieldMatches(q, raw, server));
             return l1Match || l2Match || serverMatch;
           });
           return { ...l1Item, l2: matchedL2 };
@@ -3077,7 +3125,10 @@
         return `${l1Label}\n${l2Label}\n${servers.map((server) => `- ${server}`).join("\n")}`;
       }
 
-      function renderTaxonomyDetail(l1Label, l2Label, servers) {
+      function renderTaxonomyDetail(l1En, l2En, serversEn) {
+        const l1Label = zhTax(l1En);
+        const l2Label = zhTax(l2En);
+        const servers = serversEn.map(zhTax);
         const detail = document.getElementById("taxonomy-detail");
         const copyLabel = window.AW_LANG ? window.AW_LANG.t("taxonomy.copy_btn") : "Copy 10 L3 Examples";
         const l3Title = window.AW_LANG ? window.AW_LANG.t("taxonomy.l3_list_title") : "Representative L3 Servers (10)";
@@ -3166,7 +3217,7 @@
           const l1Button = document.createElement("button");
           l1Button.className = "taxonomy-l1-button";
           l1Button.type = "button";
-          l1Button.textContent = item.l1;
+          l1Button.textContent = zhTax(item.l1);
           l1Wrap.appendChild(l1Button);
 
           const l2List = document.createElement("div");
@@ -3176,7 +3227,8 @@
             const l2Button = document.createElement("button");
             l2Button.className = "taxonomy-l2-button";
             l2Button.type = "button";
-            l2Button.textContent = l2Item.label;
+            l2Button.dataset.l2 = l2Item.label;
+            l2Button.textContent = zhTax(l2Item.label);
             const isInitialActive = taxonomyState.activeL1 === item.l1 && taxonomyState.activeL2 === l2Item.label;
             if (isInitialActive) {
               l2Button.classList.add("active");
@@ -3216,7 +3268,7 @@
           taxonomyState.activeL2 = firstL2.label;
           setActiveL1ByValue(first.l1);
           document.querySelectorAll(".taxonomy-l2-button").forEach((el) => {
-            if (el.textContent === firstL2.label) {
+            if (el.dataset.l2 === firstL2.label) {
               el.classList.add("active");
             } else {
               el.classList.remove("active");
