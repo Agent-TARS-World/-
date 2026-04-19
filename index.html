@@ -2111,7 +2111,7 @@
         en: {
           "taxonomy.title": "Environment Taxonomy Mapping (L1 → L2 → L3 Examples)",
           "taxonomy.intro": "Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.",
-          "taxonomy.lang_hint": "Tip: In 中文 mode, L1 / L2 / L3 names display in Chinese (machine-translated for readability).",
+          "taxonomy.lang_hint": "Tip: In 中文 mode, L1 and L2 labels use Chinese; L3 server names stay in English.",
           "taxonomy.chip_l1": "L1 Categories: 20",
           "taxonomy.chip_l2": "L2 Labels: 50",
           "taxonomy.chip_l3": "L3 Servers (Total): 1,978",
@@ -2132,7 +2132,7 @@
         zh: {
           "taxonomy.title": "环境分类映射（L1 → L2 → L3 示例）",
           "taxonomy.intro": "点击左侧一级（L1）类目展开二级（L2）标签；任选一个 L2 标签，在右侧查看 10 个代表性三级（L3）服务器示例。",
-          "taxonomy.lang_hint": "中文模式下，一级 / 二级 / 三级（服务器）名称均显示中文（机器翻译，仅供参考）。",
+          "taxonomy.lang_hint": "中文模式下仅翻译一级、二级标签；三级服务器名称保持英文。",
           "taxonomy.chip_l1": "一级类目：20",
           "taxonomy.chip_l2": "二级标签：50",
           "taxonomy.chip_l3": "三级服务器（合计）：1,978",
@@ -2208,7 +2208,7 @@
     })();
   </script>
 
-  <!-- 中文分类译名：仅编辑下方 JSON（英文键 → 中文值）。须为合法 JSON。 -->
+  <!-- 中文分类译名（仅 L1/L2；L3 服务器名不译）：英文键 → 中文值，须为合法 JSON。 -->
   <script type="application/json" id="taxonomy-zh-map">
 {
   "100ms Raydium Sniper": "100ms 镭射狙击手",
@@ -3588,7 +3588,7 @@
           const l1Match = fieldMatches(q, raw, l1Item.l1);
           const matchedL2 = l1Item.l2.filter((l2Item) => {
             const l2Match = fieldMatches(q, raw, l2Item.label);
-            const serverMatch = l2Item.servers.some((server) => fieldMatches(q, raw, server));
+            const serverMatch = l2Item.servers.some((server) => server.toLowerCase().includes(q));
             return l1Match || l2Match || serverMatch;
           });
           return { ...l1Item, l2: matchedL2 };
@@ -3602,7 +3602,7 @@
       function renderTaxonomyDetail(l1En, l2En, serversEn) {
         const l1Label = zhTax(l1En);
         const l2Label = zhTax(l2En);
-        const servers = serversEn.map(zhTax);
+        const servers = serversEn.slice();
         const detail = document.getElementById("taxonomy-detail");
         const copyLabel = window.AW_LANG ? window.AW_LANG.t("taxonomy.copy_btn") : "Copy 10 L3 Examples";
         const l3Title = window.AW_LANG ? window.AW_LANG.t("taxonomy.l3_list_title") : "Representative L3 Servers (10)";
