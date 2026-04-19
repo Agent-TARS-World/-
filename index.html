@@ -58,11 +58,21 @@
       margin-right: 0;
       width: auto;
     }
+    .navbar-brand > a.navbar-item:first-child {
+      padding-left: 0.2rem !important;
+      margin-left: -0.65rem;
+    }
+    @media (max-width: 768px) {
+      .navbar-brand > a.navbar-item:first-child {
+        margin-left: -0.35rem;
+      }
+    }
     .aw-brand-lockup {
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
       flex-wrap: nowrap;
+      margin-left: -0.2rem;
     }
     .aw-brand-logos {
       display: inline-flex;
@@ -114,18 +124,36 @@
       font-size: 0.92rem;
     }
 
-    /* Language switch (We-Math–style segmented control, top-right) */
-    .aw-lang-switch-wrap.navbar-item {
-      padding-left: 0.5rem !important;
-      padding-right: 0.5rem !important;
-      border-bottom: none !important;
+    .aw-author-link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(58, 118, 237, 0.35);
+      transition: color 0.2s, border-color 0.2s;
     }
-    .aw-lang-switch-wrap.navbar-item:hover {
-      transform: none !important;
-      color: #64748b !important;
-      background: transparent !important;
+    .aw-author-link:hover {
+      color: #3a76ed;
+      border-bottom-color: rgba(58, 118, 237, 0.75);
     }
-    .aw-lang-switch {
+
+    /* Taxonomy-only language switch (We-Math–style) */
+    .taxonomy-header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem 1rem;
+      margin-bottom: 0.35rem;
+    }
+    .taxonomy-header-top h4 {
+      margin: 0 !important;
+      flex: 1 1 12rem;
+      min-width: 0;
+    }
+    .taxonomy-lang-toggle {
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .taxonomy-lang-toggle .aw-lang-switch {
       display: inline-flex;
       align-items: stretch;
       border: 1px solid rgba(226, 232, 240, 0.95);
@@ -525,15 +553,27 @@
     }
     .aw-hero-authors span {
       display: inline-block;
-      margin: .2rem .4rem;
-      font-size: .85rem;
+      margin: .28rem .45rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
       color: #475569;
     }
+    .aw-hero-authors sup {
+      font-size: 0.72em;
+      vertical-align: super;
+    }
     .aw-hero-affil {
-      font-size: .8rem;
+      font-size: 0.98rem;
+      line-height: 1.65;
       color: #94a3b8;
-      margin-top: .6rem;
+      margin-top: .75rem;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
       animation: fadeInUp .8s ease-out .8s both;
+    }
+    .aw-hero-affil sup {
+      font-size: 0.75em;
     }
 
     /* Scroll-down chevrons */
@@ -1028,26 +1068,20 @@
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
-          <a class="navbar-item" href="#overview" data-i18n="nav.overview">Overview</a>
-          <a class="navbar-item" href="#demos" data-i18n="nav.demos">Demos</a>
-          <a class="navbar-item" href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
-          <a class="navbar-item" href="#abstract" data-i18n="nav.abstract">Abstract</a>
-          <a class="navbar-item" href="#method" data-i18n="nav.method">Method</a>
-          <a class="navbar-item" href="#experiments" data-i18n="nav.experiments">Experiments</a>
-          <a class="navbar-item" href="#citation" data-i18n="nav.citation">Citation</a>
+          <a class="navbar-item" href="#overview">Overview</a>
+          <a class="navbar-item" href="#demos">Demos</a>
+          <a class="navbar-item" href="#capabilities">Capabilities</a>
+          <a class="navbar-item" href="#abstract">Abstract</a>
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#experiments">Experiments</a>
+          <a class="navbar-item" href="#citation">Citation</a>
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="#" data-i18n="nav.more_research">More Research</a>
+            <a class="navbar-link" href="#">More Research</a>
             <div class="navbar-dropdown is-right">
               <a class="navbar-item" href="https://seed-tars.com/1/" target="_blank" rel="noopener noreferrer">UI-TARS 1.0</a>
               <a class="navbar-item" href="https://seed-tars.com/1.5/" target="_blank" rel="noopener noreferrer">UI-TARS 1.5</a>
               <a class="navbar-item" href="https://seed-tars.com/showcase/ui-tars-2" target="_blank" rel="noopener noreferrer">UI-TARS 2</a>
               <a class="navbar-item" href="https://seed-tars.com/game-tars/" target="_blank" rel="noopener noreferrer">Game-TARS</a>
-            </div>
-          </div>
-          <div class="navbar-item aw-lang-switch-wrap" role="group" aria-label="Language">
-            <div class="aw-lang-switch">
-              <button type="button" class="aw-lang-pill is-active" data-aw-lang="en">English</button>
-              <button type="button" class="aw-lang-pill" data-aw-lang="zh">中文</button>
             </div>
           </div>
         </div>
@@ -1063,31 +1097,31 @@
     <div class="hero-body">
       <div class="container">
         <div class="has-text-centered">
-          <div class="aw-hero-badge" data-i18n="hero.badge">Self-Evolving Agent Training Arena</div>
+          <div class="aw-hero-badge">Self-Evolving Agent Training Arena</div>
           <h1 class="publication-title">
             <span><em class="dnerf">Agent-World</em></span>
           </h1>
-          <p class="aw-hero-tagline" data-i18n-html="hero.tagline">Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence</p>
+          <p class="aw-hero-tagline">Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence</p>
 
           <div class="aw-hero-stats">
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">2,000+</span>
-              <span class="aw-hero-stat-label" data-i18n="hero.stat_env">Environments</span>
+              <span class="aw-hero-stat-label">Environments</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">19K+</span>
-              <span class="aw-hero-stat-label" data-i18n="hero.stat_tools">Tools</span>
+              <span class="aw-hero-stat-label">Tools</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">23</span>
-              <span class="aw-hero-stat-label" data-i18n="hero.stat_bench">Benchmarks</span>
+              <span class="aw-hero-stat-label">Benchmarks</span>
             </div>
             <div class="aw-hero-stat-divider"></div>
             <div class="aw-hero-stat">
               <span class="aw-hero-stat-num">20</span>
-              <span class="aw-hero-stat-label" data-i18n="hero.stat_cat">Categories</span>
+              <span class="aw-hero-stat-label">Categories</span>
             </div>
           </div>
 
@@ -1095,32 +1129,32 @@
             <span class="link-block">
               <span class="button is-dark is-static">
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span data-i18n="hero.paper_soon">Paper (Coming Soon)</span>
+                <span>Paper (Coming Soon)</span>
               </span>
             </span>
           </div>
 
           <div class="aw-hero-authors">
-            <span>Guanting Dong<sup>1,*</sup></span>
-            <span>Junting Lu<sup>2</sup></span>
-            <span>Junjie Huang<sup>2,*</sup></span>
-            <span>Wanjun Zhong<sup>2,&#8224;</sup></span>
-            <span>Longxiang Liu<sup>2</sup></span>
-            <span>Shijue Huang<sup>2,*</sup></span>
-            <span>Zhenyu Li<sup>2</sup></span>
-            <span>Yang Zhao<sup>2,*</sup></span>
-            <span>Xiaoshuai Song<sup>1</sup></span>
-            <span>Xiaoxi Li<sup>1</sup></span>
-            <span>Jiajie Jin<sup>1</sup></span>
-            <span>Yutao Zhu<sup>1</sup></span>
-            <span>Hanbin Wang<sup>2,*</sup></span>
-            <span>Fangyu Lei<sup>2,*</sup></span>
-            <span>Qinyu Luo<sup>2</sup></span>
-            <span>Mingyang Chen<sup>2</sup></span>
-            <span>Zehui Chen<sup>2</sup></span>
-            <span>Jiazhan Feng<sup>2</sup></span>
-            <span>Ji-Rong Wen<sup>1</sup></span>
-            <span>Zhicheng Dou<sup>1,&#8224;</sup></span>
+            <span><a class="aw-author-link" href="https://dongguanting.github.io/" target="_blank" rel="noopener noreferrer">Guanting Dong</a><sup>1,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=ZyvZWYYAAAAJ" target="_blank" rel="noopener noreferrer">Junting Lu</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=kZnvrCEAAAAJ" target="_blank" rel="noopener noreferrer">Junjie Huang</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=FGIZfyQAAAAJ" target="_blank" rel="noopener noreferrer">Wanjun Zhong</a><sup>2,&#8224;</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=nCuDUs8AAAAJ" target="_blank" rel="noopener noreferrer">Longxiang Liu</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=C0Xc3dYAAAAJ" target="_blank" rel="noopener noreferrer">Shijue Huang</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=v0IDKw4AAAAJ" target="_blank" rel="noopener noreferrer">Zhenyu Li</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=UrVEK7IAAAAJ" target="_blank" rel="noopener noreferrer">Yang Zhao</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=0QqMGUQAAAAJ" target="_blank" rel="noopener noreferrer">Xiaoshuai Song</a><sup>1</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=XDljV4YAAAAJ" target="_blank" rel="noopener noreferrer">Xiaoxi Li</a><sup>1</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=iHCuEo8AAAAJ" target="_blank" rel="noopener noreferrer">Jiajie Jin</a><sup>1</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=tBqVOWsAAAAJ" target="_blank" rel="noopener noreferrer">Yutao Zhu</a><sup>1</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=FMHqC7gAAAAJ" target="_blank" rel="noopener noreferrer">Hanbin Wang</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=1WzAOSkAAAAJ" target="_blank" rel="noopener noreferrer">Fangyu Lei</a><sup>2,*</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=ipMWfycAAAAJ" target="_blank" rel="noopener noreferrer">Qinyu Luo</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=ofNVwaQAAAAJ" target="_blank" rel="noopener noreferrer">Mingyang Chen</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=NfSsLncAAAAJ" target="_blank" rel="noopener noreferrer">Zehui Chen</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=uYHmew8AAAAJ" target="_blank" rel="noopener noreferrer">Jiazhan Feng</a><sup>2</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=tbxCHJgAAAAJ" target="_blank" rel="noopener noreferrer">Ji-Rong Wen</a><sup>1</sup></span>
+            <span><a class="aw-author-link" href="https://scholar.google.com/citations?user=ChCjAAwAAAAJ" target="_blank" rel="noopener noreferrer">Zhicheng Dou</a><sup>1,&#8224;</sup></span>
           </div>
           <div class="aw-hero-affil">
             <sup>1</sup>Gaoling School of Artificial Intelligence, Renmin University of China &nbsp;&nbsp; <sup>2</sup>ByteDance Seed &nbsp;&nbsp; <sup>*</sup>Work was done during their internship at ByteDance Seed &nbsp;&nbsp; <sup>&#8224;</sup>Corresponding Author
@@ -1138,8 +1172,8 @@
   <section class="section aw-showcase" id="overview">
     <div class="container">
       <div style="max-width:950px;margin:0 auto;">
-        <h2 class="title is-3 has-text-centered" data-i18n="overview.title">What is Agent-World?</h2>
-        <p class="aw-overview-lead" style="font-size:1.08rem;color:#475569;line-height:1.85;text-align:justify;margin-bottom:2.5rem;" data-i18n-html="overview.lead">
+        <h2 class="title is-3 has-text-centered">What is Agent-World?</h2>
+        <p class="aw-overview-lead" style="font-size:1.08rem;color:#475569;line-height:1.85;text-align:justify;margin-bottom:2.5rem;">
           A self-evolving training arena that unifies <strong>scalable environment synthesis</strong>
           with <strong>continuous agent training</strong> — autonomously mining real-world tool ecosystems,
           synthesizing verifiable tasks, and driving agents to evolve through diagnostic feedback loops.
@@ -1653,9 +1687,17 @@
 
             <div class="taxonomy-system" id="taxonomy-system">
               <div class="taxonomy-system-header">
-                <h4 data-i18n="taxonomy.title">Environment Taxonomy Mapping (L1 -&gt; L2 -&gt; L3 Examples)</h4>
+                <div class="taxonomy-header-top">
+                  <h4 data-i18n="taxonomy.title">Environment Taxonomy Mapping (L1 -&gt; L2 -&gt; L3 Examples)</h4>
+                  <div class="taxonomy-lang-toggle" role="group" aria-label="Taxonomy language">
+                    <div class="aw-lang-switch">
+                      <button type="button" class="aw-lang-pill is-active" data-aw-lang="en">English</button>
+                      <button type="button" class="aw-lang-pill" data-aw-lang="zh">中文</button>
+                    </div>
+                  </div>
+                </div>
                 <p data-i18n="taxonomy.intro">Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.</p>
-                <p class="taxonomy-lang-hint" data-i18n="taxonomy.lang_hint">Tip: Use English / 中文 in the top-right to switch interface language (taxonomy data stays English).</p>
+                <p class="taxonomy-lang-hint" data-i18n="taxonomy.lang_hint">Tip: Use English / 中文 above to switch labels for this taxonomy panel (server names stay English).</p>
                 <div class="taxonomy-counts">
                   <span class="taxonomy-count-chip" data-i18n="taxonomy.chip_l1">L1 Categories: 20</span>
                   <span class="taxonomy-count-chip" data-i18n="taxonomy.chip_l2">L2 Labels: 50</span>
@@ -2043,9 +2085,9 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-10">
-          <h2 class="title is-3" data-i18n="ack.title">Acknowledgment</h2>
+          <h2 class="title is-3">Acknowledgment</h2>
           <div class="content">
-            <p data-i18n-html="ack.body">We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.</p>
+            <p>We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.</p>
           </div>
         </div>
       </div>
@@ -2055,7 +2097,7 @@
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
-        <p data-i18n-html="footer.line">Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed.</p>
+        <p>Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed.</p>
       </div>
     </div>
   </footer>
@@ -2065,26 +2107,9 @@
       const STORAGE_KEY = "aw-lang";
       const messages = {
         en: {
-          "nav.overview": "Overview",
-          "nav.demos": "Demos",
-          "nav.capabilities": "Capabilities",
-          "nav.abstract": "Abstract",
-          "nav.method": "Method",
-          "nav.experiments": "Experiments",
-          "nav.citation": "Citation",
-          "nav.more_research": "More Research",
-          "hero.badge": "Self-Evolving Agent Training Arena",
-          "hero.tagline": "Scaling Real-World Environment Synthesis<br>for Evolving General Agent Intelligence",
-          "hero.stat_env": "Environments",
-          "hero.stat_tools": "Tools",
-          "hero.stat_bench": "Benchmarks",
-          "hero.stat_cat": "Categories",
-          "hero.paper_soon": "Paper (Coming Soon)",
-          "overview.title": "What is Agent-World?",
-          "overview.lead": "A self-evolving training arena that unifies <strong>scalable environment synthesis</strong> with <strong>continuous agent training</strong> — autonomously mining real-world tool ecosystems, synthesizing verifiable tasks, and driving agents to evolve through diagnostic feedback loops.",
           "taxonomy.title": "Environment Taxonomy Mapping (L1 → L2 → L3 Examples)",
           "taxonomy.intro": "Click an L1 category to expand its L2 labels. Select any L2 label to view 10 representative L3 server examples on the right.",
-          "taxonomy.lang_hint": "Tip: Use English / 中文 in the top-right to switch interface language (taxonomy data stays English).",
+          "taxonomy.lang_hint": "Tip: Use English / 中文 above to switch labels for this taxonomy panel (server names stay English).",
           "taxonomy.chip_l1": "L1 Categories: 20",
           "taxonomy.chip_l2": "L2 Labels: 50",
           "taxonomy.chip_l3": "L3 Servers (Total): 1,978",
@@ -2100,32 +2125,12 @@
           "taxonomy.copy_done": "Copied",
           "taxonomy.copy_fail": "Copy failed",
           "taxonomy.data_unavailable": "Taxonomy data is unavailable.",
-          "taxonomy.unavailable_title": "Taxonomy unavailable",
-          "ack.title": "Acknowledgment",
-          "ack.body": "We greatly thank Yujia Qin<sup>2</sup> and Guang Shi<sup>2</sup> for supporting this work and providing valuable suggestions. We also thank Yifei Chen<sup>1</sup> for valuable discussions.",
-          "footer.line": "Agent-World &copy; 2026. Renmin University of China &amp; ByteDance Seed."
+          "taxonomy.unavailable_title": "Taxonomy unavailable"
         },
         zh: {
-          "nav.overview": "概述",
-          "nav.demos": "演示",
-          "nav.capabilities": "核心能力",
-          "nav.abstract": "摘要",
-          "nav.method": "方法",
-          "nav.experiments": "实验",
-          "nav.citation": "引用",
-          "nav.more_research": "更多研究",
-          "hero.badge": "自进化智能体训练场",
-          "hero.tagline": "规模化真实世界环境合成<br>驱动通用智能体持续演化",
-          "hero.stat_env": "环境",
-          "hero.stat_tools": "工具",
-          "hero.stat_bench": "基准",
-          "hero.stat_cat": "类目",
-          "hero.paper_soon": "论文（即将发布）",
-          "overview.title": "什么是 Agent-World？",
-          "overview.lead": "一个自进化的训练场，将<strong>可扩展的环境合成</strong>与<strong>连续智能体训练</strong>统一起来——自主挖掘真实世界工具生态、合成可验证任务，并通过诊断反馈闭环驱动智能体持续演进。",
           "taxonomy.title": "环境分类映射（L1 → L2 → L3 示例）",
           "taxonomy.intro": "点击左侧一级（L1）类目展开二级（L2）标签；任选一个 L2 标签，在右侧查看 10 个代表性三级（L3）服务器示例。",
-          "taxonomy.lang_hint": "提示：右上角 English / 中文 可切换界面语言（下方服务器与类目名称仍为英文数据）。",
+          "taxonomy.lang_hint": "提示：上方 English / 中文 仅切换本分类模块的界面文案（服务器与类目名称仍为英文）。",
           "taxonomy.chip_l1": "一级类目：20",
           "taxonomy.chip_l2": "二级标签：50",
           "taxonomy.chip_l3": "三级服务器（合计）：1,978",
@@ -2141,10 +2146,7 @@
           "taxonomy.copy_done": "已复制",
           "taxonomy.copy_fail": "复制失败",
           "taxonomy.data_unavailable": "分类数据暂不可用。",
-          "taxonomy.unavailable_title": "分类模块不可用",
-          "ack.title": "致谢",
-          "ack.body": "我们诚挚感谢 Yujia Qin<sup>2</sup> 与 Guang Shi<sup>2</sup> 对本工作的支持与宝贵建议，并感谢 Yifei Chen<sup>1</sup> 的有益讨论。",
-          "footer.line": "Agent-World &copy; 2026。中国人民大学高瓴人工智能学院与 ByteDance Seed。"
+          "taxonomy.unavailable_title": "分类模块不可用"
         }
       };
 
